@@ -26,7 +26,7 @@ public class MyGdxGame extends ApplicationAdapter {
     public void create() {
 
         batch = new SpriteBatch();
-        terrain = new Texture("Terrain.PNG");
+        terrain = new Texture("Terrain2.PNG");
         sky = new Texture("Sky.jpg");
         player = new Player(new Texture("egg.png"), 0, 0 , 600,
                 512, 150,128, 0,0,0,0);
