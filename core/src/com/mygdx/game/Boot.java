@@ -14,7 +14,7 @@ public class Boot extends ApplicationAdapter {
 	public void create () {
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
-	}
+	} // ну как то да
 
 	@Override
 	public void render () {
