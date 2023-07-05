@@ -25,7 +25,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
         batch = new SpriteBatch();
         terrain = new Texture("Terrain.PNG");
-        sky = new Texture("Sky.PNG");
+        sky = new Texture("Sky.jpg");
         SCR_WIDTH = Gdx.graphics.getWidth();
         SCR_HEIGHT = Gdx.graphics.getHeight();
         gwidth = SCR_WIDTH / 9;
