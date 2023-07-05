@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class MyGdxGame extends ApplicationAdapter {
     static SpriteBatch batch;
@@ -19,6 +20,7 @@ public class MyGdxGame extends ApplicationAdapter {
     OrthographicCamera camera;
 
     SolidPlatform solids[] = new SolidPlatform[15];
+    Player player;
 
     @Override
     public void create() {
@@ -26,6 +28,8 @@ public class MyGdxGame extends ApplicationAdapter {
         batch = new SpriteBatch();
         terrain = new Texture("Terrain.PNG");
         sky = new Texture("Sky.jpg");
+        player = new Player(new Texture("egg.png"), 0, 0 , 600,
+                512, 150,128, 0,0,0,0);
         SCR_WIDTH = Gdx.graphics.getWidth();
         SCR_HEIGHT = Gdx.graphics.getHeight();
         gwidth = SCR_WIDTH / 9;
@@ -47,7 +51,7 @@ public class MyGdxGame extends ApplicationAdapter {
         for (int j = 0; j < solids.length; j++) {
             solids[j].exist();
         }
-
+        player.draw(batch);
         batch.end();
     }
 
