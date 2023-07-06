@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Player extends Sprite {
-    float x, y;
+    static float x, y;
     float vx, vy;
 
     Player(Texture img, int srcx, int srcy, int srcwidth, int srcheight, float width, float height,

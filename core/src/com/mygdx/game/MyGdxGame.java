@@ -12,6 +12,8 @@ public class MyGdxGame extends ApplicationAdapter {
     static SpriteBatch batch;
     Texture terrain;
     Texture sky;
+
+    static Texture bullet;
     int gx = 0;
     int gy = 0;
     float gwidth, gheight;
@@ -19,7 +21,7 @@ public class MyGdxGame extends ApplicationAdapter {
     float SCR_HEIGHT;
     OrthographicCamera camera;
 
-    SolidPlatform solids[] = new SolidPlatform[15];
+    SolidPlatform solids[];
     Player player;
 
     @Override
@@ -28,6 +30,8 @@ public class MyGdxGame extends ApplicationAdapter {
         batch = new SpriteBatch();
         terrain = new Texture("Terrain2.PNG");
         sky = new Texture("Sky.jpg");
+        bullet = new Texture("bullet.png");
+        solids = new SolidPlatform[15];
         SCR_WIDTH = Gdx.graphics.getWidth();
         SCR_HEIGHT = Gdx.graphics.getHeight();
         player = new Player(new Texture("egg.png"), 0, 0 , 600,
