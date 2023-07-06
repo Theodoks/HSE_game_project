@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
@@ -15,11 +16,14 @@ public class MyGdxGame extends ApplicationAdapter {
     static SpriteBatch batch;
     Texture terrain;
     Texture sky;
+    static Texture bullet;
     int gx = 0;
     int gy = 0;
+    static Bullet[] playerBullets;
+    Vector3 touch;
     float gwidth, gheight;
-    float SCR_WIDTH;
-    float SCR_HEIGHT;
+    static float SCR_WIDTH;
+    static float SCR_HEIGHT;
     OrthographicCamera camera;
 
     SolidPlatform solids[] = new SolidPlatform[15];
@@ -32,6 +36,9 @@ public class MyGdxGame extends ApplicationAdapter {
         batch = new SpriteBatch();
         terrain = new Texture("Terrain2.PNG");
         sky = new Texture("Sky.jpg");
+        bullet = new Texture("bullet.png");
+        touch = new Vector3(0, 0 ,0);
+        playerBullets = new Bullet[100];
         SCR_WIDTH = Gdx.graphics.getWidth();
         SCR_HEIGHT = Gdx.graphics.getHeight();
         player = new Player(new Texture("egg.png"), SCR_WIDTH / 9,SCR_HEIGHT / 5, 0,500, 1, 1, 1);
@@ -54,6 +61,19 @@ public class MyGdxGame extends ApplicationAdapter {
         batch.draw(sky,0,0, SCR_WIDTH,SCR_HEIGHT);
         for (int j = 0; j < solids.length; j++) {
             solids[j].exist();
+        }
+        for (int i = 0; i < playerBullets.length; i++) {
+            if (playerBullets[i] != null){
+                playerBullets[i].exist();
+            }
+        }
+        if (Gdx.input.justTouched()) {
+            touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+            camera.unproject(touch);
+            if(touch.x > SCR_WIDTH/2 && touch.y < SCR_HEIGHT/2){
+                Player.shoot();
+            }
+
         }
         player.update(false, false, false, objects);
         player.draw(batch);

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class Player extends Sprite {
     float x, y;
     float vx, vy;
+    static int i = 0;
     float width, height;
     boolean onGround, bodyRotation = true;
     float moveSpeed, powerJump, gravity;
@@ -24,6 +25,12 @@ public class Player extends Sprite {
         this.gravity = gravity;
         setSize(width, height);
         setPosition(x, y);
+    }
+    public static void shoot(){
+        MyGdxGame.playerBullets[i] = new Bullet();
+        if(++i >= 100){
+            i = 0;
+        }
     }
     void update(boolean right, boolean left, boolean up, ArrayList<Object> objects){
         x += vx;

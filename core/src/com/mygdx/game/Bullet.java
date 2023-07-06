@@ -1,11 +1,18 @@
 package com.mygdx.game;
 
 
-import com.badlogic.gdx.graphics.Texture;
 
 public class Bullet {
-    float x, y;
-    float vx, vy;
-    float width, height;
-    Texture img;
+    float x = Player.x;
+    float y = Player.y;
+    float vx = 14;
+    Boolean doesExist = true;
+    public void exist(){
+        if (doesExist){
+            MyGdxGame.batch.draw(MyGdxGame.bullet, x, y + (MyGdxGame.SCR_HEIGHT/14.85f), MyGdxGame.SCR_WIDTH/15, MyGdxGame.SCR_HEIGHT/25);
+            x += vx;
+        }
+
+
+    }
 }
