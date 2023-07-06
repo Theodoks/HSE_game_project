@@ -12,7 +12,6 @@ public class Bullet {
             MyGdxGame.batch.draw(MyGdxGame.bullet, x, y + (MyGdxGame.SCR_HEIGHT/14.85f), MyGdxGame.SCR_WIDTH/15, MyGdxGame.SCR_HEIGHT/25);
             x += vx;
         }
-
-
     }
+    
 }

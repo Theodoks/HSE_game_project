@@ -26,7 +26,7 @@ public class MyGdxGame extends ApplicationAdapter {
     static float SCR_HEIGHT;
     OrthographicCamera camera;
 
-    SolidPlatform solids[] = new SolidPlatform[15];
+    SolidPlatform solids[] = new SolidPlatform[16];
     Player player;
     ArrayList<Object> objects = new ArrayList<>();
 
@@ -53,6 +53,7 @@ public class MyGdxGame extends ApplicationAdapter {
             gx += gwidth;
 
         }
+        solids[15] = new SolidPlatform(terrain, 1000, 512, gwidth, gheight);
     }
 
     @Override
@@ -60,7 +61,10 @@ public class MyGdxGame extends ApplicationAdapter {
         batch.begin();
         batch.draw(sky,0,0, SCR_WIDTH,SCR_HEIGHT);
         for (int j = 0; j < solids.length; j++) {
-            solids[j].exist();
+            if(solids [j] != null){
+                solids[j].exist();
+            }
+
         }
         for (int i = 0; i < playerBullets.length; i++) {
             if (playerBullets[i] != null){
