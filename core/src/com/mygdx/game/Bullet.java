@@ -13,5 +13,5 @@ public class Bullet {
             x += vx;
         }
     }
-    
+
 }

@@ -53,7 +53,7 @@ public class MyGdxGame extends ApplicationAdapter {
             gx += gwidth;
 
         }
-        solids[15] = new SolidPlatform(terrain, 1000, 512, gwidth, gheight);
+        solids[15] = new SolidPlatform(terrain, 1000, 80, gwidth, gheight);
     }
 
     @Override
