@@ -30,8 +30,7 @@ public class MyGdxGame extends ApplicationAdapter {
         sky = new Texture("Sky.jpg");
         SCR_WIDTH = Gdx.graphics.getWidth();
         SCR_HEIGHT = Gdx.graphics.getHeight();
-        player = new Player(new Texture("egg.png"), 0, 0 , 600,
-                512, SCR_WIDTH / 9,SCR_HEIGHT / 5, 0,0,0,0);
+        player = new Player(new Texture("egg.png"), SCR_WIDTH / 9,SCR_HEIGHT / 5, 0,0, 1, 1, 1);
         gwidth = SCR_WIDTH / 9;
         gheight = SCR_HEIGHT / 9.6f;
         camera = new OrthographicCamera();
