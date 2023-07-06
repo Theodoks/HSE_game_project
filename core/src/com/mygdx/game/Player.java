@@ -2,6 +2,8 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Rectangle;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -70,11 +72,12 @@ public class Player extends Sprite {
             for(int i = 0; i < objects.size(); i++){
                 if(objects.get(0) instanceof SolidPlatform){
                     SolidPlatform s = (SolidPlatform) objects.get(0);
-                    if((s.x < x + width && x + width < s.x + s.width) || (s.y < y + height && y + height< s.y + s.height) || (s.x < x && x < s.x + s.width) || (s.y < y && y < s.y + s.height)){
+                    if(Intersector.overlaps(new Rectangle(s.x, s.y, s.width, s.height), getBoundingRectangle())){
                         if(vx > 0){
                             x = s.x - width;
                             setPosition(x, y);
                         }
+
                         if(vx < 0){
                             x = s.x + s.width;
                             setPosition(x, y);
