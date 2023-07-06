@@ -21,6 +21,8 @@ public class Player extends Sprite {
         super(img, 0, 0, img.getWidth(), img.getHeight());
         this.x = x;
         this.y = y;
+        this.moveSpeed = moveSpeed;
+        this.powerJump = powerJump;
         this.width = width;
         this.height = height;
         this.vx = 0;
@@ -37,9 +39,11 @@ public class Player extends Sprite {
     }
     void update(boolean right, boolean left, boolean up, ArrayList<Object> objects){
         x += vx;
+        setPosition(x, y);
+        collide(vx, 0, objects);
         y += vy;
         setPosition(x, y);
-        collide(objects);
+        collide(0, vy, objects);
         if(up){
             if(onGround){
                 vy = powerJump;
@@ -67,11 +71,11 @@ public class Player extends Sprite {
         }
         onGround = false;
     }
-        void collide(ArrayList<Object> objects)
+        void collide(float vx, float vy, ArrayList<Object> objects)
         {
             for(int i = 0; i < objects.size(); i++){
-                if(objects.get(0) instanceof SolidPlatform){
-                    SolidPlatform s = (SolidPlatform) objects.get(0);
+                if(objects.get(i) instanceof SolidPlatform){
+                    SolidPlatform s = (SolidPlatform) objects.get(i);
                     if(Intersector.overlaps(new Rectangle(s.x, s.y, s.width, s.height), getBoundingRectangle())){
                         if(vx > 0){
                             x = s.x - width;
@@ -85,13 +89,13 @@ public class Player extends Sprite {
                         if(vy > 0){
                             y = s.y - height;
                             setPosition(x, y);
-                            vy = 0;
+                            this.vy = 0;
                         }
                         if(vy < 0){
                             y = s.y + s.height;
                             setPosition(x, y);
                             onGround = true;
-                            vy = 0;
+                            this.vy = 0;
                         }
                     }
                 }

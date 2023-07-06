@@ -42,7 +42,7 @@ public class MyGdxGame extends ApplicationAdapter {
         playerBullets = new Bullet[100];
         SCR_WIDTH = Gdx.graphics.getWidth();
         SCR_HEIGHT = Gdx.graphics.getHeight();
-        player = new Player(new Texture("egg.png"), SCR_WIDTH / 9,SCR_HEIGHT / 5, 0,500, 1, 1, 1);
+        player = new Player(new Texture("egg.png"), SCR_WIDTH / 9,SCR_HEIGHT / 5, 0,500, 20, 20, 1);
         gwidth = SCR_WIDTH / 9;
         gheight = SCR_HEIGHT / 9.6f;
         camera = new OrthographicCamera();
@@ -55,6 +55,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
         }
         solids[15] = new SolidPlatform(terrain, 1000, 80, gwidth, gheight);
+        objects.add(solids[15]);
     }
 
     @Override
@@ -78,9 +79,16 @@ public class MyGdxGame extends ApplicationAdapter {
             if(touch.x > SCR_WIDTH/2 && touch.y < SCR_HEIGHT/2){
                 Player.shoot();
             }
-
+            if(touch.x < SCR_WIDTH/2 && touch.y < SCR_HEIGHT/2){
+                player.update(true, false, false, objects);
+            }
+            if(touch.x < SCR_WIDTH/2 && touch.y > SCR_HEIGHT/2){
+                player.update(false, false, true, objects);
+            }
         }
-        player.update(false, false, false, objects);
+        else {
+            player.update(false, false, false, objects);
+        }
         player.draw(batch);
         batch.end();
     }
