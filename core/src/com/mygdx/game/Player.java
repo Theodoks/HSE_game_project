@@ -47,6 +47,7 @@ public class Player extends Sprite {
         if(up){
             if(onGround){
                 vy = powerJump;
+                onGround = false;
             }
         }
         if(left){
@@ -69,7 +70,7 @@ public class Player extends Sprite {
         if(!onGround){
             vy -= gravity;
         }
-        onGround = false;
+
     }
         void collide(float vx, float vy, ArrayList<Object> objects)
         {

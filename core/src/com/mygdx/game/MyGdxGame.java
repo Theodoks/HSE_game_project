@@ -2,9 +2,11 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -16,6 +18,7 @@ import java.util.Objects;
 public class MyGdxGame extends ApplicationAdapter {
     static SpriteBatch batch;
     Texture terrain;
+    static ShapeRenderer shapeRenderer;
     Texture sky;
     static Texture bullet;
     int gx = 0;
@@ -33,6 +36,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
     @Override
     public void create() {
+        shapeRenderer = new ShapeRenderer();
 
         batch = new SpriteBatch();
         terrain = new Texture("Terrain2.PNG");
@@ -56,6 +60,8 @@ public class MyGdxGame extends ApplicationAdapter {
         }
         solids[15] = new SolidPlatform(terrain, 1000, 120, gwidth, gheight);
         objects.add(solids[15]);
+        shapeRenderer.setColor(Color.BLACK);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
     }
 
@@ -70,6 +76,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 
         }
+
         for (int i = 0; i < playerBullets.length; i++) {
             if (playerBullets[i] != null && playerBullets[i].doesExist){
                 playerBullets[i].exist();
@@ -93,10 +100,14 @@ public class MyGdxGame extends ApplicationAdapter {
             if(touch.x < SCR_WIDTH/2 && touch.y > SCR_HEIGHT/2){
                 player.update(false, false, true, objects);
             }
+
         }
+
         else {
             player.update(false, false, false, objects);
         }
+
+
         player.draw(batch);
         batch.end();
     }

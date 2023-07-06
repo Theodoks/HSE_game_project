@@ -7,8 +7,8 @@ import com.badlogic.gdx.math.Rectangle;
 import java.util.ArrayList;
 
 public class Bullet {
-    float x = Player.x;
-    float y = Player.y;
+    float x = Player.x + 100;
+    float y = Player.y + (MyGdxGame.SCR_HEIGHT/14.85f);
     float vx = 14;
     float vy = 0;
     float width = MyGdxGame.SCR_WIDTH/15;
@@ -16,7 +16,7 @@ public class Bullet {
     Boolean doesExist = true;
     public void exist(){
 
-        MyGdxGame.batch.draw(MyGdxGame.bullet, x + 100, y + (MyGdxGame.SCR_HEIGHT/14.85f), width, height);
+        MyGdxGame.batch.draw(MyGdxGame.bullet, x, y , width, height);
         x += vx;
 
     }
@@ -26,7 +26,8 @@ public class Bullet {
         for(int i = 0; i < objects.size(); i++){
             if(objects.get(i) instanceof SolidPlatform){
                 SolidPlatform s = (SolidPlatform) objects.get(i);
-                if(Intersector.overlaps(new Rectangle(s.x, s.y, s.width, s.height), new Rectangle(x, y, width + 60, height + 10))) {
+
+                if(new Rectangle(s.x, s.y, s.width, s.height).overlaps(new Rectangle(x, y, width, height))) {
                     doesExist = false;
 
                 }
