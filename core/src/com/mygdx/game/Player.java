@@ -7,7 +7,8 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Player extends Sprite {
-    float x, y;
+    static float x;
+    static float y;
     float vx, vy;
     static int i = 0;
     float width, height;
