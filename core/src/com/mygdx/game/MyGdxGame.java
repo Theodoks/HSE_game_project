@@ -8,6 +8,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
+import java.util.ArrayList;
+import java.util.Objects;
+
 public class MyGdxGame extends ApplicationAdapter {
     static SpriteBatch batch;
     Texture terrain;
@@ -21,6 +24,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
     SolidPlatform solids[] = new SolidPlatform[15];
     Player player;
+    ArrayList<Object> objects = new ArrayList<>();
 
     @Override
     public void create() {
@@ -30,7 +34,7 @@ public class MyGdxGame extends ApplicationAdapter {
         sky = new Texture("Sky.jpg");
         SCR_WIDTH = Gdx.graphics.getWidth();
         SCR_HEIGHT = Gdx.graphics.getHeight();
-        player = new Player(new Texture("egg.png"), SCR_WIDTH / 9,SCR_HEIGHT / 5, 0,0, 1, 1, 1);
+        player = new Player(new Texture("egg.png"), SCR_WIDTH / 9,SCR_HEIGHT / 5, 0,500, 1, 1, 1);
         gwidth = SCR_WIDTH / 9;
         gheight = SCR_HEIGHT / 9.6f;
         camera = new OrthographicCamera();
@@ -38,6 +42,7 @@ public class MyGdxGame extends ApplicationAdapter {
         for (int i = 0; i < solids.length; i++) {
             SolidPlatform g = new SolidPlatform(terrain, gx, gy, gwidth, gheight);
             solids[i] = g;
+            objects.add(g);
             gx += gwidth;
 
         }
@@ -50,6 +55,7 @@ public class MyGdxGame extends ApplicationAdapter {
         for (int j = 0; j < solids.length; j++) {
             solids[j].exist();
         }
+        player.update(false, false, false, objects);
         player.draw(batch);
         batch.end();
     }

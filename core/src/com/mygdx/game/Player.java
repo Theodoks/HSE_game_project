@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class Player extends Sprite {
     float x, y;
     float vx, vy;
+    float width, height;
     boolean onGround, bodyRotation = true;
     float moveSpeed, powerJump, gravity;
 
@@ -16,6 +17,8 @@ public class Player extends Sprite {
         super(img, 0, 0, img.getWidth(), img.getHeight());
         this.x = x;
         this.y = y;
+        this.width = width;
+        this.height = height;
         this.vx = 0;
         this.vy = 0;
         this.gravity = gravity;
@@ -26,10 +29,10 @@ public class Player extends Sprite {
         x += vx;
         y += vy;
         setPosition(x, y);
-        collide(vx, vy, objects);
+        collide(objects);
         if(up){
             if(onGround){
-                vy = -powerJump;
+                vy = powerJump;
             }
         }
         if(left){
@@ -50,14 +53,39 @@ public class Player extends Sprite {
             vx = 0;
         }
         if(!onGround){
-            vy += gravity;
+            vy -= gravity;
         }
         onGround = false;
     }
-        void collide(float vx, float vy, ArrayList<Object> objects)
+        void collide(ArrayList<Object> objects)
         {
             for(int i = 0; i < objects.size(); i++){
-                
+                if(objects.get(0) instanceof SolidPlatform){
+                    SolidPlatform s = (SolidPlatform) objects.get(0);
+                    if((s.x < x + width && x + width < s.x + s.width) || (s.y < y + height && y + height< s.y + s.height) || (s.x < x && x < s.x + s.width) || (s.y < y && y < s.y + s.height)){
+                        if(vx > 0){
+                            x = s.x - width;
+                            setPosition(x, y);
+                        }
+                        if(vx < 0){
+                            x = s.x + s.width;
+                            setPosition(x, y);
+                        }
+                        if(vy > 0){
+                            y = s.y - height;
+                            setPosition(x, y);
+                            vy = 0;
+                        }
+                        if(vy < 0){
+                            y = s.y + s.height;
+                            setPosition(x, y);
+                            onGround = true;
+                            vy = 0;
+                        }
+                    }
+                }
+
+
             }
         }
 }
