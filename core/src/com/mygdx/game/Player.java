@@ -33,7 +33,7 @@ public class Player extends Sprite {
     }
     public static void shoot(){
         MyGdxGame.playerBullets[i] = new Bullet();
-        if(++i >= 100){
+        if(++i >= 10){
             i = 0;
         }
     }

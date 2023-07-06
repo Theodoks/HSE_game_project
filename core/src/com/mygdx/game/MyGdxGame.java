@@ -39,7 +39,7 @@ public class MyGdxGame extends ApplicationAdapter {
         sky = new Texture("Sky.jpg");
         bullet = new Texture("bullet.png");
         touch = new Vector3(0, 0 ,0);
-        playerBullets = new Bullet[100];
+        playerBullets = new Bullet[10];
         SCR_WIDTH = Gdx.graphics.getWidth();
         SCR_HEIGHT = Gdx.graphics.getHeight();
         player = new Player(new Texture("egg.png"), SCR_WIDTH / 9,SCR_HEIGHT / 5, 0,500, 20, 20, 1);
@@ -54,8 +54,9 @@ public class MyGdxGame extends ApplicationAdapter {
             gx += gwidth;
 
         }
-        solids[15] = new SolidPlatform(terrain, 1000, 80, gwidth, gheight);
+        solids[15] = new SolidPlatform(terrain, 1000, 120, gwidth, gheight);
         objects.add(solids[15]);
+
     }
 
     @Override
@@ -67,11 +68,18 @@ public class MyGdxGame extends ApplicationAdapter {
                 solids[j].exist();
             }
 
+
         }
         for (int i = 0; i < playerBullets.length; i++) {
-            if (playerBullets[i] != null){
+            if (playerBullets[i] != null && playerBullets[i].doesExist){
                 playerBullets[i].exist();
+                playerBullets[i].collide(playerBullets[i].vx, playerBullets[i].vy, objects);
+                /*for (int j = 0; j < solids.length; j++) {
+                    if(solids [j] != null && playerBullets[i].x) {
+
+                    }*/
             }
+
         }
         if (Gdx.input.justTouched()) {
             touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
