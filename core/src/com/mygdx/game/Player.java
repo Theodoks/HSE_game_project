@@ -16,6 +16,9 @@ public class Player extends Sprite {
     float width, height;
     boolean onGround, bodyRotation = true;
     float moveSpeed, powerJump, gravity;
+    float bulletCD;
+    float counterCD;
+    static boolean onCD;
 
     Player(Texture img, float width, float height, float x, float y, float moveSpeed, float powerJump, float gravity) {
         super(img, 0, 0, img.getWidth(), img.getHeight());
@@ -28,13 +31,19 @@ public class Player extends Sprite {
         this.vx = 0;
         this.vy = 0;
         this.gravity = gravity;
+        bulletCD = 30; // frames
+        counterCD = 0;
+        onCD = false;
         setSize(width, height);
         setPosition(x, y);
     }
     public static void shoot(){
-        MyGdxGame.playerBullets[i] = new Bullet();
-        if(++i >= 10){
-            i = 0;
+        if (!onCD) {
+            onCD = true;
+            MyGdxGame.playerBullets[i] = new Bullet();
+            if (++i >= 100) {
+                i = 0;
+            }
         }
     }
     void update(boolean right, boolean left, boolean up, ArrayList<Object> objects){
@@ -44,6 +53,13 @@ public class Player extends Sprite {
         y += vy;
         setPosition(x, y);
         collide(0, vy, objects);
+        if(onCD){
+            counterCD++;
+            if(counterCD == bulletCD){
+                onCD = false;
+                counterCD = 0;
+            }
+        }
         if(up){
             if(onGround){
                 vy = powerJump;

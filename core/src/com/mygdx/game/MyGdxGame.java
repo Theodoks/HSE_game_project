@@ -43,7 +43,7 @@ public class MyGdxGame extends ApplicationAdapter {
         sky = new Texture("Sky.jpg");
         bullet = new Texture("bullet.png");
         touch = new Vector3(0, 0 ,0);
-        playerBullets = new Bullet[10];
+        playerBullets = new Bullet[100];
         SCR_WIDTH = Gdx.graphics.getWidth();
         SCR_HEIGHT = Gdx.graphics.getHeight();
         player = new Player(new Texture("egg.png"), SCR_WIDTH / 9,SCR_HEIGHT / 5, 0,500, 20, 20, 1);
@@ -93,6 +93,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
             if(touch.x > SCR_WIDTH/2 && touch.y > SCR_HEIGHT/2){
                 Player.shoot();
+                player.update(false, false, false, objects);
             }
             if(touch.x < SCR_WIDTH/2 && touch.y > SCR_HEIGHT/2){
                 player.update(true, false, false, objects);
