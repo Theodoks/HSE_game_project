@@ -88,16 +88,16 @@ public class MyGdxGame extends ApplicationAdapter {
             }
 
         }
-        if (Gdx.input.justTouched()) {
+        if (Gdx.input.isTouched()) {
             touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-            camera.unproject(touch);
-            if(touch.x > SCR_WIDTH/2 && touch.y < SCR_HEIGHT/2){
+
+            if(touch.x > SCR_WIDTH/2 && touch.y > SCR_HEIGHT/2){
                 Player.shoot();
             }
-            if(touch.x < SCR_WIDTH/2 && touch.y < SCR_HEIGHT/2){
+            if(touch.x < SCR_WIDTH/2 && touch.y > SCR_HEIGHT/2){
                 player.update(true, false, false, objects);
             }
-            if(touch.x < SCR_WIDTH/2 && touch.y > SCR_HEIGHT/2){
+            if(touch.x < SCR_WIDTH/2 && touch.y < SCR_HEIGHT/2){
                 player.update(false, false, true, objects);
             }
 
