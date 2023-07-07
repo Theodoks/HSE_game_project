@@ -28,7 +28,7 @@ public class ScreenGame implements Screen {
         sky = new Texture("Sky.jpg");
         bullet = new Texture("bullet.png");
         playerBullets = new Bullet[100];
-        player = new Player(new Texture("egg.png"), SCR_WIDTH / 9,SCR_HEIGHT / 5, 0,500, 20, 20, 1);
+        player = new Player(new Texture("egg.png"), SCR_WIDTH / 9,SCR_HEIGHT / 5, 0,500, 5, 14, 0.3f);
         gwidth = SCR_WIDTH / 9;
         gheight = SCR_HEIGHT / 9.6f;
         for (int i = 0; i < solids.length; i++) {
@@ -61,7 +61,7 @@ public class ScreenGame implements Screen {
         for (int i = 0; i < playerBullets.length; i++) {
             if (playerBullets[i] != null && playerBullets[i].doesExist){
                 playerBullets[i].exist();
-                mgg.batch.draw(bullet, playerBullets[i].x, playerBullets[i].y, SCR_HEIGHT /15, SCR_HEIGHT / 25);
+                mgg.batch.draw(bullet, playerBullets[i].x, playerBullets[i].y, SCR_WIDTH / 26.7f, SCR_HEIGHT / 35);
                 playerBullets[i].collide(playerBullets[i].vx, playerBullets[i].vy, objects);
             }
 

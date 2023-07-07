@@ -19,6 +19,7 @@ public class Player extends Sprite {
     float bulletCD;
     float counterCD;
     static boolean onCD;
+    int direction;
 
     Player(Texture img, float width, float height, float x, float y, float moveSpeed, float powerJump, float gravity) {
         super(img, 0, 0, img.getWidth(), img.getHeight());
@@ -36,6 +37,7 @@ public class Player extends Sprite {
         onCD = false;
         setSize(width, height);
         setPosition(x, y);
+        direction = 1; // 1 = right, 2 = left
     }
     public static void shoot(Bullet[] playerBullets){
         if (!onCD) {
@@ -70,6 +72,8 @@ public class Player extends Sprite {
             if(bodyRotation){
                 flip(true, false);
                 bodyRotation = false;
+                direction = 2;
+
             }
         }
         if(right){
@@ -77,6 +81,7 @@ public class Player extends Sprite {
             if (!bodyRotation){
                 flip(true, false);
                 bodyRotation = true;
+                direction = 1;
             }
         }
         if(!right && !left){
