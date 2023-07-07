@@ -1,33 +1,122 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 
-public class Boot extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
+import java.util.ArrayList;
+import java.util.Objects;
 
-	
-	@Override
-	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
-	} // ну как то да
+public class MyGdxGame extends ApplicationAdapter {
+    static SpriteBatch batch;
+    Texture terrain;
+    static ShapeRenderer shapeRenderer;
+    Texture sky;
+    static Texture bullet;
+    int gx = 0;
+    int gy = 0;
+    static Bullet[] playerBullets;
+    Vector3 touch;
+    float gwidth, gheight;
+    static float SCR_WIDTH;
+    static float SCR_HEIGHT;
+    OrthographicCamera camera;
 
-	@Override
-	public void render () {
-		//comment
-		ScreenUtils.clear(1, 0, 0, 1);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
-	}
+    SolidPlatform solids[] = new SolidPlatform[16];
+    Player player;
+    ArrayList<Object> objects = new ArrayList<>();
 
-	@Override
-	public void dispose () {
-		batch.dispose();
-		img.dispose();
-	}
+    @Override
+    public void create() {
+        shapeRenderer = new ShapeRenderer();
+
+        batch = new SpriteBatch();
+        terrain = new Texture("Terrain2.PNG");
+        sky = new Texture("Sky.jpg");
+        bullet = new Texture("bullet.png");
+        touch = new Vector3(0, 0 ,0);
+        playerBullets = new Bullet[10];
+        SCR_WIDTH = Gdx.graphics.getWidth();
+        SCR_HEIGHT = Gdx.graphics.getHeight();
+        player = new Player(new Texture("egg.png"), SCR_WIDTH / 9,SCR_HEIGHT / 5, 0,500, 20, 20, 1);
+        gwidth = SCR_WIDTH / 9;
+        gheight = SCR_HEIGHT / 9.6f;
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, SCR_WIDTH, SCR_HEIGHT);
+        for (int i = 0; i < solids.length; i++) {
+            SolidPlatform g = new SolidPlatform(terrain, gx, gy, gwidth, gheight);
+            solids[i] = g;
+            objects.add(g);
+            gx += gwidth;
+
+        }
+        solids[15] = new SolidPlatform(terrain, 1000, 120, gwidth, gheight);
+        objects.add(solids[15]);
+        shapeRenderer.setColor(Color.BLACK);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+
+    }
+
+    @Override
+    public void render() {
+        batch.begin();
+        batch.draw(sky,0,0, SCR_WIDTH,SCR_HEIGHT);
+        for (int j = 0; j < solids.length; j++) {
+            if(solids [j] != null){
+                solids[j].exist();
+            }
+
+
+        }
+
+        for (int i = 0; i < playerBullets.length; i++) {
+            if (playerBullets[i] != null && playerBullets[i].doesExist){
+                playerBullets[i].exist();
+                playerBullets[i].collide(playerBullets[i].vx, playerBullets[i].vy, objects);
+                /*for (int j = 0; j < solids.length; j++) {
+                    if(solids [j] != null && playerBullets[i].x) {
+
+                    }*/
+            }
+
+        }
+        if (Gdx.input.justTouched()) {
+            touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+            camera.unproject(touch);
+            if(touch.x > SCR_WIDTH/2 && touch.y < SCR_HEIGHT/2){
+                Player.shoot();
+            }
+            if(touch.x < SCR_WIDTH/2 && touch.y < SCR_HEIGHT/2){
+                player.update(true, false, false, objects);
+            }
+            if(touch.x < SCR_WIDTH/2 && touch.y > SCR_HEIGHT/2){
+                player.update(false, false, true, objects);
+            }
+
+        }
+
+        else {
+            player.update(false, false, false, objects);
+        }
+
+
+        player.draw(batch);
+        batch.end();
+    }
+
+    @Override
+    public void dispose() {
+        batch.dispose();
+        terrain.dispose();
+
+    }
+
 }
