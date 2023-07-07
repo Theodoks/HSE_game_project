@@ -71,6 +71,7 @@ public class ScreenGame implements Screen {
 
             if(mgg.touch.x > SCR_WIDTH/2 && mgg.touch.y > SCR_HEIGHT/2){
                 Player.shoot(playerBullets);
+                player.update(false, false, false, objects);
             }
             if(mgg.touch.x < SCR_WIDTH/2 && mgg.touch.y > SCR_HEIGHT/2){
                 player.update(true, false, false, objects);
