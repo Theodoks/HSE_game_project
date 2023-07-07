@@ -27,7 +27,7 @@ public class ScreenGame implements Screen {
         terrain = new Texture("Terrain2.PNG");
         sky = new Texture("Sky.jpg");
         bullet = new Texture("bullet.png");
-        playerBullets = new Bullet[10];
+        playerBullets = new Bullet[100];
         player = new Player(new Texture("egg.png"), SCR_WIDTH / 9,SCR_HEIGHT / 5, 0,500, 20, 20, 1);
         gwidth = SCR_WIDTH / 9;
         gheight = SCR_HEIGHT / 9.6f;
@@ -70,7 +70,7 @@ public class ScreenGame implements Screen {
             mgg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 
             if(mgg.touch.x > SCR_WIDTH/2 && mgg.touch.y > SCR_HEIGHT/2){
-                Player.shoot(playerBullets);
+                player.shoot(playerBullets);
                 player.update(false, false, false, objects);
             }
             if(mgg.touch.x < SCR_WIDTH/2 && mgg.touch.y > SCR_HEIGHT/2){
