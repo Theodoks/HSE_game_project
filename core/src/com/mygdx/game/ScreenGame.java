@@ -15,7 +15,7 @@ public class ScreenGame implements Screen {
     Texture terrain;
     Texture sky;
     Texture egg;
-    Texture rightButtonTexture, leftButtonTexture;
+    Texture rightButtonTexture, leftButtonTexture, upButtonTexture;
     static Texture bullet;
     int gx = 0;
     int gy = 0;
@@ -26,7 +26,7 @@ public class ScreenGame implements Screen {
     Player player;
     ArrayList<Object> objects = new ArrayList<>();
 
-    Button rightButton, leftButton;
+    Button rightButton, leftButton, upButton;
     ScreenGame(MyGdxGame mgg){
         this.mgg = mgg;
         terrain = new Texture("Terrain2.PNG");
@@ -35,6 +35,7 @@ public class ScreenGame implements Screen {
         egg = new Texture("egg.png");
         rightButtonTexture = new Texture("button_right.png");
         leftButtonTexture = new Texture("button_left.png");
+        upButtonTexture = new Texture("button_up.png");
 
         playerBullets = new Bullet[100];
         player = new Player(egg, SCR_WIDTH / 9,SCR_HEIGHT / 5, 0,500, 5, 14, 0.3f);
@@ -43,6 +44,7 @@ public class ScreenGame implements Screen {
 
         leftButton = new Button(30, 50, SCR_WIDTH / 4 / (SCR_WIDTH/SCR_HEIGHT), SCR_HEIGHT / 4, leftButtonTexture);
         rightButton = new Button(300, 50, SCR_WIDTH / 4 / (SCR_WIDTH/SCR_HEIGHT), SCR_HEIGHT / 4, rightButtonTexture);
+        upButton = new Button(SCR_WIDTH - 290, 50, SCR_WIDTH / 4 / (SCR_WIDTH/SCR_HEIGHT), SCR_HEIGHT / 4, upButtonTexture);
 
         for (int i = 0; i < solids.length; i++) {
             SolidPlatform g = new SolidPlatform(terrain, gx, gy, gwidth, gheight);
@@ -85,11 +87,14 @@ public class ScreenGame implements Screen {
             if(mgg.touch.x > SCR_WIDTH/2 && mgg.touch.y > SCR_HEIGHT/2 && !Player.onCD){
                 player.shoot(playerBullets);
             }
-            else if(mgg.touch.x < SCR_WIDTH/2 && mgg.touch.y > SCR_HEIGHT/2){
+            else if(rightButton.hit(mgg.touch.x, -mgg.touch.y + SCR_HEIGHT)){
                 player.update(true, false, false, objects);
             }
-            else if(mgg.touch.x < SCR_WIDTH/2 && mgg.touch.y < SCR_HEIGHT/2){
+            else if(upButton.hit(mgg.touch.x, -mgg.touch.y + SCR_HEIGHT)){
                 player.update(false, false, true, objects);
+            }
+            else if (leftButton.hit(mgg.touch.x, -mgg.touch.y + SCR_HEIGHT)){
+                player.update(false, true, false, objects);
             }
             else {
                 player.update(false, false, false, objects);
@@ -104,6 +109,7 @@ public class ScreenGame implements Screen {
         player.draw(mgg.batch);
         rightButton.draw(mgg.batch);
         leftButton.draw(mgg.batch);
+        upButton.draw(mgg.batch);
         mgg.batch.end();
     }
 
