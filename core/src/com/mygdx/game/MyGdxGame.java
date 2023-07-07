@@ -27,6 +27,7 @@ public class MyGdxGame extends Game {
     BitmapFont font;
     ScreenIntro screenIntro;
     ScreenGame screenGame;
+    ScreenAbout screenAbout;
 
     @Override
     public void create() {
@@ -39,6 +40,7 @@ public class MyGdxGame extends Game {
         camera.setToOrtho(false, SCR_WIDTH, SCR_HEIGHT);
         screenIntro = new ScreenIntro(this);
         screenGame = new ScreenGame(this);
+        screenAbout = new ScreenAbout(this);
         setScreen(screenIntro);
     }
     void createFont(){
