@@ -16,7 +16,6 @@ public class Bullet {
     Boolean doesExist = true;
     public void exist(){
 
-        MyGdxGame.batch.draw(MyGdxGame.bullet, x, y , width, height);
         x += vx;
 
     }
