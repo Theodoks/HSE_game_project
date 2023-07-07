@@ -26,7 +26,7 @@ public class ScreenGame implements Screen {
         this.mgg = mgg;
         terrain = new Texture("Terrain2.PNG");
         sky = new Texture("Sky.jpg");
-        bullet = new Texture("bullet.png");
+        bullet = new Texture("bullet2.png");
         playerBullets = new Bullet[100];
         player = new Player(new Texture("egg.png"), SCR_WIDTH / 9,SCR_HEIGHT / 5, 0,500, 5, 14, 0.3f);
         gwidth = SCR_WIDTH / 9;
