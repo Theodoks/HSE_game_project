@@ -43,9 +43,9 @@ public class ScreenIntro implements Screen {
 //            if(btnSettings.hit(mgg.touch.x, mgg.touch.y)){
 //                mgg.setScreen(mgg.screenSettings);
 //            }
-//            if(btnAbout.hit(mgg.touch.x, mgg.touch.y)){
-//                mgg.setScreen(mgg.screenAbout);
-//            }
+            if(btnAbout.hit(mgg.touch.x, mgg.touch.y)){
+                    mgg.setScreen(mgg.screenAbout);
+            }
             if(btnExit.hit(mgg.touch.x, mgg.touch.y)){
                 Gdx.app.exit();
             }
