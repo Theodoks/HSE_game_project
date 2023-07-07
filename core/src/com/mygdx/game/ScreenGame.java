@@ -26,7 +26,9 @@ public class ScreenGame implements Screen {
     boolean left;
     boolean up;
     boolean shoot;
+    int fps;
     ScreenGame(MyGdxGame mgg){
+        fps = 60;
         this.mgg = mgg;
         terrain = new Texture("Terrain2.PNG");
         sky = new Texture("Sky.jpg");
@@ -45,6 +47,20 @@ public class ScreenGame implements Screen {
         solids[15] = new SolidPlatform(terrain, 1000, 120, gwidth, gheight);
         objects.add(solids[15]);
     }
+    private long diff, start = System.currentTimeMillis();
+
+    public void limitFPS(int fps) {
+        if(fps>0){
+            diff = System.currentTimeMillis() - start;
+            long targetDelay = 1000/fps;
+            if (diff < targetDelay) {
+                try{
+                    Thread.sleep(targetDelay - diff);
+                } catch (InterruptedException e) {}
+            }
+            start = System.currentTimeMillis();
+        }
+    }
     @Override
     public void show() {
 
@@ -52,6 +68,7 @@ public class ScreenGame implements Screen {
 
     @Override
     public void render(float delta) {
+        limitFPS(fps);
         mgg.batch.begin();
         mgg.batch.draw(sky,0,0, SCR_WIDTH,SCR_HEIGHT);
         for (int j = 0; j < solids.length; j++) {
