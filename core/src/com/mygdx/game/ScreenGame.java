@@ -5,6 +5,7 @@ import static com.mygdx.game.MyGdxGame.SCR_WIDTH;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 
 import java.util.ArrayList;
@@ -13,6 +14,8 @@ public class ScreenGame implements Screen {
     MyGdxGame mgg;
     Texture terrain;
     Texture sky;
+    Texture egg;
+    Texture rightButtonTexture, leftButtonTexture;
     static Texture bullet;
     int gx = 0;
     int gy = 0;
@@ -22,15 +25,25 @@ public class ScreenGame implements Screen {
     SolidPlatform solids[] = new SolidPlatform[16];
     Player player;
     ArrayList<Object> objects = new ArrayList<>();
+
+    Button rightButton, leftButton;
     ScreenGame(MyGdxGame mgg){
         this.mgg = mgg;
         terrain = new Texture("Terrain2.PNG");
         sky = new Texture("Sky.jpg");
         bullet = new Texture("bullet.png");
+        egg = new Texture("egg.png");
+        rightButtonTexture = new Texture("button_right.png");
+        leftButtonTexture = new Texture("button_left.png");
+
         playerBullets = new Bullet[100];
-        player = new Player(new Texture("egg.png"), SCR_WIDTH / 9,SCR_HEIGHT / 5, 0,500, 5, 14, 0.3f);
+        player = new Player(egg, SCR_WIDTH / 9,SCR_HEIGHT / 5, 0,500, 5, 14, 0.3f);
         gwidth = SCR_WIDTH / 9;
         gheight = SCR_HEIGHT / 9.6f;
+
+        leftButton = new Button(30, 50, SCR_WIDTH / 4 / (SCR_WIDTH/SCR_HEIGHT), SCR_HEIGHT / 4, leftButtonTexture);
+        rightButton = new Button(300, 50, SCR_WIDTH / 4 / (SCR_WIDTH/SCR_HEIGHT), SCR_HEIGHT / 4, rightButtonTexture);
+
         for (int i = 0; i < solids.length; i++) {
             SolidPlatform g = new SolidPlatform(terrain, gx, gy, gwidth, gheight);
             solids[i] = g;
@@ -89,6 +102,8 @@ public class ScreenGame implements Screen {
 
 
         player.draw(mgg.batch);
+        rightButton.draw(mgg.batch);
+        leftButton.draw(mgg.batch);
         mgg.batch.end();
     }
 
