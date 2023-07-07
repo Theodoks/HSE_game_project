@@ -27,6 +27,7 @@ public class MyGdxGame extends Game {
     BitmapFont font;
     ScreenIntro screenIntro;
     ScreenGame screenGame;
+    ScreenAbout screenAbout;
 
     @Override
     public void create() {
@@ -37,9 +38,10 @@ public class MyGdxGame extends Game {
         SCR_HEIGHT = Gdx.graphics.getHeight();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, SCR_WIDTH, SCR_HEIGHT);
-        //screenIntro = new ScreenIntro(this);
+        screenIntro = new ScreenIntro(this);
         screenGame = new ScreenGame(this);
-        setScreen(screenGame);
+        screenAbout = new ScreenAbout(this);
+        setScreen(screenIntro);
     }
     void createFont(){
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("wellwait.otf"));

@@ -7,13 +7,17 @@ import com.badlogic.gdx.math.Rectangle;
 import java.util.ArrayList;
 
 public class Bullet {
-    float x = Player.x + 100;
-    float y = Player.y + (MyGdxGame.SCR_HEIGHT/14.85f);
-    float vx = 14;
+    float x = Player.x;
+    float y = Player.y + (MyGdxGame.SCR_HEIGHT/14.35f);
+    float vx = 21;
     float vy = 0;
-    float width = MyGdxGame.SCR_WIDTH/15;
-    float height = MyGdxGame.SCR_HEIGHT/25;
+    float width = MyGdxGame.SCR_WIDTH/26.7f;
+    float height = MyGdxGame.SCR_HEIGHT/35;
     Boolean doesExist = true;
+
+    Bullet(float vx){
+        this.vx = vx;
+    }
     public void exist(){
 
         x += vx;

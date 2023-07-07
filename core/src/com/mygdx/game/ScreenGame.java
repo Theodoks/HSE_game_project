@@ -26,9 +26,9 @@ public class ScreenGame implements Screen {
         this.mgg = mgg;
         terrain = new Texture("Terrain2.PNG");
         sky = new Texture("Sky.jpg");
-        bullet = new Texture("bullet.png");
-        playerBullets = new Bullet[10];
-        player = new Player(new Texture("egg.png"), SCR_WIDTH / 9,SCR_HEIGHT / 5, 0,500, 20, 20, 1);
+        bullet = new Texture("bullet2.png");
+        playerBullets = new Bullet[100];
+        player = new Player(new Texture("egg.png"), SCR_WIDTH / 9,SCR_HEIGHT / 5, 0,500, 5, 14, 0.3f);
         gwidth = SCR_WIDTH / 9;
         gheight = SCR_HEIGHT / 9.6f;
         for (int i = 0; i < solids.length; i++) {
@@ -61,7 +61,7 @@ public class ScreenGame implements Screen {
         for (int i = 0; i < playerBullets.length; i++) {
             if (playerBullets[i] != null && playerBullets[i].doesExist){
                 playerBullets[i].exist();
-                mgg.batch.draw(bullet, playerBullets[i].x, playerBullets[i].y, SCR_HEIGHT /15, SCR_HEIGHT / 25);
+                mgg.batch.draw(bullet, playerBullets[i].x, playerBullets[i].y, SCR_WIDTH / 26.7f, SCR_HEIGHT / 35);
                 playerBullets[i].collide(playerBullets[i].vx, playerBullets[i].vy, objects);
             }
 
@@ -69,16 +69,18 @@ public class ScreenGame implements Screen {
         if (Gdx.input.isTouched()) {
             mgg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 
-            if(mgg.touch.x > SCR_WIDTH/2 && mgg.touch.y > SCR_HEIGHT/2){
-                Player.shoot(playerBullets);
+            if(mgg.touch.x > SCR_WIDTH/2 && mgg.touch.y > SCR_HEIGHT/2 && !Player.onCD){
+                player.shoot(playerBullets);
             }
-            if(mgg.touch.x < SCR_WIDTH/2 && mgg.touch.y > SCR_HEIGHT/2){
+            else if(mgg.touch.x < SCR_WIDTH/2 && mgg.touch.y > SCR_HEIGHT/2){
                 player.update(true, false, false, objects);
             }
-            if(mgg.touch.x < SCR_WIDTH/2 && mgg.touch.y < SCR_HEIGHT/2){
+            else if(mgg.touch.x < SCR_WIDTH/2 && mgg.touch.y < SCR_HEIGHT/2){
                 player.update(false, false, true, objects);
             }
-
+            else {
+                player.update(false, false, false, objects);
+            }
         }
 
         else {
