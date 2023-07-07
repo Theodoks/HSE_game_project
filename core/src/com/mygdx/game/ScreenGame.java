@@ -32,7 +32,7 @@ public class ScreenGame implements Screen {
         sky = new Texture("Sky.jpg");
         bullet = new Texture("bullet2.png");
         playerBullets = new Bullet[100];
-        player = new Player(new Texture("egg.png"), SCR_WIDTH / 9,SCR_HEIGHT / 5, 0,500, 5, 14, 0.3f);
+        player = new Player(new Texture("egg.png"), SCR_WIDTH / 9,SCR_HEIGHT / 5, 0,500, SCR_WIDTH / 190, SCR_HEIGHT / 60, SCR_HEIGHT / 1800);
         gwidth = SCR_WIDTH / 9;
         gheight = SCR_HEIGHT / 9.6f;
         for (int i = 0; i < solids.length; i++) {
