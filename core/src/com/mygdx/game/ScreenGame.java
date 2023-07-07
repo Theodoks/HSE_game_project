@@ -69,17 +69,18 @@ public class ScreenGame implements Screen {
         if (Gdx.input.isTouched()) {
             mgg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 
-            if(mgg.touch.x > SCR_WIDTH/2 && mgg.touch.y > SCR_HEIGHT/2){
+            if(mgg.touch.x > SCR_WIDTH/2 && mgg.touch.y > SCR_HEIGHT/2 && !Player.onCD){
                 player.shoot(playerBullets);
-                player.update(false, false, false, objects);
             }
-            if(mgg.touch.x < SCR_WIDTH/2 && mgg.touch.y > SCR_HEIGHT/2){
+            else if(mgg.touch.x < SCR_WIDTH/2 && mgg.touch.y > SCR_HEIGHT/2){
                 player.update(true, false, false, objects);
             }
-            if(mgg.touch.x < SCR_WIDTH/2 && mgg.touch.y < SCR_HEIGHT/2){
+            else if(mgg.touch.x < SCR_WIDTH/2 && mgg.touch.y < SCR_HEIGHT/2){
                 player.update(false, false, true, objects);
             }
-
+            else {
+                player.update(false, false, false, objects);
+            }
         }
 
         else {
