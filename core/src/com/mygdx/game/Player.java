@@ -31,8 +31,8 @@ public class Player extends Sprite {
         setSize(width, height);
         setPosition(x, y);
     }
-    public static void shoot(){
-        MyGdxGame.playerBullets[i] = new Bullet();
+    public static void shoot(Bullet[] playerBullets){
+        playerBullets[i] = new Bullet();
         if(++i >= 10){
             i = 0;
         }
