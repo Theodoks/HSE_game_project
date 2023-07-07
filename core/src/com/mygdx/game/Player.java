@@ -33,7 +33,7 @@ public class Player extends Sprite {
         this.vx = 0;
         this.vy = 0;
         this.gravity = gravity;
-        bulletCD = 30; // frames
+        bulletCD = 240; // frames
         counterCD = 0;
         onCD = false;
         setSize(width, height);

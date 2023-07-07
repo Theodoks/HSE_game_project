@@ -22,6 +22,10 @@ public class ScreenGame implements Screen {
     SolidPlatform solids[] = new SolidPlatform[16];
     Player player;
     ArrayList<Object> objects = new ArrayList<>();
+    boolean right;
+    boolean left;
+    boolean up;
+    boolean shoot;
     ScreenGame(MyGdxGame mgg){
         this.mgg = mgg;
         terrain = new Texture("Terrain2.PNG");
@@ -66,27 +70,31 @@ public class ScreenGame implements Screen {
             }
 
         }
-        if (Gdx.input.isTouched()) {
-            mgg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+        right = false;
+        left = false;
+        up = false;
+        shoot = false;
+        for (int i = 0; i < 2; i++) {
 
-            if(mgg.touch.x > SCR_WIDTH/2 && mgg.touch.y > SCR_HEIGHT/2 && !Player.onCD){
-                player.shoot(playerBullets);
-            }
-            else if(mgg.touch.x < SCR_WIDTH/2 && mgg.touch.y > SCR_HEIGHT/2){
-                player.update(true, false, false, objects);
-            }
-            else if(mgg.touch.x < SCR_WIDTH/2 && mgg.touch.y < SCR_HEIGHT/2){
-                player.update(false, false, true, objects);
-            }
-            else {
-                player.update(false, false, false, objects);
+
+            if (Gdx.input.isTouched(i)) {
+                mgg.touch.set(Gdx.input.getX(i), Gdx.input.getY(i), 0);
+
+
+                if (mgg.touch.x < SCR_WIDTH / 2 && mgg.touch.y > SCR_HEIGHT / 2) {
+                    right = true;
+
+                }  if (mgg.touch.x < SCR_WIDTH / 2 && mgg.touch.y < SCR_HEIGHT / 2) {
+                    up = true;
+                }
+                if (mgg.touch.x > SCR_WIDTH / 2 && mgg.touch.y > SCR_HEIGHT / 2 && !Player.onCD) {
+                    shoot = true;
+                }
+
             }
         }
-
-        else {
-            player.update(false, false, false, objects);
-        }
-
+        player.update(right, left, up, objects);
+        if (shoot) player.shoot(playerBullets);
 
         player.draw(mgg.batch);
         mgg.batch.end();
