@@ -124,13 +124,13 @@ public class ScreenGame implements Screen {
             player.update(right, left, up, objects);
             if (shoot) player.shoot(playerBullets);
 
-            player.draw(mgg.batch);
-            rightButton.draw(mgg.batch);
-            leftButton.draw(mgg.batch);
-            upButton.draw(mgg.batch);
-            mgg.batch.end();
-        }
 
+        }
+        player.draw(mgg.batch);
+        rightButton.draw(mgg.batch);
+        leftButton.draw(mgg.batch);
+        upButton.draw(mgg.batch);
+        mgg.batch.end();
     }
     @Override
     public void show() {
