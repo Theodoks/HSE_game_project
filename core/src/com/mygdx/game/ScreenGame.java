@@ -13,6 +13,7 @@ public class ScreenGame implements Screen {
     MyGdxGame mgg;
     Texture terrain;
     Texture sky;
+    Texture rightButtonTexture, leftButtonTexture, upButtonTexture;
     static Texture bullet;
     int gx = 0;
     int gy = 0;
@@ -27,16 +28,26 @@ public class ScreenGame implements Screen {
     boolean up;
     boolean shoot;
     int fps;
+
+    Button rightButton, leftButton, upButton;
     ScreenGame(MyGdxGame mgg){
-        fps = 60;
         this.mgg = mgg;
         terrain = new Texture("Terrain2.PNG");
         sky = new Texture("Sky.jpg");
         bullet = new Texture("bullet2.png");
+        rightButtonTexture = new Texture("button_right.png");
+        leftButtonTexture = new Texture("button_left.png");
+        upButtonTexture = new Texture("button_up.png");
+
         playerBullets = new Bullet[100];
         player = new Player(new Texture("egg.png"), SCR_WIDTH / 9,SCR_HEIGHT / 5, 0,500, SCR_WIDTH / 190, SCR_HEIGHT / 60, SCR_HEIGHT / 1800);
         gwidth = SCR_WIDTH / 9;
         gheight = SCR_HEIGHT / 9.6f;
+
+        leftButton = new Button(30, 50, SCR_WIDTH / 4 / (SCR_WIDTH/SCR_HEIGHT), SCR_HEIGHT / 4, leftButtonTexture);
+        rightButton = new Button(300, 50, SCR_WIDTH / 4 / (SCR_WIDTH/SCR_HEIGHT), SCR_HEIGHT / 4, rightButtonTexture);
+        upButton = new Button(SCR_WIDTH - 290, 50, SCR_WIDTH / 4 / (SCR_WIDTH/SCR_HEIGHT), SCR_HEIGHT / 4, upButtonTexture);
+
         for (int i = 0; i < solids.length; i++) {
             SolidPlatform g = new SolidPlatform(terrain, gx, gy, gwidth, gheight);
             solids[i] = g;
@@ -98,22 +109,27 @@ public class ScreenGame implements Screen {
                 mgg.touch.set(Gdx.input.getX(i), Gdx.input.getY(i), 0);
 
 
-                if (mgg.touch.x < SCR_WIDTH / 2 && mgg.touch.y > SCR_HEIGHT / 2) {
-                    right = true;
-
-                }  if (mgg.touch.x < SCR_WIDTH / 2 && mgg.touch.y < SCR_HEIGHT / 2) {
-                    up = true;
-                }
-                if (mgg.touch.x > SCR_WIDTH / 2 && mgg.touch.y > SCR_HEIGHT / 2 && !Player.onCD) {
-                    shoot = true;
-                }
-
+            if(mgg.touch.x > SCR_WIDTH/2 && mgg.touch.y > SCR_HEIGHT/2 && !Player.onCD){
+                shoot = true;
+            }
+            else if(rightButton.hit(mgg.touch.x, -mgg.touch.y + SCR_HEIGHT)){
+                right = true;
+            }
+            else if(upButton.hit(mgg.touch.x, -mgg.touch.y + SCR_HEIGHT)){
+                up = true;
+            }
+            else if (leftButton.hit(mgg.touch.x, -mgg.touch.y + SCR_HEIGHT)){
+                left = true;
             }
         }
+
         player.update(right, left, up, objects);
         if (shoot) player.shoot(playerBullets);
 
         player.draw(mgg.batch);
+        rightButton.draw(mgg.batch);
+        leftButton.draw(mgg.batch);
+        upButton.draw(mgg.batch);
         mgg.batch.end();
     }
 
