@@ -30,7 +30,8 @@ public class ScreenGame implements Screen {
     int fps;
 
     Button rightButton, leftButton, upButton;
-    ScreenGame(MyGdxGame mgg){
+
+    ScreenGame(MyGdxGame mgg) {
         this.mgg = mgg;
         terrain = new Texture("Terrain2.PNG");
         sky = new Texture("Sky.jpg");
@@ -40,13 +41,13 @@ public class ScreenGame implements Screen {
         upButtonTexture = new Texture("button_up.png");
 
         playerBullets = new Bullet[100];
-        player = new Player(new Texture("egg.png"), SCR_WIDTH / 9,SCR_HEIGHT / 5, 0,500, SCR_WIDTH / 190, SCR_HEIGHT / 60, SCR_HEIGHT / 1800);
+        player = new Player(new Texture("egg.png"), SCR_WIDTH / 9, SCR_HEIGHT / 5, 0, 500, SCR_WIDTH / 190, SCR_HEIGHT / 60, SCR_HEIGHT / 1800);
         gwidth = SCR_WIDTH / 9;
         gheight = SCR_HEIGHT / 9.6f;
 
-        leftButton = new Button(30, 50, SCR_WIDTH / 4 / (SCR_WIDTH/SCR_HEIGHT), SCR_HEIGHT / 4, leftButtonTexture);
-        rightButton = new Button(300, 50, SCR_WIDTH / 4 / (SCR_WIDTH/SCR_HEIGHT), SCR_HEIGHT / 4, rightButtonTexture);
-        upButton = new Button(SCR_WIDTH - 290, 50, SCR_WIDTH / 4 / (SCR_WIDTH/SCR_HEIGHT), SCR_HEIGHT / 4, upButtonTexture);
+        leftButton = new Button(30, 50, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, leftButtonTexture);
+        rightButton = new Button(300, 50, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, rightButtonTexture);
+        upButton = new Button(SCR_WIDTH - 290, 50, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, upButtonTexture);
 
         for (int i = 0; i < solids.length; i++) {
             SolidPlatform g = new SolidPlatform(terrain, gx, gy, gwidth, gheight);
@@ -58,32 +59,32 @@ public class ScreenGame implements Screen {
         solids[15] = new SolidPlatform(terrain, 1000, 120, gwidth, gheight);
         objects.add(solids[15]);
     }
+
     private long diff, start = System.currentTimeMillis();
 
     public void limitFPS(int fps) {
-        if(fps>0){
+        if (fps > 0) {
             diff = System.currentTimeMillis() - start;
-            long targetDelay = 1000/fps;
+            long targetDelay = 1000 / fps;
             if (diff < targetDelay) {
-                try{
+                try {
                     Thread.sleep(targetDelay - diff);
-                } catch (InterruptedException e) {}
+                } catch (InterruptedException e) {
+                }
             }
             start = System.currentTimeMillis();
         }
     }
-    @Override
-    public void show() {
 
-    }
+
 
     @Override
     public void render(float delta) {
         limitFPS(fps);
         mgg.batch.begin();
-        mgg.batch.draw(sky,0,0, SCR_WIDTH,SCR_HEIGHT);
+        mgg.batch.draw(sky, 0, 0, SCR_WIDTH, SCR_HEIGHT);
         for (int j = 0; j < solids.length; j++) {
-            if(solids [j] != null){
+            if (solids[j] != null) {
                 solids[j].exist();
             }
 
@@ -91,7 +92,7 @@ public class ScreenGame implements Screen {
         }
 
         for (int i = 0; i < playerBullets.length; i++) {
-            if (playerBullets[i] != null && playerBullets[i].doesExist){
+            if (playerBullets[i] != null && playerBullets[i].doesExist) {
                 playerBullets[i].exist();
                 mgg.batch.draw(bullet, playerBullets[i].x, playerBullets[i].y, SCR_WIDTH / 26.7f, SCR_HEIGHT / 35);
                 playerBullets[i].collide(playerBullets[i].vx, playerBullets[i].vy, objects);
@@ -109,28 +110,31 @@ public class ScreenGame implements Screen {
                 mgg.touch.set(Gdx.input.getX(i), Gdx.input.getY(i), 0);
 
 
-            if(mgg.touch.x > SCR_WIDTH/2 && mgg.touch.y > SCR_HEIGHT/2 && !Player.onCD){
-                shoot = true;
+                if (mgg.touch.x > SCR_WIDTH / 2 && mgg.touch.y > SCR_HEIGHT / 2 && !Player.onCD) {
+                    shoot = true;
+                } else if (rightButton.hit(mgg.touch.x, -mgg.touch.y + SCR_HEIGHT)) {
+                    right = true;
+                } else if (upButton.hit(mgg.touch.x, -mgg.touch.y + SCR_HEIGHT)) {
+                    up = true;
+                } else if (leftButton.hit(mgg.touch.x, -mgg.touch.y + SCR_HEIGHT)) {
+                    left = true;
+                }
             }
-            else if(rightButton.hit(mgg.touch.x, -mgg.touch.y + SCR_HEIGHT)){
-                right = true;
-            }
-            else if(upButton.hit(mgg.touch.x, -mgg.touch.y + SCR_HEIGHT)){
-                up = true;
-            }
-            else if (leftButton.hit(mgg.touch.x, -mgg.touch.y + SCR_HEIGHT)){
-                left = true;
-            }
+
+            player.update(right, left, up, objects);
+            if (shoot) player.shoot(playerBullets);
+
+            player.draw(mgg.batch);
+            rightButton.draw(mgg.batch);
+            leftButton.draw(mgg.batch);
+            upButton.draw(mgg.batch);
+            mgg.batch.end();
         }
 
-        player.update(right, left, up, objects);
-        if (shoot) player.shoot(playerBullets);
+    }
+    @Override
+    public void show() {
 
-        player.draw(mgg.batch);
-        rightButton.draw(mgg.batch);
-        leftButton.draw(mgg.batch);
-        upButton.draw(mgg.batch);
-        mgg.batch.end();
     }
 
     @Override
@@ -152,9 +156,8 @@ public class ScreenGame implements Screen {
     public void hide() {
 
     }
-
     @Override
-    public void dispose() {
+    public void dispose () {
         mgg.batch.dispose();
         terrain.dispose();
     }
