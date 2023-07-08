@@ -5,6 +5,8 @@ import static com.mygdx.game.MyGdxGame.SCR_WIDTH;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 
 import java.util.ArrayList;
@@ -20,7 +22,9 @@ public class ScreenGame implements Screen {
     static Bullet[] playerBullets;
     float gwidth, gheight;
 
-    SolidPlatform solids[] = new SolidPlatform[16];
+
+
+    SolidPlatform solids[] = new SolidPlatform[22];
     Player player;
     ArrayList<Object> objects = new ArrayList<>();
     boolean right;
@@ -41,6 +45,7 @@ public class ScreenGame implements Screen {
         upButtonTexture = new Texture("button_up.png");
         shootButtonTexture = new Texture(("button_shoot.png"));
         fps = 60;
+
         playerBullets = new Bullet[100];
         player = new Player(new Texture("egg.png"), SCR_WIDTH / 9, SCR_HEIGHT / 5, 0, 500, SCR_WIDTH / 190, SCR_HEIGHT / 60, SCR_HEIGHT / 1800);
         gwidth = SCR_WIDTH / 9;
@@ -58,8 +63,9 @@ public class ScreenGame implements Screen {
             gx += gwidth;
 
         }
-        solids[15] = new SolidPlatform(terrain, 1000, 120, gwidth, gheight);
-        objects.add(solids[15]);
+        solids[21] = new SolidPlatform(terrain, 1000, 120, gwidth, gheight);
+        objects.add(solids[21]);
+        mgg.camera.setToOrtho(false, SCR_WIDTH, SCR_HEIGHT);
     }
 
     private long diff, start = System.currentTimeMillis();
@@ -84,7 +90,17 @@ public class ScreenGame implements Screen {
     public void render(float delta) {
         limitFPS(fps);
         mgg.batch.begin();
-        mgg.batch.draw(sky, 0, 0, SCR_WIDTH, SCR_HEIGHT);
+
+        Gdx.gl.glClearColor(0, 0 ,0 ,1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+        mgg.batch.setProjectionMatrix(mgg.camera.combined);
+        mgg.camera.position.set(player.x + player.width/2, player.y + player.height/2, 0);
+        mgg.batch.draw(sky, mgg.camera.position.x - SCR_WIDTH/2, mgg.camera.position.y -SCR_HEIGHT/2, SCR_WIDTH, SCR_HEIGHT);
+        mgg.camera.update();
+
+        //leftButton.x = mgg.camera.position.x - SCR_WIDTH/2 + 30;
+        //leftButton.y = mgg.camera.position.y - SCR_HEIGHT/2 + 50;
+
         for (int j = 0; j < solids.length; j++) {
             if (solids[j] != null) {
                 solids[j].exist();
@@ -92,6 +108,8 @@ public class ScreenGame implements Screen {
 
 
         }
+
+
 
         for (int i = 0; i < playerBullets.length; i++) {
             if (playerBullets[i] != null && playerBullets[i].doesExist) {
@@ -134,11 +152,16 @@ public class ScreenGame implements Screen {
         if (shoot) player.shoot(playerBullets);
 
         player.draw(mgg.batch);
-        rightButton.draw(mgg.batch);
-        leftButton.draw(mgg.batch);
-        upButton.draw(mgg.batch);
-        shootButton.draw(mgg.batch);
+        //rightButton.draw(mgg.batch);
+        //leftButton.draw(mgg.batch);
+        mgg.batch.draw(leftButtonTexture, mgg.camera.position.x - SCR_WIDTH/2 + 30, mgg.camera.position.y - SCR_HEIGHT/2 + 50, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4);
+        mgg.batch.draw(rightButtonTexture, mgg.camera.position.x - SCR_WIDTH/2 + 300, mgg.camera.position.y - SCR_HEIGHT/2 + 50, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4);
+        //upButton.draw(mgg.batch);
+        //shootButton.draw(mgg.batch);
+        mgg.batch.draw(upButtonTexture, mgg.camera.position.x + SCR_WIDTH - SCR_WIDTH/2 - 290, mgg.camera.position.y - SCR_HEIGHT/2 + 50, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4);
+        mgg.batch.draw(shootButtonTexture, mgg.camera.position.x + SCR_WIDTH - SCR_WIDTH/2 - 560, mgg.camera.position.y - SCR_HEIGHT/2 + 50, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4);
         mgg.batch.end();
+
     }
     @Override
     public void show() {
