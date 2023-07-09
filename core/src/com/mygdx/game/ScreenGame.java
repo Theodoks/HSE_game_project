@@ -8,8 +8,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector3;
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class ScreenGame implements Screen {
     MyGdxGame mgg;
@@ -32,18 +34,21 @@ public class ScreenGame implements Screen {
     boolean up;
     boolean shoot;
     int fps;
-
+    float lerp;
     Button rightButton, leftButton, upButton, shootButton;
+    Vector3 position;
+    Background skyBG;
 
     ScreenGame(MyGdxGame mgg) {
         this.mgg = mgg;
         terrain = new Texture("Terrain2.PNG");
-        sky = new Texture("Sky.jpg");
+        sky = new Texture("Sky2.png");
         bullet = new Texture("bullet2.png");
         rightButtonTexture = new Texture("button_right.png");
         leftButtonTexture = new Texture("button_left.png");
         upButtonTexture = new Texture("button_up.png");
         shootButtonTexture = new Texture(("button_shoot.png"));
+
         fps = 60;
 
         playerBullets = new Bullet[100];
@@ -66,6 +71,9 @@ public class ScreenGame implements Screen {
         solids[21] = new SolidPlatform(terrain, 1000, 120, gwidth, gheight);
         objects.add(solids[21]);
         mgg.camera.setToOrtho(false, SCR_WIDTH, SCR_HEIGHT);
+        lerp = 0.12f;
+        position = mgg.camera.position;
+        skyBG = new Background(sky, mgg);
     }
 
     private long diff, start = System.currentTimeMillis();
@@ -84,7 +92,15 @@ public class ScreenGame implements Screen {
         }
     }
 
-
+    /*public void updateCam(float delta, float Xtarget, float Ytarget){
+        Vector3 target = new Vector3(Xtarget, Ytarget, 0);
+        final float speed = delta, ispeed = 1.0f - speed;
+        Vector3 cameraPosition = mgg.camera.position;
+        cameraPosition.scl(ispeed);
+        target.scl(speed);
+        cameraPosition.add(target);
+        mgg.camera.position.set(cameraPosition);
+    }*/
 
     @Override
     public void render(float delta) {
@@ -93,13 +109,11 @@ public class ScreenGame implements Screen {
 
         Gdx.gl.glClearColor(0, 0 ,0 ,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-        mgg.batch.setProjectionMatrix(mgg.camera.combined);
-        mgg.camera.position.set(player.x + player.width/2, player.y + player.height/2, 0);
-        mgg.batch.draw(sky, mgg.camera.position.x - SCR_WIDTH/2, mgg.camera.position.y -SCR_HEIGHT/2, SCR_WIDTH, SCR_HEIGHT);
-        mgg.camera.update();
 
-        //leftButton.x = mgg.camera.position.x - SCR_WIDTH/2 + 30;
-        //leftButton.y = mgg.camera.position.y - SCR_HEIGHT/2 + 50;
+        //mgg.batch.draw(sky, mgg.camera.position.x - SCR_WIDTH/2, mgg.camera.position.y -SCR_HEIGHT/2, SCR_WIDTH, SCR_HEIGHT);
+        skyBG.exist();
+
+
 
         for (int j = 0; j < solids.length; j++) {
             if (solids[j] != null) {
@@ -148,16 +162,19 @@ public class ScreenGame implements Screen {
 
 
         }
-        player.update(right, left, up, objects);
+        mgg.batch.setProjectionMatrix(mgg.camera.combined);
+        //mgg.camera.position.set(player.x + player.width/2, player.y + player.height/2, 0);
+        position.x += (player.x + player.width/2 - position.x) * lerp;
+        position.y += (player.y + player.height/2 - position.y) * lerp;
         if (shoot) player.shoot(playerBullets);
-
+        player.update(right, left, up, objects);
+        mgg.camera.update();
         player.draw(mgg.batch);
-        //rightButton.draw(mgg.batch);
-        //leftButton.draw(mgg.batch);
+
+
+
         mgg.batch.draw(leftButtonTexture, mgg.camera.position.x - SCR_WIDTH/2 + 30, mgg.camera.position.y - SCR_HEIGHT/2 + 50, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4);
         mgg.batch.draw(rightButtonTexture, mgg.camera.position.x - SCR_WIDTH/2 + 300, mgg.camera.position.y - SCR_HEIGHT/2 + 50, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4);
-        //upButton.draw(mgg.batch);
-        //shootButton.draw(mgg.batch);
         mgg.batch.draw(upButtonTexture, mgg.camera.position.x + SCR_WIDTH - SCR_WIDTH/2 - 290, mgg.camera.position.y - SCR_HEIGHT/2 + 50, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4);
         mgg.batch.draw(shootButtonTexture, mgg.camera.position.x + SCR_WIDTH - SCR_WIDTH/2 - 560, mgg.camera.position.y - SCR_HEIGHT/2 + 50, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4);
         mgg.batch.end();
