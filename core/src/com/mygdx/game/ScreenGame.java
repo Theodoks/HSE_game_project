@@ -82,7 +82,7 @@ public class ScreenGame implements Screen {
         solids[20] = new GrassyPlat(1000, 120);
         objects.add(solids[20]);
         gx = 500;
-        gy = 200;
+        gy = SCR_HEIGHT / 7;
         for (int i = 21; i < 31; i++) {
             GrassyPlat g = new GrassyPlat(gx, gy);
             solids[i] = g;
