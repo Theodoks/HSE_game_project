@@ -141,10 +141,12 @@ public class ScreenGame implements Screen {
     @Override
     public void render(float delta) {
         limitFPS(fps);
-        if(id == -1)
-            id = levelMusic.loop();
+
         mgg.batch.begin();
         if(!player.isWinner) {
+            if(id == -1) {
+                id = levelMusic.loop();
+            }
             Gdx.gl.glClearColor(0, 0, 0, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
@@ -196,6 +198,9 @@ public class ScreenGame implements Screen {
 
 
             }
+            eggChild.draw(mgg.batch);
+            player.draw(mgg.batch);
+            gun.draw(mgg.batch);
             mgg.batch.setProjectionMatrix(mgg.camera.combined);
             //mgg.camera.position.set(player.x + player.width/2, player.y + player.height/2, 0);
             position.x += (player.x + player.width / 2 - position.x) * lerp;
@@ -208,9 +213,6 @@ public class ScreenGame implements Screen {
             } else {
                 gun.update(player.x + player.getWidth() - gun.getWidth(), player.y + player.height / 5f, player.bodyRotation);
             }
-            player.draw(mgg.batch);
-            gun.draw(mgg.batch);
-            eggChild.draw(mgg.batch);
 
             mgg.batch.draw(leftButtonTexture, mgg.camera.position.x - SCR_WIDTH / 2 + SCR_WIDTH / 60, mgg.camera.position.y - SCR_HEIGHT / 2 + SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4);
             mgg.batch.draw(rightButtonTexture, mgg.camera.position.x - SCR_WIDTH / 2 + SCR_WIDTH / 6, mgg.camera.position.y - SCR_HEIGHT / 2 + SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4);
@@ -220,8 +222,10 @@ public class ScreenGame implements Screen {
             position.set(0.0f, 0.0f, 0.0f);
             mgg.camera.position.set((float) (SCR_WIDTH * 0.5), (float) (SCR_HEIGHT * 0.5), 0f);
             mgg.camera.update();
+            levelMusic.stop();
             mgg.setScreen(mgg.screenIntro);
         }
+
         mgg.batch.end();
 
     }
