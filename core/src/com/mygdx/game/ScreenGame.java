@@ -28,6 +28,7 @@ public class ScreenGame implements Screen {
 
     SolidPlatform solids[] = new SolidPlatform[22];
     Player player;
+    Gun gun;
     ArrayList<Object> objects = new ArrayList<>();
     boolean right;
     boolean left;
@@ -52,7 +53,8 @@ public class ScreenGame implements Screen {
         fps = 60;
 
         playerBullets = new Bullet[100];
-        player = new Player(new Texture("egg.png"), SCR_WIDTH / 9, SCR_HEIGHT / 5, 0, 500, SCR_WIDTH / 190, SCR_HEIGHT / 60, SCR_HEIGHT / 1800);
+        player = new Player(new Texture("justEgg.png"), SCR_WIDTH / 12.5f, SCR_HEIGHT / 5, 0, 500, SCR_WIDTH / 190, SCR_HEIGHT / 60, SCR_HEIGHT / 1800);
+        gun = new Gun(new Texture("egg_gun.png"), player.getX(), player.getY(), SCR_WIDTH / 9.5f,SCR_HEIGHT / 15);
         gwidth = SCR_WIDTH / 9;
         gheight = SCR_HEIGHT / 9.6f;
 
@@ -169,8 +171,14 @@ public class ScreenGame implements Screen {
         if (shoot) player.shoot(playerBullets);
         player.update(right, left, up, objects);
         mgg.camera.update();
+        if(gun.bodyRotation) {
+            gun.update(player.x, player.y + player.height / 5f, player.bodyRotation);
+        }
+        else {
+            gun.update(player.x + player.getWidth() - gun.getWidth(), player.y + player.height / 5f, player.bodyRotation);
+        }
         player.draw(mgg.batch);
-
+        gun.draw(mgg.batch);
 
 
         mgg.batch.draw(leftButtonTexture, mgg.camera.position.x - SCR_WIDTH/2 + 30, mgg.camera.position.y - SCR_HEIGHT/2 + 50, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4);
