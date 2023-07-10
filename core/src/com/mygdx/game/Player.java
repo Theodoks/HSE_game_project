@@ -1,5 +1,7 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Intersector;
@@ -22,6 +24,7 @@ public class Player extends Sprite {
     static int direction;
     static int v;
     boolean isWinner = false;
+    static Sound bitShoot;
 
     Player(Texture img, float width, float height, float x, float y, float moveSpeed, float powerJump, float gravity) {
         super(img, 0, 0, img.getWidth(), img.getHeight());
@@ -34,15 +37,17 @@ public class Player extends Sprite {
         this.vx = 0;
         this.vy = 0;
         this.gravity = gravity;
-        bulletCD = 60; // frames
+        bulletCD = 20; // frames
         counterCD = 0;
         onCD = false;
         setSize(width, height);
         setPosition(x, y);
         direction = 1; // 1 = right, 2 = left
+        bitShoot = Gdx.audio.newSound(Gdx.files.internal("shootSound.ogg"));
     }
     public static void shoot(Bullet[] playerBullets){
         if (!onCD) {
+            bitShoot.play();
             onCD = true;
             if(direction == 1) v = 21;
             else v = -21;
@@ -126,7 +131,12 @@ public class Player extends Sprite {
                         }
                     }
                 }
-
+                if(objects.get(i) instanceof EggChild){
+                    EggChild eggChild = (EggChild) objects.get(i);
+                    if(Intersector.overlaps(eggChild.getBoundingRectangle(), getBoundingRectangle())) {
+                        isWinner = true;
+                    }
+                }
 
             }
         }

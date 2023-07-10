@@ -36,9 +36,9 @@ public class MyGdxGame extends Game {
     public void create() {
         batch = new SpriteBatch();
         touch = new Vector3(0, 0 ,0);
-        createFont();
-        SCR_WIDTH = Gdx.graphics.getWidth();
         SCR_HEIGHT = Gdx.graphics.getHeight();
+        SCR_WIDTH = Gdx.graphics.getWidth();
+        createFont();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, SCR_WIDTH, SCR_HEIGHT);
         screenIntro = new ScreenIntro(this);
@@ -46,6 +46,7 @@ public class MyGdxGame extends Game {
         screenAbout = new ScreenAbout(this);
         screenLevels = new ScreenLevels(this);
         setScreen(screenIntro);
+
     }
     void createFont(){
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("wellwait.otf"));
