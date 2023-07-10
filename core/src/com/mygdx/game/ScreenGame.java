@@ -20,14 +20,14 @@ public class ScreenGame implements Screen {
     Texture sky;
     Texture rightButtonTexture, leftButtonTexture, upButtonTexture, shootButtonTexture;
     static Texture bullet;
-    int gx = 0;
-    int gy = 0;
+    float gx = 0;
+    float gy = 0;
     static Bullet[] playerBullets;
     float gwidth, gheight;
 
 
 
-    SolidPlatform solids[] = new SolidPlatform[22];
+    SolidPlatform solids[] = new SolidPlatform[100];
     Player player;
     Gun gun;
     static ArrayList<Object> objects = new ArrayList<>();
@@ -64,15 +64,39 @@ public class ScreenGame implements Screen {
         upButton = new Button(SCR_WIDTH - 290, 50, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, upButtonTexture);
         shootButton = new Button(SCR_WIDTH - 560, 50, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, shootButtonTexture);
 
-        for (int i = 0; i < solids.length; i++) {
+        //PLATFORMS CREATION START
+
+        for (int i = 0; i < 20; i++) {
             GrassyPlat g = new GrassyPlat(gx, gy);
             solids[i] = g;
             objects.add(g);
             gx += g.width;
 
         }
-        solids[21] = new GrassyPlat(1000, 120);
-        objects.add(solids[21]);
+        solids[20] = new GrassyPlat(1000, 120);
+        objects.add(solids[20]);
+        gx = 500;
+        gy = 200;
+        for (int i = 21; i < 31; i++) {
+            GrassyPlat g = new GrassyPlat(gx, gy);
+            solids[i] = g;
+            objects.add(g);
+            gx += 100;
+            gy += 100;
+        }
+        solids[31] = new Dirt(0, -10000, gwidth * 20, 10000);
+        objects.add(solids[31]);
+        solids[32] = new Dirt(-10000, -10000, 10000, 10400);
+        objects.add(solids[32]);
+        int o = 1;
+        for (int i = 33; i < 43; i++) {
+            solids[i] = new GrassyPlat(-gwidth * o, 400);
+            objects.add(solids[i]);
+            o++;
+        }
+
+        //PLATFORMS CREATION END
+
         mgg.camera.setToOrtho(false, SCR_WIDTH, SCR_HEIGHT);
         lerp = 0.12f;
         position = mgg.camera.position;
