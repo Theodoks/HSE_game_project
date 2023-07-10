@@ -40,6 +40,7 @@ public class ScreenGame implements Screen {
     Button rightButton, leftButton, upButton, shootButton;
     Vector3 position;
     Background skyBG;
+    EggChild eggChild;
 
     ScreenGame(MyGdxGame mgg) {
         this.mgg = mgg;
@@ -56,13 +57,14 @@ public class ScreenGame implements Screen {
         playerBullets = new Bullet[100];
         player = new Player(new Texture("egg.png"), SCR_WIDTH / 12.5f, SCR_HEIGHT / 5, 0, 500, SCR_WIDTH / 190, SCR_HEIGHT / 60, SCR_HEIGHT / 1800);
         gun = new Gun(new Texture("egg_gun.png"), player.getX(), player.getY(), SCR_WIDTH / 9.5f,SCR_HEIGHT / 15);
+        eggChild = new EggChild(new Texture("egg_baby.png"), 1000, 240, SCR_WIDTH / 12.5f, SCR_HEIGHT / 5);
         gwidth = SCR_WIDTH / 9;
         gheight = SCR_HEIGHT / 9.6f;
 
-        leftButton = new Button(30, 50, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, leftButtonTexture);
-        rightButton = new Button(300, 50, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, rightButtonTexture);
-        upButton = new Button(SCR_WIDTH - 290, 50, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, upButtonTexture);
-        shootButton = new Button(SCR_WIDTH - 560, 50, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, shootButtonTexture);
+        leftButton = new Button(SCR_WIDTH / 60, SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, leftButtonTexture);
+        rightButton = new Button(SCR_WIDTH / 6, SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, rightButtonTexture);
+        upButton = new Button(SCR_WIDTH - SCR_WIDTH / 5.5f, SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, upButtonTexture);
+        shootButton = new Button(SCR_WIDTH - SCR_WIDTH / 3, SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, shootButtonTexture);
 
         for (int i = 0; i < solids.length; i++) {
             GrassyPlat g = new GrassyPlat(gx, gy);
@@ -75,6 +77,7 @@ public class ScreenGame implements Screen {
         objects.add(solids[21]);
         solids[22] = new GrassyPlat(1200, 120);
         objects.add(solids[22]);
+        objects.add(eggChild);
         mgg.camera.setToOrtho(false, SCR_WIDTH, SCR_HEIGHT);
         lerp = 0.12f;
         position = mgg.camera.position;
@@ -111,83 +114,84 @@ public class ScreenGame implements Screen {
     public void render(float delta) {
         limitFPS(fps);
         mgg.batch.begin();
+        if(!player.isWinner) {
+            Gdx.gl.glClearColor(0, 0, 0, 1);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
-        Gdx.gl.glClearColor(0, 0 ,0 ,1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-
-        //mgg.batch.draw(sky, mgg.camera.position.x - SCR_WIDTH/2, mgg.camera.position.y -SCR_HEIGHT/2, SCR_WIDTH, SCR_HEIGHT);
-        skyBG.exist();
+            //mgg.batch.draw(sky, mgg.camera.position.x - SCR_WIDTH/2, mgg.camera.position.y -SCR_HEIGHT/2, SCR_WIDTH, SCR_HEIGHT);
+            skyBG.exist();
 
 
+            for (int j = 0; j < solids.length; j++) {
+                if (solids[j] != null) {
+                    batch.draw(solids[j].img, solids[j].x, solids[j].y, solids[j].width, solids[j].height);
+                }
 
-        for (int j = 0; j < solids.length; j++) {
-            if (solids[j] != null) {
-                batch.draw(solids[j].img, solids[j].x, solids[j].y, solids[j].width, solids[j].height);
+
             }
 
 
-        }
+            for (int i = 0; i < playerBullets.length; i++) {
+                if (playerBullets[i] != null && playerBullets[i].doesExist) {
+                    playerBullets[i].exist();
+                    mgg.batch.draw(bullet, playerBullets[i].x, playerBullets[i].y, SCR_WIDTH / 26.7f, SCR_HEIGHT / 35);
+                    playerBullets[i].collide(playerBullets[i].vx, playerBullets[i].vy, objects);
+                }
 
-
-
-        for (int i = 0; i < playerBullets.length; i++) {
-            if (playerBullets[i] != null && playerBullets[i].doesExist) {
-                playerBullets[i].exist();
-                mgg.batch.draw(bullet, playerBullets[i].x, playerBullets[i].y, SCR_WIDTH / 26.7f, SCR_HEIGHT / 35);
-                playerBullets[i].collide(playerBullets[i].vx, playerBullets[i].vy, objects);
             }
-
-        }
-        right = false;
-        left = false;
-        up = false;
-        shoot = false;
-        for (int i = 0; i < 3; i++) {
+            right = false;
+            left = false;
+            up = false;
+            shoot = false;
+            for (int i = 0; i < 3; i++) {
 
 
-            if (Gdx.input.isTouched(i)) {
-                mgg.touch.set(Gdx.input.getX(i), Gdx.input.getY(i), 0);
+                if (Gdx.input.isTouched(i)) {
+                    mgg.touch.set(Gdx.input.getX(i), Gdx.input.getY(i), 0);
 
 
-                if (shootButton.hit(mgg.touch.x, -mgg.touch.y + SCR_HEIGHT) && !Player.onCD) {
-                    shoot = true;
+                    if (shootButton.hit(mgg.touch.x, -mgg.touch.y + SCR_HEIGHT) && !Player.onCD) {
+                        shoot = true;
+                    }
+                    if (rightButton.hit(mgg.touch.x, -mgg.touch.y + SCR_HEIGHT)) {
+                        right = true;
+                    }
+                    if (upButton.hit(mgg.touch.x, -mgg.touch.y + SCR_HEIGHT)) {
+                        up = true;
+                    }
+                    if (leftButton.hit(mgg.touch.x, -mgg.touch.y + SCR_HEIGHT)) {
+                        left = true;
+                    }
                 }
-                if (rightButton.hit(mgg.touch.x, -mgg.touch.y + SCR_HEIGHT)) {
-                    right = true;
-                }
-                if (upButton.hit(mgg.touch.x, -mgg.touch.y + SCR_HEIGHT)) {
-                    up = true;
-                }
-                if (leftButton.hit(mgg.touch.x, -mgg.touch.y + SCR_HEIGHT)) {
-                    left = true;
-                }
+
+
             }
+            mgg.batch.setProjectionMatrix(mgg.camera.combined);
+            //mgg.camera.position.set(player.x + player.width/2, player.y + player.height/2, 0);
+            position.x += (player.x + player.width / 2 - position.x) * lerp;
+            position.y += (player.y + player.height / 2 - position.y) * lerp;
+            if (shoot) player.shoot(playerBullets);
+            player.update(right, left, up, objects);
+            mgg.camera.update();
+            if (gun.bodyRotation) {
+                gun.update(player.x, player.y + player.height / 5f, player.bodyRotation);
+            } else {
+                gun.update(player.x + player.getWidth() - gun.getWidth(), player.y + player.height / 5f, player.bodyRotation);
+            }
+            player.draw(mgg.batch);
+            gun.draw(mgg.batch);
+            eggChild.draw(mgg.batch);
 
-
-
-
+            mgg.batch.draw(leftButtonTexture, mgg.camera.position.x - SCR_WIDTH / 2 + SCR_WIDTH / 60, mgg.camera.position.y - SCR_HEIGHT / 2 + SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4);
+            mgg.batch.draw(rightButtonTexture, mgg.camera.position.x - SCR_WIDTH / 2 + SCR_WIDTH / 6, mgg.camera.position.y - SCR_HEIGHT / 2 + SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4);
+            mgg.batch.draw(upButtonTexture, mgg.camera.position.x + SCR_WIDTH - SCR_WIDTH / 2 - SCR_WIDTH / 5.5f, mgg.camera.position.y - SCR_HEIGHT / 2 + SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4);
+            mgg.batch.draw(shootButtonTexture, mgg.camera.position.x + SCR_WIDTH - SCR_WIDTH / 2 - SCR_WIDTH / 3, mgg.camera.position.y - SCR_HEIGHT / 2 + SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4);
+        }else {
+            position.set(0.0f, 0.0f, 0.0f);
+            mgg.camera.position.set((float) (SCR_WIDTH * 0.5), (float) (SCR_HEIGHT * 0.5), 0f);
+            mgg.camera.update();
+            mgg.setScreen(mgg.screenIntro);
         }
-        mgg.batch.setProjectionMatrix(mgg.camera.combined);
-        //mgg.camera.position.set(player.x + player.width/2, player.y + player.height/2, 0);
-        position.x += (player.x + player.width/2 - position.x) * lerp;
-        position.y += (player.y + player.height/2 - position.y) * lerp;
-        if (shoot) player.shoot(playerBullets);
-        player.update(right, left, up, objects);
-        mgg.camera.update();
-        if(gun.bodyRotation) {
-            gun.update(player.x, player.y + player.height / 5f, player.bodyRotation);
-        }
-        else {
-            gun.update(player.x + player.getWidth() - gun.getWidth(), player.y + player.height / 5f, player.bodyRotation);
-        }
-        player.draw(mgg.batch);
-        gun.draw(mgg.batch);
-
-
-        mgg.batch.draw(leftButtonTexture, mgg.camera.position.x - SCR_WIDTH/2 + 30, mgg.camera.position.y - SCR_HEIGHT/2 + 50, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4);
-        mgg.batch.draw(rightButtonTexture, mgg.camera.position.x - SCR_WIDTH/2 + 300, mgg.camera.position.y - SCR_HEIGHT/2 + 50, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4);
-        mgg.batch.draw(upButtonTexture, mgg.camera.position.x + SCR_WIDTH - SCR_WIDTH/2 - 290, mgg.camera.position.y - SCR_HEIGHT/2 + 50, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4);
-        mgg.batch.draw(shootButtonTexture, mgg.camera.position.x + SCR_WIDTH - SCR_WIDTH/2 - 560, mgg.camera.position.y - SCR_HEIGHT/2 + 50, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4);
         mgg.batch.end();
 
     }
@@ -218,6 +222,10 @@ public class ScreenGame implements Screen {
     @Override
     public void dispose () {
         mgg.batch.dispose();
+        leftButtonTexture.dispose();
+        upButtonTexture.dispose();
+        shootButtonTexture.dispose();
+        rightButtonTexture.dispose();
         terrain.dispose();
     }
 }
