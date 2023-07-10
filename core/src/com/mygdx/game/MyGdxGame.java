@@ -24,6 +24,7 @@ public class MyGdxGame extends Game {
     static SpriteBatch batch;
     OrthographicCamera camera;
     Vector3 touch;
+    Vector3 touch2;
     BitmapFont font;
     ScreenIntro screenIntro;
     ScreenGame screenGame;
