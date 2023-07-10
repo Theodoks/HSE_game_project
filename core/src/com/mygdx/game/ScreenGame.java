@@ -86,7 +86,7 @@ public class ScreenGame implements Screen {
             solids[i] = g;
             objects.add(g);
             gx += 100;
-            gy += 100;
+            gy += SCR_HEIGHT / 10;
         }
         solids[31] = new Dirt(0, -10000, gwidth * 20, 10000);
         objects.add(solids[31]);
