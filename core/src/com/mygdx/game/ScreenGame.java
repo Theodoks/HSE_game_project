@@ -27,7 +27,7 @@ public class ScreenGame implements Screen {
 
 
 
-    SolidPlatform solids[] = new SolidPlatform[22];
+    SolidPlatform solids[] = new SolidPlatform[23];
     Player player;
     Gun gun;
     static ArrayList<Object> objects = new ArrayList<>();
@@ -73,6 +73,8 @@ public class ScreenGame implements Screen {
         }
         solids[21] = new GrassyPlat(1000, 120);
         objects.add(solids[21]);
+        solids[22] = new GrassyPlat(1200, 120);
+        objects.add(solids[22]);
         mgg.camera.setToOrtho(false, SCR_WIDTH, SCR_HEIGHT);
         lerp = 0.12f;
         position = mgg.camera.position;
