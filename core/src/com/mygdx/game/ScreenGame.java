@@ -6,6 +6,8 @@ import static com.mygdx.game.MyGdxGame.batch;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -41,7 +43,8 @@ public class ScreenGame implements Screen {
     Button rightButton, leftButton, upButton, shootButton;
     Vector3 position;
     Background skyBG;
-
+    long id;
+    Sound levelMusic;
     ScreenGame(MyGdxGame mgg) {
         this.mgg = mgg;
         //terrain = new Texture("Terrain2.PNG");
@@ -102,6 +105,9 @@ public class ScreenGame implements Screen {
         lerp = 0.12f;
         position = mgg.camera.position;
         skyBG = new Background(sky, mgg);
+        levelMusic = Gdx.audio.newSound(Gdx.files.internal("epicMusic2.ogg"));
+        id = levelMusic.loop();
+
     }
 
     private long diff, start = System.currentTimeMillis();
@@ -133,6 +139,9 @@ public class ScreenGame implements Screen {
     @Override
     public void render(float delta) {
         limitFPS(fps);
+        if(id == -1){
+            id = levelMusic.loop();
+        }
         mgg.batch.begin();
 
         Gdx.gl.glClearColor(0, 0 ,0 ,1);
