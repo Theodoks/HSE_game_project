@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import static com.mygdx.game.MyGdxGame.SCR_HEIGHT;
 import static com.mygdx.game.MyGdxGame.SCR_WIDTH;
+import static com.mygdx.game.MyGdxGame.batch;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -26,10 +27,10 @@ public class ScreenGame implements Screen {
 
 
 
-    SolidPlatform solids[] = new SolidPlatform[22];
+    SolidPlatform solids[] = new SolidPlatform[23];
     Player player;
     Gun gun;
-    ArrayList<Object> objects = new ArrayList<>();
+    static ArrayList<Object> objects = new ArrayList<>();
     boolean right;
     boolean left;
     boolean up;
@@ -42,7 +43,7 @@ public class ScreenGame implements Screen {
 
     ScreenGame(MyGdxGame mgg) {
         this.mgg = mgg;
-        terrain = new Texture("Terrain2.PNG");
+        //terrain = new Texture("Terrain2.PNG");
         sky = new Texture("Sky2.png");
         bullet = new Texture("bullet2.png");
         rightButtonTexture = new Texture("button_right.png");
@@ -53,7 +54,7 @@ public class ScreenGame implements Screen {
         fps = 60;
 
         playerBullets = new Bullet[100];
-        player = new Player(new Texture("justEgg.png"), SCR_WIDTH / 12.5f, SCR_HEIGHT / 5, 0, 500, SCR_WIDTH / 190, SCR_HEIGHT / 60, SCR_HEIGHT / 1800);
+        player = new Player(new Texture("egg.png"), SCR_WIDTH / 12.5f, SCR_HEIGHT / 5, 0, 500, SCR_WIDTH / 190, SCR_HEIGHT / 60, SCR_HEIGHT / 1800);
         gun = new Gun(new Texture("egg_gun.png"), player.getX(), player.getY(), SCR_WIDTH / 9.5f,SCR_HEIGHT / 15);
         gwidth = SCR_WIDTH / 9;
         gheight = SCR_HEIGHT / 9.6f;
@@ -64,14 +65,16 @@ public class ScreenGame implements Screen {
         shootButton = new Button(SCR_WIDTH - 560, 50, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, shootButtonTexture);
 
         for (int i = 0; i < solids.length; i++) {
-            SolidPlatform g = new SolidPlatform(terrain, gx, gy, gwidth, gheight);
+            GrassyPlat g = new GrassyPlat(gx, gy);
             solids[i] = g;
             objects.add(g);
-            gx += gwidth;
+            gx += g.width;
 
         }
-        solids[21] = new SolidPlatform(terrain, 1000, 120, gwidth, gheight);
+        solids[21] = new GrassyPlat(1000, 120);
         objects.add(solids[21]);
+        solids[22] = new GrassyPlat(1200, 120);
+        objects.add(solids[22]);
         mgg.camera.setToOrtho(false, SCR_WIDTH, SCR_HEIGHT);
         lerp = 0.12f;
         position = mgg.camera.position;
@@ -119,7 +122,7 @@ public class ScreenGame implements Screen {
 
         for (int j = 0; j < solids.length; j++) {
             if (solids[j] != null) {
-                solids[j].exist();
+                batch.draw(solids[j].img, solids[j].x, solids[j].y, solids[j].width, solids[j].height);
             }
 
 

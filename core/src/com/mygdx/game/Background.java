@@ -23,7 +23,7 @@ public class Background {
 
     public void exist(){
 
-        y1 = y2 = mgg.camera.position.y - MyGdxGame.SCR_HEIGHT / 2;
+        y1 = y2 = mgg.camera.position.y - MyGdxGame.SCR_HEIGHT / 1.9f;
 
         if(x1 < mgg.camera.position.x - MyGdxGame.SCR_WIDTH * 3 / 2){
             x1 = x2 + MyGdxGame.SCR_WIDTH;
@@ -42,8 +42,8 @@ public class Background {
 
         }
 
-        mgg.batch.draw(img, x1, y1, MyGdxGame.SCR_WIDTH, MyGdxGame.SCR_HEIGHT);
-        mgg.batch.draw(img, x2, y2, MyGdxGame.SCR_WIDTH, MyGdxGame.SCR_HEIGHT);
+        mgg.batch.draw(img, x1, y1, MyGdxGame.SCR_WIDTH, MyGdxGame.SCR_HEIGHT * 1.2f);
+        mgg.batch.draw(img, x2, y2, MyGdxGame.SCR_WIDTH, MyGdxGame.SCR_HEIGHT * 1.2f);
         //mgg.batch.draw(img, x3, y3, MyGdxGame.SCR_WIDTH, MyGdxGame.SCR_HEIGHT);
     }
 }
