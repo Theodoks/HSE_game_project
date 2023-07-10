@@ -29,7 +29,7 @@ public class ScreenGame implements Screen {
 
 
 
-    SolidPlatform solids[] = new SolidPlatform[23];
+    SolidPlatform solids[] = new SolidPlatform[100];
     Player player;
     Gun gun;
     static ArrayList<Object> objects = new ArrayList<>();
@@ -141,6 +141,8 @@ public class ScreenGame implements Screen {
     @Override
     public void render(float delta) {
         limitFPS(fps);
+        if(id == -1)
+            id = levelMusic.loop();
         mgg.batch.begin();
         if(!player.isWinner) {
             Gdx.gl.glClearColor(0, 0, 0, 1);
