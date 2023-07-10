@@ -21,6 +21,7 @@ public class Player extends Sprite {
     static boolean onCD;
     static int direction;
     static int v;
+    boolean isWinner = false;
 
     Player(Texture img, float width, float height, float x, float y, float moveSpeed, float powerJump, float gravity) {
         super(img, 0, 0, img.getWidth(), img.getHeight());

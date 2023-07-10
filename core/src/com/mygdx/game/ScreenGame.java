@@ -28,6 +28,7 @@ public class ScreenGame implements Screen {
 
 
     SolidPlatform solids[] = new SolidPlatform[100];
+
     Player player;
     Gun gun;
     static ArrayList<Object> objects = new ArrayList<>();
