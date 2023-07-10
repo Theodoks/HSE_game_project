@@ -30,6 +30,8 @@ public class MyGdxGame extends Game {
     ScreenGame screenGame;
     ScreenAbout screenAbout;
 
+    ScreenLevels screenLevels;
+
     @Override
     public void create() {
         batch = new SpriteBatch();
@@ -42,6 +44,7 @@ public class MyGdxGame extends Game {
         screenIntro = new ScreenIntro(this);
         screenGame = new ScreenGame(this);
         screenAbout = new ScreenAbout(this);
+        screenLevels = new ScreenLevels(this);
         setScreen(screenIntro);
     }
     void createFont(){
