@@ -2,6 +2,8 @@ package com.mygdx.game;
 
 import static com.mygdx.game.MyGdxGame.SCR_HEIGHT;
 import static com.mygdx.game.MyGdxGame.SCR_WIDTH;
+import static com.mygdx.game.MyGdxGame.X;
+import static com.mygdx.game.MyGdxGame.Y;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -43,6 +45,7 @@ public class ScreenGame implements Screen {
     long id;
     Sound levelMusic;
     EggChild eggChild;
+    EnemyEgg bob;
 
     ScreenGame(MyGdxGame mgg) {
         this.mgg = mgg;
@@ -59,12 +62,12 @@ public class ScreenGame implements Screen {
 
         playerBullets = new Bullet[100];
 
-        player = new Player(playerTexture, SCR_WIDTH / 12.5f, SCR_HEIGHT / 5, 0, 500, SCR_WIDTH / 190, SCR_HEIGHT / 60, SCR_HEIGHT / 1800);
+        player = new Player(playerTexture, SCR_WIDTH / 12.5f, SCR_HEIGHT / 5, 0, 500 * Y, SCR_WIDTH / 190, SCR_HEIGHT / 60, SCR_HEIGHT / 1800);
         gun = new Gun(gunTexture, player.getX(), player.getY(), SCR_WIDTH / 9.5f, SCR_HEIGHT / 15);
-        eggChild = new EggChild(eggChildTexture, 1000, 240, SCR_WIDTH / 12.5f, SCR_HEIGHT / 5);
- 
-        gwidth = 181.44f * mgg.X;
-        gheight = 84.4f * mgg.Y;
+        eggChild = new EggChild(eggChildTexture, 1000 * X, 240 * Y, SCR_WIDTH / 12.5f, SCR_HEIGHT / 5);
+
+        gwidth = 181.44f * X;
+        gheight = 84.4f * Y;
 
         leftButton = new IconButton(SCR_WIDTH / 60, SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, leftButtonTexture);
         rightButton = new IconButton(SCR_WIDTH / 6, SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, rightButtonTexture);
@@ -74,36 +77,39 @@ public class ScreenGame implements Screen {
         //PLATFORMS CREATION START
 
         for (int i = 0; i < 20; i++) {
-            GrassyPlat g = new GrassyPlat(gx, gy, 181.44f * mgg.X, 84.4f * mgg.Y);
+            GrassyPlat g = new GrassyPlat(gx, gy);
             solids[i] = g;
             objects.add(g);
             gx += g.width;
 
         }
-        solids[20] = new GrassyPlat(1000 * mgg.X, mgg.Y * 120, 181.44f * mgg.X, 84.4f * mgg.Y);
+        solids[20] = new GrassyPlat(1000 * X, Y * 120);
         objects.add(solids[20]);
-        gx = 500 * mgg.X;
-        gy = 202.5f * mgg.Y;
+        gx = 500 * X;
+        gy = 202.5f * Y;
         for (int i = 21; i < 31; i++) {
-            GrassyPlat g = new GrassyPlat(gx, gy, 181.44f * mgg.X, 84.4f * mgg.Y);
+            GrassyPlat g = new GrassyPlat(gx, gy);
             solids[i] = g;
             objects.add(g);
-            gx += 100 * mgg.X;
+            gx += 100 * X;
             gy += SCR_HEIGHT / 10;
         }
-        solids[31] = new Dirt(0, -10000 * mgg . Y, gwidth * 20, 10000 * mgg.Y);
+        solids[31] = new Dirt(0, -10000 * Y, gwidth * 20, 10000 * Y);
         objects.add(solids[31]);
-        solids[32] = new Dirt(-10000 * mgg.X, -10000 * mgg.Y, 10000 * mgg.X, 10400 * mgg.Y);
+        solids[32] = new Dirt(-10000 * X, -10000 * Y, 10000 * X, 10400 * Y);
         objects.add(solids[32]);
         int o = 1;
         for (int i = 33; i < 43; i++) {
-            solids[i] = new GrassyPlat(-gwidth * o, 400 * mgg.Y, 181.44f * mgg.X, 84.4f * mgg.Y);
+            solids[i] = new GrassyPlat(-gwidth * o, 400 * Y);
             objects.add(solids[i]);
             o++;
         }
 
         //PLATFORMS CREATION END
         objects.add(eggChild);
+
+        bob = new EnemyEgg(100, X * 8, 0, Y * 100, false, 200 * X);
+
         mgg.camera.setToOrtho(false, SCR_WIDTH, SCR_HEIGHT);
         lerp = 0.12f;
         position = mgg.camera.position;
@@ -141,7 +147,6 @@ public class ScreenGame implements Screen {
             Gdx.gl.glClearColor(0, 0, 0, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
-            //mgg.batch.draw(sky, mgg.camera.position.x - SCR_WIDTH/2, mgg.camera.position.y -SCR_HEIGHT/2, SCR_WIDTH, SCR_HEIGHT);
             skyBG.exist();
 
 
@@ -168,6 +173,7 @@ public class ScreenGame implements Screen {
             shoot = false;
 
             for (int i = 0; i < 3; i++) {
+
 
                 if (Gdx.input.isTouched(i)) {
                     mgg.touch.set(Gdx.input.getX(i), Gdx.input.getY(i), 0);
@@ -200,6 +206,9 @@ public class ScreenGame implements Screen {
             position.y += (player.y + player.height / 2 - position.y) * lerp;
             if (shoot) player.shoot(playerBullets);
             player.update(right, left, up, objects);
+            bob.update(objects);
+            mgg.batch.draw(bob.img, bob.x, bob.y, bob.width, bob.height);
+
             mgg.camera.update();
             if (gun.bodyRotation) {
                 gun.update(player.x, player.y + player.height / 5f, player.bodyRotation);

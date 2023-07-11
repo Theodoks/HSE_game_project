@@ -8,7 +8,8 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 
 import java.util.ArrayList;
-
+import static com.mygdx.game.MyGdxGame.X;
+import static com.mygdx.game.MyGdxGame.Y;
 public class Player extends Sprite {
     float x;
     float y;
@@ -21,7 +22,7 @@ public class Player extends Sprite {
     float counterCD;
     boolean onCD;
     int direction;
-    int v;
+    float v;
     boolean isWinner = false;
     static Sound bitShoot;
 
@@ -49,10 +50,10 @@ public class Player extends Sprite {
         if (!onCD) {
             bitShoot.play();
             onCD = true;
-            if (direction == 1) v = 21;
-            else v = -21;
+            if (direction == 1) v = 21 * X;
+            else v = -21 * X;
             playerBullets[i] = new Bullet(v, x, y + (MyGdxGame.SCR_HEIGHT/14.35f));
-            if (v == 21) playerBullets[i].x += 100;
+            if (v == 21 * X) playerBullets[i].x += 100 * X;
 
             if (++i >= 100) {
                 i = 0;
