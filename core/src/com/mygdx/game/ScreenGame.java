@@ -2,6 +2,8 @@ package com.mygdx.game;
 
 import static com.mygdx.game.MyGdxGame.SCR_HEIGHT;
 import static com.mygdx.game.MyGdxGame.SCR_WIDTH;
+import static com.mygdx.game.MyGdxGame.X;
+import static com.mygdx.game.MyGdxGame.Y;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -62,10 +64,10 @@ public class ScreenGame implements Screen {
 
         player = new Player(playerTexture, SCR_WIDTH / 12.5f, SCR_HEIGHT / 5, 0, 500, SCR_WIDTH / 190, SCR_HEIGHT / 60, SCR_HEIGHT / 1800);
         gun = new Gun(gunTexture, player.getX(), player.getY(), SCR_WIDTH / 9.5f, SCR_HEIGHT / 15);
-        eggChild = new EggChild(eggChildTexture, 1000, 240, SCR_WIDTH / 12.5f, SCR_HEIGHT / 5);
+        eggChild = new EggChild(eggChildTexture, 1000 * X, 240 * Y, SCR_WIDTH / 12.5f, SCR_HEIGHT / 5);
 
-        gwidth = 181.44f * mgg.X;
-        gheight = 84.4f * mgg.Y;
+        gwidth = 181.44f * X;
+        gheight = 84.4f * Y;
 
         leftButton = new IconButton(SCR_WIDTH / 60, SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, leftButtonTexture);
         rightButton = new IconButton(SCR_WIDTH / 6, SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, rightButtonTexture);
@@ -75,30 +77,30 @@ public class ScreenGame implements Screen {
         //PLATFORMS CREATION START
 
         for (int i = 0; i < 20; i++) {
-            GrassyPlat g = new GrassyPlat(gx, gy, 181.44f * mgg.X, 84.4f * mgg.Y);
+            GrassyPlat g = new GrassyPlat(gx, gy);
             solids[i] = g;
             objects.add(g);
             gx += g.width;
 
         }
-        solids[20] = new GrassyPlat(1000 * mgg.X, mgg.Y * 120, 181.44f * mgg.X, 84.4f * mgg.Y);
+        solids[20] = new GrassyPlat(1000 * X, Y * 120);
         objects.add(solids[20]);
-        gx = 500 * mgg.X;
-        gy = 202.5f * mgg.Y;
+        gx = 500 * X;
+        gy = 202.5f * Y;
         for (int i = 21; i < 31; i++) {
-            GrassyPlat g = new GrassyPlat(gx, gy, 181.44f * mgg.X, 84.4f * mgg.Y);
+            GrassyPlat g = new GrassyPlat(gx, gy);
             solids[i] = g;
             objects.add(g);
-            gx += 100 * mgg.X;
+            gx += 100 * X;
             gy += SCR_HEIGHT / 10;
         }
-        solids[31] = new Dirt(0, -10000 * mgg . Y, gwidth * 20, 10000 * mgg.Y);
+        solids[31] = new Dirt(0, -10000 * Y, gwidth * 20, 10000 * Y);
         objects.add(solids[31]);
-        solids[32] = new Dirt(-10000 * mgg.X, -10000 * mgg.Y, 10000 * mgg.X, 10400 * mgg.Y);
+        solids[32] = new Dirt(-10000 * X, -10000 * Y, 10000 * X, 10400 * Y);
         objects.add(solids[32]);
         int o = 1;
         for (int i = 33; i < 43; i++) {
-            solids[i] = new GrassyPlat(-gwidth * o, 400 * mgg.Y, 181.44f * mgg.X, 84.4f * mgg.Y);
+            solids[i] = new GrassyPlat(-gwidth * o, 400 * Y);
             objects.add(solids[i]);
             o++;
         }
@@ -112,8 +114,7 @@ public class ScreenGame implements Screen {
         lerp = 0.12f;
         position = mgg.camera.position;
         skyBG = new Background(sky, mgg);
-        levelMusic = Gdx.audio.newSound(Gdx.files.internal("epicMusic2.ogg"));
-        id = levelMusic.loop();
+
 
     }
 
@@ -206,7 +207,7 @@ public class ScreenGame implements Screen {
             if (shoot) player.shoot(playerBullets);
             player.update(right, left, up, objects);
             bob.update(objects);
-            batch.draw(bob.img, bob.x, bob.y, bob.width, bob.height);
+            mgg.batch.draw(bob.img, bob.x, bob.y, bob.width, bob.height);
 
             mgg.camera.update();
             if (gun.bodyRotation) {
@@ -233,7 +234,8 @@ public class ScreenGame implements Screen {
 
     @Override
     public void show() {
-
+        levelMusic = Gdx.audio.newSound(Gdx.files.internal("epicMusic2.ogg"));
+        id = levelMusic.loop();
     }
 
     @Override
