@@ -4,7 +4,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 public class Text {
     float x, y;
-    float width, height;
+    static float width;
+    static float height;
     String text;
     BitmapFont font;
 
