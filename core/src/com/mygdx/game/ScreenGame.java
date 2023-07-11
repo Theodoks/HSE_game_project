@@ -62,9 +62,6 @@ public class ScreenGame implements Screen {
         player = new Player(playerTexture, SCR_WIDTH / 12.5f, SCR_HEIGHT / 5, 0, 500, SCR_WIDTH / 190, SCR_HEIGHT / 60, SCR_HEIGHT / 1800);
         gun = new Gun(gunTexture, player.getX(), player.getY(), SCR_WIDTH / 9.5f, SCR_HEIGHT / 15);
         eggChild = new EggChild(eggChildTexture, 1000, 240, SCR_WIDTH / 12.5f, SCR_HEIGHT / 5);
-
-        gwidth = SCR_WIDTH / 9;
-        gheight = SCR_HEIGHT / 9.6f;
  
         gwidth = 181.44f * mgg.X;
         gheight = 84.4f * mgg.Y;

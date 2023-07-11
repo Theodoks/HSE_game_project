@@ -2,7 +2,6 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class Button extends Sprite {
     float width, height;
@@ -25,10 +24,7 @@ public class Button extends Sprite {
     }
 
     boolean hit(float tx, float ty) {
-        if ((x < tx && tx < (x + width)) && (y < ty && ty < (y + height))) {
-            return true;
-        }
-        return false;
+        return (x < tx && tx < (x + width)) && (y < ty && ty < (y + height));
     }
 
     ;

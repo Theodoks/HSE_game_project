@@ -20,9 +20,6 @@ public class TextButton {
     }
 
     boolean hit(float tx, float ty) {
-        if (x < tx && tx < x + width * text.length() && y > ty && ty > y - height) {
-            return true;
-        }
-        return false;
+        return x < tx && tx < x + width * text.length() && y > ty && ty > y - height;
     }
 }

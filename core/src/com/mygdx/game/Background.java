@@ -1,6 +1,5 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 
 
@@ -9,9 +8,6 @@ public class Background {
     MyGdxGame mgg;
 
     float x1, x2, y1, y2;
-    float leftBGx, rightBGx; //, centerBGx;
-    float hold;
-
     Background(Texture img, MyGdxGame mgg){
         this.img = img;
         this.mgg = mgg;

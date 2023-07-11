@@ -1,6 +1,5 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 public class GrassyPlat extends SolidPlatform{
 
@@ -9,8 +8,6 @@ public class GrassyPlat extends SolidPlatform{
         this.width = width;
         this.height = height;
         img = new Texture("Terrain2.PNG");
-
-
     }
 
 }
