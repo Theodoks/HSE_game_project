@@ -109,8 +109,7 @@ public class ScreenGame implements Screen {
         position = mgg.camera.position;
         skyBG = new Background(sky, mgg);
         levelMusic = Gdx.audio.newSound(Gdx.files.internal("epicMusic2.ogg"));
-        id = levelMusic.loop();
-
+        id = -1;
     }
 
     private long start = System.currentTimeMillis();
