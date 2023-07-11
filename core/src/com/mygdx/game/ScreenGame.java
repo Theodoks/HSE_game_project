@@ -2,29 +2,24 @@ package com.mygdx.game;
 
 import static com.mygdx.game.MyGdxGame.SCR_HEIGHT;
 import static com.mygdx.game.MyGdxGame.SCR_WIDTH;
-import static com.mygdx.game.MyGdxGame.batch;
-import static com.mygdx.game.MyGdxGame.X;
-import static com.mygdx.game.MyGdxGame.Y;
-import static com.mygdx.game.MyGdxGame.A;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 
 import java.util.ArrayList;
-import java.util.Vector;
-
 
 public class ScreenGame implements Screen {
     MyGdxGame mgg;
     Texture terrain;
     Texture sky;
     Texture rightButtonTexture, leftButtonTexture, upButtonTexture, shootButtonTexture;
+    Texture playerTexture;
+    Texture gunTexture;
+    Texture eggChildTexture;
     static Texture bullet;
     float gx = 0;
     float gy = 0;
@@ -32,18 +27,17 @@ public class ScreenGame implements Screen {
     float gwidth, gheight;
 
 
-
-    SolidPlatform solids[] = new SolidPlatform[100];
+    SolidPlatform[] solids = new SolidPlatform[100];
     Player player;
     Gun gun;
-    static ArrayList<Object> objects = new ArrayList<>();
+      ArrayList<Object> objects = new ArrayList<>();
     boolean right;
     boolean left;
     boolean up;
     boolean shoot;
-    int fps;
+    final static int FPS = 60;
     float lerp;
-    Button rightButton, leftButton, upButton, shootButton;
+    IconButton rightButton, leftButton, upButton, shootButton;
     Vector3 position;
     Background skyBG;
     long id;
@@ -60,48 +54,51 @@ public class ScreenGame implements Screen {
         leftButtonTexture = new Texture("button_left.png");
         upButtonTexture = new Texture("button_up.png");
         shootButtonTexture = new Texture(("button_shoot.png"));
-
-        fps = 60;
+        playerTexture = new Texture("egg.png");
+        gunTexture = new Texture("egg_gun.png");
+        eggChildTexture = new Texture("egg_baby.png");
 
         playerBullets = new Bullet[100];
-        player = new Player(new Texture("egg.png"), SCR_WIDTH / 12.5f, SCR_HEIGHT / 5, 0, Y * 500, 8.6f * X, 13.5f * Y, 0.45f * Y);
-        gun = new Gun(new Texture("egg_gun.png"), player.getX(), player.getY(), SCR_WIDTH / 9.5f,SCR_HEIGHT / 15);
-        eggChild = new EggChild(new Texture("egg_baby.png"), X * 1000, Y * 240, SCR_WIDTH / 12.5f, SCR_HEIGHT / 5);
-        gwidth = 181.44f * X;
-        gheight = 84.4f * Y;
 
-        leftButton = new Button(SCR_WIDTH / 60, SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, leftButtonTexture);
-        rightButton = new Button(SCR_WIDTH / 6, SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, rightButtonTexture);
-        upButton = new Button(SCR_WIDTH - SCR_WIDTH / 5.5f, SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, upButtonTexture);
-        shootButton = new Button(SCR_WIDTH - SCR_WIDTH / 3, SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, shootButtonTexture);
+        player = new Player(playerTexture, SCR_WIDTH / 12.5f, SCR_HEIGHT / 5, 0, 500, SCR_WIDTH / 190, SCR_HEIGHT / 60, SCR_HEIGHT / 1800);
+        gun = new Gun(gunTexture, player.getX(), player.getY(), SCR_WIDTH / 9.5f, SCR_HEIGHT / 15);
+        eggChild = new EggChild(eggChildTexture, 1000, 240, SCR_WIDTH / 12.5f, SCR_HEIGHT / 5);
+
+        gwidth = 181.44f * mgg.X;
+        gheight = 84.4f * mgg.Y;
+
+        leftButton = new IconButton(SCR_WIDTH / 60, SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, leftButtonTexture);
+        rightButton = new IconButton(SCR_WIDTH / 6, SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, rightButtonTexture);
+        upButton = new IconButton(SCR_WIDTH - SCR_WIDTH / 5.5f, SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, upButtonTexture);
+        shootButton = new IconButton(SCR_WIDTH - SCR_WIDTH / 3, SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, shootButtonTexture);
 
         //PLATFORMS CREATION START
 
         for (int i = 0; i < 20; i++) {
-            GrassyPlat g = new GrassyPlat(gx, gy);
+            GrassyPlat g = new GrassyPlat(gx, gy, 181.44f * mgg.X, 84.4f * mgg.Y);
             solids[i] = g;
             objects.add(g);
             gx += g.width;
 
         }
-        solids[20] = new GrassyPlat(1000 * X, Y * 120);
+        solids[20] = new GrassyPlat(1000 * mgg.X, mgg.Y * 120, 181.44f * mgg.X, 84.4f * mgg.Y);
         objects.add(solids[20]);
-        gx = 500 * X;
-        gy = 202.5f * Y;
+        gx = 500 * mgg.X;
+        gy = 202.5f * mgg.Y;
         for (int i = 21; i < 31; i++) {
-            GrassyPlat g = new GrassyPlat(gx, gy);
+            GrassyPlat g = new GrassyPlat(gx, gy, 181.44f * mgg.X, 84.4f * mgg.Y);
             solids[i] = g;
             objects.add(g);
-            gx += 100 * X;
+            gx += 100 * mgg.X;
             gy += SCR_HEIGHT / 10;
         }
-        solids[31] = new Dirt(0, -10000 * Y, gwidth * 20, 10000 * Y);
+        solids[31] = new Dirt(0, -10000 * mgg . Y, gwidth * 20, 10000 * mgg.Y);
         objects.add(solids[31]);
-        solids[32] = new Dirt(-10000 * X, -10000 * Y, 10000 * X, 10400 * Y);
+        solids[32] = new Dirt(-10000 * mgg.X, -10000 * mgg.Y, 10000 * mgg.X, 10400 * mgg.Y);
         objects.add(solids[32]);
         int o = 1;
         for (int i = 33; i < 43; i++) {
-            solids[i] = new GrassyPlat(-gwidth * o, 400 * Y);
+            solids[i] = new GrassyPlat(-gwidth * o, 400 * mgg.Y, 181.44f * mgg.X, 84.4f * mgg.Y);
             objects.add(solids[i]);
             o++;
         }
@@ -120,28 +117,30 @@ public class ScreenGame implements Screen {
 
     }
 
-    private long diff, start = System.currentTimeMillis();
+    private long start = System.currentTimeMillis();
 
     public void limitFPS(int fps) {
         if (fps > 0) {
-            diff = System.currentTimeMillis() - start;
+            long diff = System.currentTimeMillis() - start;
             long targetDelay = 1000 / fps;
             if (diff < targetDelay) {
                 try {
                     Thread.sleep(targetDelay - diff);
                 } catch (InterruptedException e) {
+                    e.getMessage();
                 }
             }
             start = System.currentTimeMillis();
         }
     }
+
     @Override
     public void render(float delta) {
-        limitFPS(fps);
+        limitFPS(FPS);
 
         mgg.batch.begin();
-        if(!player.isWinner) {
-            if(id == -1) {
+        if (!player.isWinner) {
+            if (id == -1) {
                 id = levelMusic.loop();
             }
             Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -149,19 +148,21 @@ public class ScreenGame implements Screen {
 
             skyBG.exist();
 
-            for (int j = 0; j < solids.length; j++) {
-                if (solids[j] != null) {
-                    batch.draw(solids[j].img, solids[j].x, solids[j].y, solids[j].width, solids[j].height);
+
+            for (SolidPlatform solid : solids) {
+                if (solid != null) {
+                    mgg.batch.draw(solid.img, solid.x, solid.y, solid.width, solid.height);
                 }
 
 
             }
 
-            for (int i = 0; i < playerBullets.length; i++) {
-                if (playerBullets[i] != null && playerBullets[i].doesExist) {
-                    playerBullets[i].exist();
-                    mgg.batch.draw(bullet, playerBullets[i].x, playerBullets[i].y, SCR_WIDTH / 26.7f, SCR_HEIGHT / 35);
-                    playerBullets[i].collide(objects);
+
+            for (Bullet playerBullet : playerBullets) {
+                if (playerBullet != null && playerBullet.doesExist) {
+                    playerBullet.exist();
+                    mgg.batch.draw(bullet, playerBullet.x, playerBullet.y, SCR_WIDTH / 26.7f, SCR_HEIGHT / 35);
+                    playerBullet.collide(objects);
                 }
 
             }
@@ -169,22 +170,25 @@ public class ScreenGame implements Screen {
             left = false;
             up = false;
             shoot = false;
+
             for (int i = 0; i < 3; i++) {
 
 
                 if (Gdx.input.isTouched(i)) {
                     mgg.touch.set(Gdx.input.getX(i), Gdx.input.getY(i), 0);
 
-
-                    if (shootButton.hit(mgg.touch.x, -mgg.touch.y + SCR_HEIGHT) && !Player.onCD) {
+                    if (shootButton.hit(mgg.touch.x, -mgg.touch.y + SCR_HEIGHT) && !player.onCD) {
                         shoot = true;
                     }
+
                     if (rightButton.hit(mgg.touch.x, -mgg.touch.y + SCR_HEIGHT)) {
                         right = true;
                     }
+
                     if (upButton.hit(mgg.touch.x, -mgg.touch.y + SCR_HEIGHT)) {
                         up = true;
                     }
+
                     if (leftButton.hit(mgg.touch.x, -mgg.touch.y + SCR_HEIGHT)) {
                         left = true;
                     }
@@ -215,7 +219,7 @@ public class ScreenGame implements Screen {
             mgg.batch.draw(rightButtonTexture, mgg.camera.position.x - SCR_WIDTH / 2 + SCR_WIDTH / 6, mgg.camera.position.y - SCR_HEIGHT / 2 + SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4);
             mgg.batch.draw(upButtonTexture, mgg.camera.position.x + SCR_WIDTH - SCR_WIDTH / 2 - SCR_WIDTH / 5.5f, mgg.camera.position.y - SCR_HEIGHT / 2 + SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4);
             mgg.batch.draw(shootButtonTexture, mgg.camera.position.x + SCR_WIDTH - SCR_WIDTH / 2 - SCR_WIDTH / 3, mgg.camera.position.y - SCR_HEIGHT / 2 + SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4);
-        }else {
+        } else {
             position.set(0.0f, 0.0f, 0.0f);
             mgg.camera.position.set((float) (SCR_WIDTH * 0.5), (float) (SCR_HEIGHT * 0.5), 0f);
             mgg.camera.update();
@@ -226,6 +230,7 @@ public class ScreenGame implements Screen {
         mgg.batch.end();
 
     }
+
     @Override
     public void show() {
 
@@ -250,10 +255,17 @@ public class ScreenGame implements Screen {
     public void hide() {
 
     }
+
     @Override
-    public void dispose () {
+    public void dispose() {
         mgg.batch.dispose();
         terrain.dispose();
+        sky.dispose();
+        shootButtonTexture.dispose();
+        leftButtonTexture.dispose();
+        rightButtonTexture.dispose();
+        upButtonTexture.dispose();
+        bullet.dispose();
     }
 }
 
