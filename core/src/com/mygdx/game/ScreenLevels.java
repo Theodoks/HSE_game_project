@@ -59,9 +59,9 @@ public class ScreenLevels implements Screen {
 
         parameter.characters = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяabcdefghijklmnopqrstuvwxyzАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|\\/?-+=()*&.;:,{}\"´`'<>";
 
-        parameter.size = 110;
+        parameter.size = (int)(110 * mgg.A);
         parameter.color = Color.ORANGE;
-        parameter.borderWidth = 3;
+        parameter.borderWidth = (int)(3 * mgg.A);
         parameter.borderColor = Color.BLACK;
         font = generator.generateFont(parameter);
     }

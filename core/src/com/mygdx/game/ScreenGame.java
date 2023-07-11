@@ -22,6 +22,8 @@ public class ScreenGame implements Screen {
     Texture playerTexture;
     Texture gunTexture;
     Texture eggChildTexture;
+
+    Texture enemyEggTexture;
     static Texture bullet;
     float gx = 0;
     float gy = 0;
@@ -59,12 +61,14 @@ public class ScreenGame implements Screen {
         playerTexture = new Texture("egg.png");
         gunTexture = new Texture("egg_gun.png");
         eggChildTexture = new Texture("egg_baby.png");
+        enemyEggTexture = new Texture("egg_enemy.png");
 
         playerBullets = new Bullet[100];
 
         player = new Player(playerTexture, SCR_WIDTH / 12.5f, SCR_HEIGHT / 5, 0, 500 * Y, SCR_WIDTH / 190, SCR_HEIGHT / 60, SCR_HEIGHT / 1800);
         gun = new Gun(gunTexture, player.getX(), player.getY(), SCR_WIDTH / 9.5f, SCR_HEIGHT / 15);
         eggChild = new EggChild(eggChildTexture, 1000 * X, 240 * Y, SCR_WIDTH / 12.5f, SCR_HEIGHT / 5);
+        bob = new EnemyEgg(enemyEggTexture,100, X * 8, 0, Y * 100, false, 200 * X);
 
         gwidth = 181.44f * X;
         gheight = 84.4f * Y;
@@ -108,7 +112,7 @@ public class ScreenGame implements Screen {
         //PLATFORMS CREATION END
         objects.add(eggChild);
 
-        bob = new EnemyEgg(100, X * 8, 0, Y * 100, false, 200 * X);
+
 
         mgg.camera.setToOrtho(false, SCR_WIDTH, SCR_HEIGHT);
         lerp = 0.12f;
@@ -206,8 +210,13 @@ public class ScreenGame implements Screen {
             position.y += (player.y + player.height / 2 - position.y) * lerp;
             if (shoot) player.shoot(playerBullets);
             player.update(right, left, up, objects);
+
             bob.update(objects);
-            mgg.batch.draw(bob.img, bob.x, bob.y, bob.width, bob.height);
+            bob.draw(mgg.batch);
+
+
+
+
 
             mgg.camera.update();
             if (gun.bodyRotation) {
