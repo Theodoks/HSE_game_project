@@ -68,7 +68,7 @@ public class ScreenGame implements Screen {
         player = new Player(playerTexture, SCR_WIDTH / 12.5f, SCR_HEIGHT / 5, 0, 500 * Y, SCR_WIDTH / 190, SCR_HEIGHT / 60, SCR_HEIGHT / 1800);
         gun = new Gun(gunTexture, player.getX(), player.getY(), SCR_WIDTH / 9.5f, SCR_HEIGHT / 15);
         eggChild = new EggChild(eggChildTexture, 1000 * X, 240 * Y, SCR_WIDTH / 12.5f, SCR_HEIGHT / 5);
-        bob = new EnemyEgg(enemyEggTexture,100, X * 8, 0, Y * 100, false, 200 * X);
+        bob = new EnemyEgg(enemyEggTexture,100, 100 * X, Y * 1000, X * 3, 0, false, 200);
 
         gwidth = 181.44f * X;
         gheight = 84.4f * Y;
@@ -91,13 +91,13 @@ public class ScreenGame implements Screen {
         objects.add(solids[20]);
         gx = 500 * X;
         gy = 202.5f * Y;
-        for (int i = 21; i < 31; i++) {
+        /*for (int i = 21; i < 31; i++) {
             GrassyPlat g = new GrassyPlat(gx, gy);
             solids[i] = g;
             objects.add(g);
             gx += 100 * X;
             gy += SCR_HEIGHT / 10;
-        }
+        }*/
         solids[31] = new Dirt(0, -10000 * Y, gwidth * 20, 10000 * Y);
         objects.add(solids[31]);
         solids[32] = new Dirt(-10000 * X, -10000 * Y, 10000 * X, 10400 * Y);

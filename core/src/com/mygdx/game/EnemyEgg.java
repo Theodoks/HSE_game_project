@@ -16,17 +16,19 @@ public class EnemyEgg extends Enemy{
     float vx, vy;
     boolean onGround = false;
     float gravity;
-
-    public EnemyEgg(Texture img, float hp, float moveSpeed, float x, float y, boolean immobile, float maxDistance){
-        super(img, hp, moveSpeed, x, y, immobile);
+    float moveSpeed;
+    public EnemyEgg(Texture img, float hp, float x, float y, float moveSpeed, float vy, boolean immobile, float maxDistance){
+        super(img, hp, x, y, immobile);
         this.maxDistance = maxDistance;
-        vx = moveSpeed;
-        vy = 0;
+
+        this.vy = vy;
         gravity = 0.45f;
         width = 390 * X;
         height = 200 * Y;
         setSize(width, height);
         setPosition(x, y);
+        this.moveSpeed = moveSpeed;
+        this.vx = moveSpeed;
     }
 
     void update(ArrayList<Object> objects){
@@ -49,12 +51,15 @@ public class EnemyEgg extends Enemy{
                 if (Intersector.overlaps(new Rectangle(s.x, s.y, s.width, s.height), getBoundingRectangle())) {
                     if (vx > 0) {
                         x = s.x - width;
+                        this.vx = -moveSpeed;
                         setPosition(x, y);
-                    }
+                    }else {
 
-                    if (vx < 0) {
-                        x = s.x + s.width;
-                        setPosition(x, y);
+                        if (vx < 0) {
+                            x = s.x + s.width;
+                            this.vx = moveSpeed;
+                            setPosition(x, y);
+                        }
                     }
 
                     if (vy > 0) {
