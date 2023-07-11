@@ -40,9 +40,6 @@ public class ScreenIntro implements Screen {
             if(btnPlay.hit(mgg.touch.x, mgg.touch.y)){
                 mgg.setScreen(mgg.screenLevels);
             }
-//            if(btnSettings.hit(mgg.touch.x, mgg.touch.y)){
-//                mgg.setScreen(mgg.screenSettings);
-//            }
             if(btnAbout.hit(mgg.touch.x, mgg.touch.y)){
                     mgg.setScreen(mgg.screenAbout);
             }
@@ -51,10 +48,6 @@ public class ScreenIntro implements Screen {
             }
         }
 
-        // СЃРѕР±С‹С‚РёСЏ РёРіСЂС‹
-
-
-        // РІС‹РІРѕРґ РёР·РѕР±СЂР°Р¶РµРЅРёР№
         mgg.camera.update();
         mgg.batch.setProjectionMatrix(mgg.camera.combined);
         mgg.batch.begin();
