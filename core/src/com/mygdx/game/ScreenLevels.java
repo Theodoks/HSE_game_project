@@ -5,7 +5,10 @@ import static com.mygdx.game.MyGdxGame.SCR_WIDTH;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
 public class ScreenLevels implements Screen {
 
@@ -13,6 +16,7 @@ public class ScreenLevels implements Screen {
 
     Texture imgBackGround;
 
+    BitmapFont font;
     Text[] levelsNumbers;
 
     TextButton btnReturn;
@@ -29,6 +33,8 @@ public class ScreenLevels implements Screen {
         imgBackGround = new Texture("Sky.jpg");
         btnReturn = new TextButton(mgg.font, "return", SCR_WIDTH * 0.05f, SCR_HEIGHT * 0.95f);
 
+        createFont();
+
         iconLevelsButtons = new IconButton[4];
         for (int i = 0; i < iconLevelsButtons.length; i++) {
             iconLevelsButtons[i] = new IconButton(
@@ -42,8 +48,22 @@ public class ScreenLevels implements Screen {
 
         levelsNumbers = new Text[4];
         for (int i = 0; i < levelsNumbers.length; i++) {
-            levelsNumbers[i] = new Text(mgg.font, "" + (i + 1), SCR_WIDTH * (0.2f * (i + 1)) - Text.width / 2, SCR_HEIGHT * 0.75f + Text.height / 2);
+            levelsNumbers[i] = new Text(font, "" + (i + 1), SCR_WIDTH * (0.2f * (i + 1)) - Text.width / 2, SCR_HEIGHT * 0.75f + Text.height / 2);
         }
+    }
+
+    void createFont(){
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("wellwait.otf"));
+
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+
+        parameter.characters = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяabcdefghijklmnopqrstuvwxyzАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|\\/?-+=()*&.;:,{}\"´`'<>";
+
+        parameter.size = 110;
+        parameter.color = Color.ORANGE;
+        parameter.borderWidth = 3;
+        parameter.borderColor = Color.BLACK;
+        font = generator.generateFont(parameter);
     }
 
     @Override
