@@ -8,6 +8,9 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 
 import java.util.ArrayList;
+import static com.mygdx.game.MyGdxGame.X;
+import static com.mygdx.game.MyGdxGame.Y;
+import static com.mygdx.game.MyGdxGame.A;
 
 public class Player extends Sprite {
     float x;

@@ -65,6 +65,9 @@ public class ScreenGame implements Screen {
 
         gwidth = SCR_WIDTH / 9;
         gheight = SCR_HEIGHT / 9.6f;
+ 
+        gwidth = 181.44f * mgg.X;
+        gheight = 84.4f * mgg.Y;
 
         leftButton = new Button(SCR_WIDTH / 60, SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, leftButtonTexture);
         rightButton = new Button(SCR_WIDTH / 6, SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, rightButtonTexture);
@@ -80,24 +83,24 @@ public class ScreenGame implements Screen {
             gx += g.width;
 
         }
-        solids[20] = new GrassyPlat(1000, 120);
+        solids[20] = new GrassyPlat(1000 * X, Y * 120);
         objects.add(solids[20]);
-        gx = 500;
-        gy = SCR_HEIGHT / 7;
+        gx = 500 * X;
+        gy = 202.5f * Y;
         for (int i = 21; i < 31; i++) {
             GrassyPlat g = new GrassyPlat(gx, gy);
             solids[i] = g;
             objects.add(g);
-            gx += 100;
+            gx += 100 * X;
             gy += SCR_HEIGHT / 10;
         }
-        solids[31] = new Dirt(0, -10000, gwidth * 20, 10000);
+        solids[31] = new Dirt(0, -10000 * Y, gwidth * 20, 10000 * Y);
         objects.add(solids[31]);
-        solids[32] = new Dirt(-10000, -10000, 10000, 10400);
+        solids[32] = new Dirt(-10000 * X, -10000 * Y, 10000 * X, 10400 * Y);
         objects.add(solids[32]);
         int o = 1;
         for (int i = 33; i < 43; i++) {
-            solids[i] = new GrassyPlat(-gwidth * o, 400);
+            solids[i] = new GrassyPlat(-gwidth * o, 400 * Y);
             objects.add(solids[i]);
             o++;
         }
