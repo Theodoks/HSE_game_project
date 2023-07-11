@@ -62,7 +62,7 @@ public class ScreenGame implements Screen {
 
         playerBullets = new Bullet[100];
 
-        player = new Player(playerTexture, SCR_WIDTH / 12.5f, SCR_HEIGHT / 5, 0, 500, SCR_WIDTH / 190, SCR_HEIGHT / 60, SCR_HEIGHT / 1800);
+        player = new Player(playerTexture, SCR_WIDTH / 12.5f, SCR_HEIGHT / 5, 0, 500 * Y, SCR_WIDTH / 190, SCR_HEIGHT / 60, SCR_HEIGHT / 1800);
         gun = new Gun(gunTexture, player.getX(), player.getY(), SCR_WIDTH / 9.5f, SCR_HEIGHT / 15);
         eggChild = new EggChild(eggChildTexture, 1000 * X, 240 * Y, SCR_WIDTH / 12.5f, SCR_HEIGHT / 5);
 
