@@ -78,7 +78,9 @@ public class ScreenLevels implements Screen {
             mgg.camera.unproject(mgg.touch);
             if(btnReturn.hit(mgg.touch.x, mgg.touch.y)){
                 mgg.setScreen(mgg.screenIntro);
-            } else if (iconLevelsButtons[0].hit(mgg.touch.x, mgg.touch.y)) {
+            }
+             else if (iconLevelsButtons[0].hit(mgg.touch.x, mgg.touch.y)) {
+            mgg.createGame();
                 mgg.setScreen(mgg.screenGame);
             }
         }

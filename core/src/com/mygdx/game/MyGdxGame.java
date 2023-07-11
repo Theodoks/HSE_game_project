@@ -37,7 +37,6 @@ public class MyGdxGame extends Game {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, SCR_WIDTH, SCR_HEIGHT);
         screenIntro = new ScreenIntro(this);
-        screenGame = new ScreenGame(this);
         screenAbout = new ScreenAbout(this);
         screenLevels = new ScreenLevels(this);
         setScreen(screenIntro);
@@ -56,5 +55,7 @@ public class MyGdxGame extends Game {
         parameter.borderColor = Color.BLACK;
         font = generator.generateFont(parameter);
     }
-
+    void createGame(){
+        screenGame = new ScreenGame(this);
+    }
 }
