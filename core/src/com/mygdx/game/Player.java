@@ -9,6 +9,9 @@ import com.badlogic.gdx.math.Rectangle;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import static com.mygdx.game.MyGdxGame.X;
+import static com.mygdx.game.MyGdxGame.Y;
+import static com.mygdx.game.MyGdxGame.A;
 
 public class Player extends Sprite {
     static float x;

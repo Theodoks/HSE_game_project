@@ -5,11 +5,14 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 
 import java.util.ArrayList;
+import static com.mygdx.game.MyGdxGame.X;
+import static com.mygdx.game.MyGdxGame.Y;
+import static com.mygdx.game.MyGdxGame.A;
 
 public class Bullet {
     float x = Player.x;
     float y = Player.y + (MyGdxGame.SCR_HEIGHT/14.35f);
-    float vx = 21;
+    float vx = 21 * X;
     float vy = 0;
     float width = MyGdxGame.SCR_WIDTH/26.7f;
     float height = MyGdxGame.SCR_HEIGHT/35;
@@ -24,7 +27,7 @@ public class Bullet {
 
     }
 
-    void collide(float vx, float vy, ArrayList<Object> objects)
+    void collide(ArrayList<Object> objects)
     {
         for(int i = 0; i < objects.size(); i++){
             if(objects.get(i) instanceof SolidPlatform){
