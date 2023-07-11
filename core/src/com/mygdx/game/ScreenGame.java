@@ -3,6 +3,9 @@ package com.mygdx.game;
 import static com.mygdx.game.MyGdxGame.SCR_HEIGHT;
 import static com.mygdx.game.MyGdxGame.SCR_WIDTH;
 import static com.mygdx.game.MyGdxGame.batch;
+import static com.mygdx.game.MyGdxGame.X;
+import static com.mygdx.game.MyGdxGame.Y;
+import static com.mygdx.game.MyGdxGame.A;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -15,6 +18,7 @@ import com.badlogic.gdx.math.Vector3;
 
 import java.util.ArrayList;
 import java.util.Vector;
+
 
 public class ScreenGame implements Screen {
     MyGdxGame mgg;
@@ -59,11 +63,11 @@ public class ScreenGame implements Screen {
         fps = 60;
 
         playerBullets = new Bullet[100];
-        player = new Player(new Texture("egg.png"), SCR_WIDTH / 12.5f, SCR_HEIGHT / 5, 0, 500, SCR_WIDTH / 190, SCR_HEIGHT / 60, SCR_HEIGHT / 1800);
+        player = new Player(new Texture("egg.png"), SCR_WIDTH / 12.5f, SCR_HEIGHT / 5, 0, Y * 500, 8.6f * X, 13.5f * Y, 0.45f * Y);
         gun = new Gun(new Texture("egg_gun.png"), player.getX(), player.getY(), SCR_WIDTH / 9.5f,SCR_HEIGHT / 15);
-        eggChild = new EggChild(new Texture("egg_baby.png"), 1000, 240, SCR_WIDTH / 12.5f, SCR_HEIGHT / 5);
-        gwidth = SCR_WIDTH / 9;
-        gheight = SCR_HEIGHT / 9.6f;
+        eggChild = new EggChild(new Texture("egg_baby.png"), X * 1000, Y * 240, SCR_WIDTH / 12.5f, SCR_HEIGHT / 5);
+        gwidth = 181.44f * X;
+        gheight = 84.4f * Y;
 
         leftButton = new Button(SCR_WIDTH / 60, SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, leftButtonTexture);
         rightButton = new Button(SCR_WIDTH / 6, SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, rightButtonTexture);
@@ -79,24 +83,24 @@ public class ScreenGame implements Screen {
             gx += g.width;
 
         }
-        solids[20] = new GrassyPlat(1000, 120);
+        solids[20] = new GrassyPlat(1000 * X, Y * 120);
         objects.add(solids[20]);
-        gx = 500;
-        gy = SCR_HEIGHT / 7;
+        gx = 500 * X;
+        gy = 202.5f * Y;
         for (int i = 21; i < 31; i++) {
             GrassyPlat g = new GrassyPlat(gx, gy);
             solids[i] = g;
             objects.add(g);
-            gx += 100;
+            gx += 100 * X;
             gy += SCR_HEIGHT / 10;
         }
-        solids[31] = new Dirt(0, -10000, gwidth * 20, 10000);
+        solids[31] = new Dirt(0, -10000 * Y, gwidth * 20, 10000 * Y);
         objects.add(solids[31]);
-        solids[32] = new Dirt(-10000, -10000, 10000, 10400);
+        solids[32] = new Dirt(-10000 * X, -10000 * Y, 10000 * X, 10400 * Y);
         objects.add(solids[32]);
         int o = 1;
         for (int i = 33; i < 43; i++) {
-            solids[i] = new GrassyPlat(-gwidth * o, 400);
+            solids[i] = new GrassyPlat(-gwidth * o, 400 * Y);
             objects.add(solids[i]);
             o++;
         }
@@ -127,17 +131,6 @@ public class ScreenGame implements Screen {
             start = System.currentTimeMillis();
         }
     }
-
-    /*public void updateCam(float delta, float Xtarget, float Ytarget){
-        Vector3 target = new Vector3(Xtarget, Ytarget, 0);
-        final float speed = delta, ispeed = 1.0f - speed;
-        Vector3 cameraPosition = mgg.camera.position;
-        cameraPosition.scl(ispeed);
-        target.scl(speed);
-        cameraPosition.add(target);
-        mgg.camera.position.set(cameraPosition);
-    }*/
-
     @Override
     public void render(float delta) {
         limitFPS(fps);
@@ -150,9 +143,7 @@ public class ScreenGame implements Screen {
             Gdx.gl.glClearColor(0, 0, 0, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
-            //mgg.batch.draw(sky, mgg.camera.position.x - SCR_WIDTH/2, mgg.camera.position.y -SCR_HEIGHT/2, SCR_WIDTH, SCR_HEIGHT);
             skyBG.exist();
-
 
             for (int j = 0; j < solids.length; j++) {
                 if (solids[j] != null) {
@@ -167,7 +158,7 @@ public class ScreenGame implements Screen {
                 if (playerBullets[i] != null && playerBullets[i].doesExist) {
                     playerBullets[i].exist();
                     mgg.batch.draw(bullet, playerBullets[i].x, playerBullets[i].y, SCR_WIDTH / 26.7f, SCR_HEIGHT / 35);
-                    playerBullets[i].collide(playerBullets[i].vx, playerBullets[i].vy, objects);
+                    playerBullets[i].collide(objects);
                 }
 
             }

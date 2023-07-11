@@ -31,13 +31,18 @@ public class MyGdxGame extends Game {
     ScreenAbout screenAbout;
 
     ScreenLevels screenLevels;
-
+    public static float X;
+    public static float Y;
+    public static float A;
     @Override
     public void create() {
         batch = new SpriteBatch();
         touch = new Vector3(0, 0 ,0);
         SCR_HEIGHT = Gdx.graphics.getHeight();
         SCR_WIDTH = Gdx.graphics.getWidth();
+        X = SCR_WIDTH / 1633;
+        Y = SCR_HEIGHT / 810;
+        A = (X + Y) / 2;
         createFont();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, SCR_WIDTH, SCR_HEIGHT);
@@ -55,9 +60,9 @@ public class MyGdxGame extends Game {
 
         parameter.characters = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяabcdefghijklmnopqrstuvwxyzАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|\\/?-+=()*&.;:,{}\"´`'<>";
 
-        parameter.size = 50;
+        parameter.size = (int)(50 * A);
         parameter.color = Color.ORANGE;
-        parameter.borderWidth = 3;
+        parameter.borderWidth = A * 3;
         parameter.borderColor = Color.BLACK;
         font = generator.generateFont(parameter);
     }
