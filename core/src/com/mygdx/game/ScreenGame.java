@@ -49,6 +49,7 @@ public class ScreenGame implements Screen {
     long id;
     Sound levelMusic;
     EggChild eggChild;
+    EnemyEgg bob;
 
     ScreenGame(MyGdxGame mgg) {
         this.mgg = mgg;
@@ -107,6 +108,9 @@ public class ScreenGame implements Screen {
 
         //PLATFORMS CREATION END
         objects.add(eggChild);
+
+        bob = new EnemyEgg(100, X * 8, 0, Y * 100, false, 200 * X);
+
         mgg.camera.setToOrtho(false, SCR_WIDTH, SCR_HEIGHT);
         lerp = 0.12f;
         position = mgg.camera.position;
@@ -153,7 +157,6 @@ public class ScreenGame implements Screen {
 
             }
 
-
             for (int i = 0; i < playerBullets.length; i++) {
                 if (playerBullets[i] != null && playerBullets[i].doesExist) {
                     playerBullets[i].exist();
@@ -198,6 +201,9 @@ public class ScreenGame implements Screen {
             position.y += (player.y + player.height / 2 - position.y) * lerp;
             if (shoot) player.shoot(playerBullets);
             player.update(right, left, up, objects);
+            bob.update(objects);
+            batch.draw(bob.img, bob.x, bob.y, bob.width, bob.height);
+
             mgg.camera.update();
             if (gun.bodyRotation) {
                 gun.update(player.x, player.y + player.height / 5f, player.bodyRotation);
