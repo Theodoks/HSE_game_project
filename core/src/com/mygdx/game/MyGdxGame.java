@@ -21,9 +21,9 @@ public class MyGdxGame extends Game {
     ScreenAbout screenAbout;
 
     ScreenLevels screenLevels;
-    public static float X;
-    public static float Y;
-    public static float A;
+    public float X;
+    public float Y;
+    public float A;
     @Override
     public void create() {
         batch = new SpriteBatch();

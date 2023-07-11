@@ -8,9 +8,6 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 
 import java.util.ArrayList;
-import static com.mygdx.game.MyGdxGame.X;
-import static com.mygdx.game.MyGdxGame.Y;
-import static com.mygdx.game.MyGdxGame.A;
 
 public class Player extends Sprite {
     float x;
@@ -54,7 +51,7 @@ public class Player extends Sprite {
             onCD = true;
             if (direction == 1) v = 21;
             else v = -21;
-            playerBullets[i] = new Bullet(v);
+            playerBullets[i] = new Bullet(v, x, y + (MyGdxGame.SCR_HEIGHT/14.35f));
             if (v == 21) playerBullets[i].x += 100;
 
             if (++i >= 100) {
@@ -116,7 +113,8 @@ public class Player extends Sprite {
 
     void collide(float vx, float vy, ArrayList<Object> objects) {
         for (int i = 0; i < objects.size(); i++) {
-            if (objects.get(i) instanceof SolidPlatform s) {
+            if (objects.get(i) instanceof SolidPlatform) {
+                SolidPlatform s = (SolidPlatform) objects.get(i);
                 if (Intersector.overlaps(new Rectangle(s.x, s.y, s.width, s.height), getBoundingRectangle())) {
                     if (vx > 0) {
                         x = s.x - width;
@@ -142,7 +140,8 @@ public class Player extends Sprite {
                     }
                 }
             }
-            if (objects.get(i) instanceof EggChild eggChild) {
+            if (objects.get(i) instanceof EggChild) {
+                EggChild eggChild = (EggChild) objects.get(i);
                 if (Intersector.overlaps(eggChild.getBoundingRectangle(), getBoundingRectangle())) {
                     isWinner = true;
                 }

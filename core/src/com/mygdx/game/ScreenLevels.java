@@ -21,11 +21,11 @@ public class ScreenLevels implements Screen {
         mgg = g;
 
         imgBackGround = new Texture("Sky.jpg");
-        btnReturn = new TextButton(mgg.font, "return", SCR_WIDTH * 0.05f, SCR_HEIGHT * 0.95f);
+        btnReturn = new TextButton(mgg.font, "return", SCR_WIDTH * 0.05f, SCR_HEIGHT * 0.95f, 55 * mgg.X, 55 * mgg.Y);
 
         levelsButtons = new TextButton[4];
         for (int i = 0; i < levelsButtons.length; i++) {
-            levelsButtons[i] = new TextButton(mgg.font, "" + (i+1), SCR_WIDTH * (0.2f*(i+1)), SCR_HEIGHT * 0.75f);
+            levelsButtons[i] = new TextButton(mgg.font, "" + (i+1), SCR_WIDTH * (0.2f*(i+1)), SCR_HEIGHT * 0.75f, 55 * mgg.X, 55 * mgg.Y);
         }
     }
 

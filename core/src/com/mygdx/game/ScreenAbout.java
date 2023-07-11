@@ -19,7 +19,7 @@ public class ScreenAbout implements Screen {
         mgg = g;
 
         imgBackGround = new Texture("Sky.jpg");
-        btnReturn = new TextButton(mgg.font, "return", SCR_WIDTH * 0.05f, SCR_HEIGHT * 0.95f);
+        btnReturn = new TextButton(mgg.font, "return", SCR_WIDTH * 0.05f, SCR_HEIGHT * 0.95f, 55 * mgg.X, 55 * mgg.Y);
         aboutUs = new Text(mgg.font, "Красноперов Данил\nФёдор Переверзев\nМуслим Костоев\nМансур Костоев", SCR_WIDTH * 0.15f, SCR_HEIGHT * 0.8f);
     }
 

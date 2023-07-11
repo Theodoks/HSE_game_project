@@ -30,7 +30,7 @@ public class ScreenGame implements Screen {
     SolidPlatform[] solids = new SolidPlatform[100];
     Player player;
     Gun gun;
-    static ArrayList<Object> objects = new ArrayList<>();
+      ArrayList<Object> objects = new ArrayList<>();
     boolean right;
     boolean left;
     boolean up;
@@ -77,30 +77,30 @@ public class ScreenGame implements Screen {
         //PLATFORMS CREATION START
 
         for (int i = 0; i < 20; i++) {
-            GrassyPlat g = new GrassyPlat(gx, gy);
+            GrassyPlat g = new GrassyPlat(gx, gy, 181.44f * mgg.X, 84.4f * mgg.Y);
             solids[i] = g;
             objects.add(g);
             gx += g.width;
 
         }
-        solids[20] = new GrassyPlat(1000 * X, Y * 120);
+        solids[20] = new GrassyPlat(1000 * mgg.X, mgg.Y * 120, 181.44f * mgg.X, 84.4f * mgg.Y);
         objects.add(solids[20]);
-        gx = 500 * X;
-        gy = 202.5f * Y;
+        gx = 500 * mgg.X;
+        gy = 202.5f * mgg.Y;
         for (int i = 21; i < 31; i++) {
-            GrassyPlat g = new GrassyPlat(gx, gy);
+            GrassyPlat g = new GrassyPlat(gx, gy, 181.44f * mgg.X, 84.4f * mgg.Y);
             solids[i] = g;
             objects.add(g);
-            gx += 100 * X;
+            gx += 100 * mgg.X;
             gy += SCR_HEIGHT / 10;
         }
-        solids[31] = new Dirt(0, -10000 * Y, gwidth * 20, 10000 * Y);
+        solids[31] = new Dirt(0, -10000 * mgg . Y, gwidth * 20, 10000 * mgg.Y);
         objects.add(solids[31]);
-        solids[32] = new Dirt(-10000 * X, -10000 * Y, 10000 * X, 10400 * Y);
+        solids[32] = new Dirt(-10000 * mgg.X, -10000 * mgg.Y, 10000 * mgg.X, 10400 * mgg.Y);
         objects.add(solids[32]);
         int o = 1;
         for (int i = 33; i < 43; i++) {
-            solids[i] = new GrassyPlat(-gwidth * o, 400 * Y);
+            solids[i] = new GrassyPlat(-gwidth * o, 400 * mgg.Y, 181.44f * mgg.X, 84.4f * mgg.Y);
             objects.add(solids[i]);
             o++;
         }
@@ -162,7 +162,7 @@ public class ScreenGame implements Screen {
                 if (playerBullet != null && playerBullet.doesExist) {
                     playerBullet.exist();
                     mgg.batch.draw(bullet, playerBullet.x, playerBullet.y, SCR_WIDTH / 26.7f, SCR_HEIGHT / 35);
-                    playerBullet.collide(playerBullet.vx, playerBullet.vy, objects);
+                    playerBullet.collide(objects);
                 }
 
             }
