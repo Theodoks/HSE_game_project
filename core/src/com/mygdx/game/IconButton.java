@@ -2,15 +2,14 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
-public class Button extends Sprite {
+public class IconButton extends Sprite {
     float width, height;
     float x, y;
 
     Texture buttonTexture;
 
-    public Button(float x, float y, float width, float height, Texture buttonTexture) {
+    public IconButton(float x, float y, float width, float height, Texture buttonTexture) {
         super(buttonTexture, 0, 0, buttonTexture.getWidth(), buttonTexture.getHeight());
         this.x = x;
         this.y = y;
