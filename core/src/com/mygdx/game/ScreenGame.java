@@ -49,9 +49,8 @@ public class ScreenGame implements Screen {
     EggChild eggChild;
     EnemyEgg bob;
 
-    ScreenGame(MyGdxGame mgg) {
+    ScreenGame(MyGdxGame mgg, int levelid) {
         this.mgg = mgg;
-        //terrain = new Texture("Terrain2.PNG");
         sky = new Texture("Sky2.png");
         bullet = new Texture("bullet2.png");
         rightButtonTexture = new Texture("button_right.png");
@@ -65,7 +64,7 @@ public class ScreenGame implements Screen {
 
         playerBullets = new Bullet[100];
 
-        player = new Player(playerTexture, SCR_WIDTH / 12.5f, SCR_HEIGHT / 5, 0, 500 * Y, SCR_WIDTH / 190, SCR_HEIGHT / 60, SCR_HEIGHT / 1800);
+        player = new Player(playerTexture, SCR_WIDTH / 13.8f, SCR_HEIGHT / 5.5f, 0, 500 * Y, SCR_WIDTH / 190, SCR_HEIGHT / 60, SCR_HEIGHT / 1800);
         gun = new Gun(gunTexture, player.getX(), player.getY(), SCR_WIDTH / 9.5f, SCR_HEIGHT / 15);
         eggChild = new EggChild(eggChildTexture, 1000 * X, 240 * Y, SCR_WIDTH / 12.5f, SCR_HEIGHT / 5);
         bob = new EnemyEgg(enemyEggTexture,100, 100 * X, Y * 1000, X * 3, 0, false, 200);
@@ -276,6 +275,9 @@ public class ScreenGame implements Screen {
         rightButtonTexture.dispose();
         upButtonTexture.dispose();
         bullet.dispose();
+        playerTexture.dispose();
+        gunTexture.dispose();
+        enemyEggTexture.dispose();
     }
 }
 

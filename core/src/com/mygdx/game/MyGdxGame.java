@@ -55,7 +55,7 @@ public class MyGdxGame extends Game {
         parameter.borderColor = Color.BLACK;
         font = generator.generateFont(parameter);
     }
-    void createGame(){
-        screenGame = new ScreenGame(this);
+    void createGame(int levelid){
+        screenGame = new ScreenGame(this, levelid);
     }
 }
