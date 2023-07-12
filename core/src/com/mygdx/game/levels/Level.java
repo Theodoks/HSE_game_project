@@ -22,6 +22,7 @@ import com.mygdx.game.IconButton;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.Player;
 import com.mygdx.game.SolidPlatform;
+import com.mygdx.game.animations.BulletImpactAnim;
 
 import java.util.ArrayList;
 
@@ -66,6 +67,9 @@ public class Level implements Screen {
     protected ArrayList<Object> objects = new ArrayList<>();
 
     protected ArrayList<EnemyEgg> enemyEggs = new ArrayList<>();
+
+    // do not delete static
+    static public  ArrayList<BulletImpactAnim> bullAnims = new ArrayList<>();
 
     private long start = System.currentTimeMillis();
 
@@ -167,6 +171,13 @@ public class Level implements Screen {
                     }
                 }
             }
+        }
+        for (BulletImpactAnim bulletImpactAnim : bullAnims){
+            if (bulletImpactAnim.doesExist){
+                bulletImpactAnim.exist();
+                mgg.batch.draw(bulletImpactAnim.textures[bulletImpactAnim.count], bulletImpactAnim.x, bulletImpactAnim.y, bulletImpactAnim.width, bulletImpactAnim.height);
+            }
+
         }
 
         eggChild.draw(mgg.batch);
