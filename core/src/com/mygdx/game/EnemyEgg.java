@@ -1,5 +1,7 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
@@ -24,6 +26,11 @@ public class EnemyEgg extends Enemy{
     int bulletCD; //frames
     int counterCD;
     int direction;
+    boolean onCD;
+    Sound bitShoot;
+    float v;
+    int i;
+
     public EnemyEgg(Texture img, float hp, float x, float y, float moveSpeed, float vy, boolean immobile, float maxDistance){
         super(img, hp, x, y, immobile);
         this.maxDistance = maxDistance;
@@ -39,9 +46,32 @@ public class EnemyEgg extends Enemy{
         passive = true;
         direction = 1;
         bulletCD = 60;
+        bitShoot = Gdx.audio.newSound(Gdx.files.internal("shootSound.ogg"));
+        i = 0;
     }
 
+    public void shoot(EnemyBullet[] enemyBullets) {
+        if (!onCD) {
+            bitShoot.play();
+            onCD = true;
+            if (direction == 1) v = 21 * X;
+            else v = -21 * X;
+            enemyBullets[i] = new EnemyBullet(v, x, y + (MyGdxGame.SCR_HEIGHT/14.35f));
+            if (v == 21 * X) enemyBullets[i].x += 100 * X;
+
+            if (++i >= 100) {
+                i = 0;
+            }
+        }
+    }
     void update(ArrayList<Object> objects, Player player){
+        if(onCD){
+            counterCD++;
+            if (counterCD == bulletCD) {
+                onCD = false;
+                counterCD = 0;
+            }
+        }
         if(passive) {
             x += vx;
         }
@@ -62,6 +92,7 @@ public class EnemyEgg extends Enemy{
                 if(direction != 2) {flip(true, false); direction = 2;};
             }
         }
+
 
         if(!onGround){
             vy -= gravity;

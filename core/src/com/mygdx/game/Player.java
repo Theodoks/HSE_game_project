@@ -14,7 +14,7 @@ public class Player extends Sprite {
     float x;
     float y;
     float vx, vy;
-    static int i = 0;
+    int i = 0;
     float width, height;
     boolean onGround, bodyRotation = true;
     float moveSpeed, powerJump, gravity;
