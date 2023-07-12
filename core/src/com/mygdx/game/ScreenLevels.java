@@ -18,7 +18,7 @@ public class ScreenLevels implements Screen {
 
     Texture levelButtonTexture;
 
-    LevelButton[] levelButtons;
+    IconTextButton[] levelButtons;
 
     BitmapFont font;
 
@@ -35,9 +35,9 @@ public class ScreenLevels implements Screen {
         createFont();
 
 
-        levelButtons = new LevelButton[4];
+        levelButtons = new IconTextButton[4];
         for (int i = 0; i < levelButtons.length; i++) {
-            levelButtons[i] = new LevelButton(
+            levelButtons[i] = new IconTextButton(
                     SCR_WIDTH*0.15f + i * (SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT) * mgg.A + 100),
                     SCR_HEIGHT / 2 - SCR_HEIGHT / 4 * mgg.A / 2,
                     levelButtonTexture,
@@ -46,11 +46,6 @@ public class ScreenLevels implements Screen {
                     SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT) * mgg.A,
                     SCR_HEIGHT / 4 * mgg.A
             );
-
-
-//            LevelButton levelButton = new LevelButton(levelButtonTexture, font, String.valueOf(i + 1)); // создаем кнопку
-//            levelButton.setPosition(startX + i * (buttonWidth + spacing), SCR_HEIGHT / 2 - buttonHeight / 2); // устанавливаем позицию кнопки
-//            levelButtons[i] = levelButton; // добавляем кнопку в массив
         }
     }
 

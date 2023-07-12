@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class LevelButton extends Sprite {
+public class IconTextButton extends Sprite {
 
     float x, y;
     private BitmapFont font;
@@ -13,7 +13,7 @@ public class LevelButton extends Sprite {
     private float width;
     private float height;
 
-    public LevelButton(float x, float y, Texture texture, BitmapFont font, String levelNumber, float width, float height) {
+    public IconTextButton(float x, float y, Texture texture, BitmapFont font, String levelNumber, float width, float height) {
         super(texture);
         this.x = x;
         this.y = y;

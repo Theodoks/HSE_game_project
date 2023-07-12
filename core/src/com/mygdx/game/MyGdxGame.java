@@ -24,7 +24,7 @@ public class MyGdxGame extends Game {
 
     public final static int FPS = 60;
     Level level;
-    ScreenLevels screenLevels;
+    public ScreenLevels screenLevels;
     public static float X;
     public static float Y;
     public static float A;
@@ -59,7 +59,7 @@ public class MyGdxGame extends Game {
         parameter.borderColor = Color.BLACK;
         font = generator.generateFont(parameter);
     }
-    void loadLevel(int levelid){
+    public void loadLevel(int levelid){
         if(levelid == 0) {
             level = new Level0(this);
             setScreen(level);
