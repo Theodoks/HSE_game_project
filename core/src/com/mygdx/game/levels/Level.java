@@ -98,10 +98,10 @@ public class Level implements Screen {
         position = mgg.camera.position;
         skyBG = new Background(sky, mgg);
 
-        player = new Player(playerTexture, 100000, SCR_WIDTH / 13.8f, SCR_HEIGHT / 5.5f, 0, 500 * Y, SCR_WIDTH / 190, SCR_HEIGHT / 60, SCR_HEIGHT / 1800);
+        player = new Player(playerTexture, 100000, SCR_WIDTH / 13.8f, SCR_HEIGHT / 5.5f, 0, 400 * Y, SCR_WIDTH / 190, SCR_HEIGHT / 60, SCR_HEIGHT / 1800);
         objects.add(player);
         gun = new Gun(gunTexture, player.getX(), player.getY(), SCR_WIDTH / 9.5f, SCR_HEIGHT / 15);
-        eggChild = new EggChild(eggChildTexture, 1000 * X, 500 * Y, SCR_WIDTH / 12.5f, SCR_HEIGHT / 5);
+        eggChild = new EggChild(eggChildTexture, 1000 * X, 500 * Y, SCR_WIDTH / 25f, SCR_HEIGHT / 10);
 
         bullet = new Texture("bullet2.png");
         eggChildTexture = new Texture("egg_baby.png");
@@ -244,7 +244,7 @@ public class Level implements Screen {
             mgg.camera.position.set((float) (SCR_WIDTH * 0.5), (float) (SCR_HEIGHT * 0.5), 0f);
             mgg.camera.update();
             levelMusic.stop();
-            mgg.setScreen(mgg.screenIntro);
+            mgg.setScreen(mgg.screenLevels);
         }
         mgg.batch.end();
     }

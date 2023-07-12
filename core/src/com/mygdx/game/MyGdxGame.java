@@ -20,11 +20,11 @@ public class MyGdxGame extends Game {
     public Vector3 touch;
     public BitmapFont font;
     public ScreenIntro screenIntro;
-    ScreenAbout screenAbout;
+    public ScreenAbout screenAbout;
 
     public final static int FPS = 60;
     Level level;
-    ScreenLevels screenLevels;
+    public ScreenLevels screenLevels;
     public static float X;
     public static float Y;
     public static float A;
@@ -62,6 +62,11 @@ public class MyGdxGame extends Game {
     void loadLevel(int levelid){
         if(levelid == 0) {
             level = new Level0(this);
+            setScreen(level);
+        }
+        else if(levelid == 2)
+        {
+            level = new Level2(this);
             setScreen(level);
         }
     }

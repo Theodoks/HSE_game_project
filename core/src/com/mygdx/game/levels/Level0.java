@@ -19,7 +19,6 @@ public class Level0 extends Level {
 
     public Level0(MyGdxGame mgg) {
         super(mgg);
-        eggChild = new EggChild(eggChildTexture, 1000 * X, 500 * Y, SCR_WIDTH / 12.5f, SCR_HEIGHT / 5);
         gwidth = 181.44f * X;
         gheight = 84.4f * Y;
 
@@ -32,11 +31,8 @@ public class Level0 extends Level {
             gx += g.width;
 
         }
-        solids[20] = new GrassyPlat(1000 * X, Y * 120);
-        objects.add(solids[20]);
-        gx = 500 * X;
-        gy = 202.5f * Y;
-
+        eggChild.setY(gheight);
+        eggChild.setX(3380 * X);
         /*
         for (int i = 21; i < 31; i++) {
             GrassyPlat g = new GrassyPlat(gx, gy);
@@ -52,6 +48,14 @@ public class Level0 extends Level {
         int o = 1;
         for (int i = 33; i < 43; i++) {
             solids[i] = new GrassyPlat(-gwidth * o, 400 * Y);
+            objects.add(solids[i]);
+            o++;
+        }
+        solids[43] = new Dirt(solids[19].x, -10000 * Y, 10000 * X, 10400 * Y);
+        objects.add(solids[43]);
+        o = 0;
+        for (int i = 44; i < 54; i++) {
+            solids[i] = new GrassyPlat(  solids[19].x + gwidth * o, 400 * Y);
             objects.add(solids[i]);
             o++;
         }
