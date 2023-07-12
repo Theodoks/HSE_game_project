@@ -163,7 +163,7 @@ public class Level implements Screen {
         if (shoot) player.shoot(playerBullets);
         player.update(right, left, up, objects);
 
-        bob.update(objects);
+        bob.update(objects, player);
         bob.draw(mgg.batch);
 
         mgg.camera.update();

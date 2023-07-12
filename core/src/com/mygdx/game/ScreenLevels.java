@@ -83,7 +83,7 @@ public class ScreenLevels implements Screen {
             }
              else if (levelButtons[0].hit(mgg.touch.x, mgg.touch.y)) {
                 mgg.createGame(1);
-                mgg.setScreen(mgg.screenGame);
+                mgg.setScreen(mgg.level1);
             }
         }
 

@@ -64,7 +64,7 @@ public class EnemyEgg extends Enemy{
             }
         }
     }
-    void update(ArrayList<Object> objects, Player player){
+    public  void update(ArrayList<Object> objects, Player player){
         if(onCD){
             counterCD++;
             if (counterCD == bulletCD) {
