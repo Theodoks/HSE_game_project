@@ -141,6 +141,7 @@ public class Player extends Sprite {
                     }
                 }
             }
+
             if (objects.get(i) instanceof EggChild) {
                 EggChild eggChild = (EggChild) objects.get(i);
                 if (Intersector.overlaps(eggChild.getBoundingRectangle(), getBoundingRectangle())) {
