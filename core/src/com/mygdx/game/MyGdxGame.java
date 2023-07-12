@@ -8,17 +8,20 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.game.levels.Level1;
 
 public class MyGdxGame extends Game {
-    static float SCR_WIDTH;
-    static float SCR_HEIGHT;
-    SpriteBatch batch;
-    OrthographicCamera camera;
-    Vector3 touch;
-    BitmapFont font;
-    ScreenIntro screenIntro;
-    ScreenGame screenGame;
+    public static float SCR_WIDTH;
+    public static float SCR_HEIGHT;
+    public SpriteBatch batch;
+    public OrthographicCamera camera;
+    public Vector3 touch;
+    public BitmapFont font;
+    public ScreenIntro screenIntro;
+    Level1 level1;
     ScreenAbout screenAbout;
+
+    public final static int FPS = 60;
 
     ScreenLevels screenLevels;
     public static float X;
@@ -56,6 +59,6 @@ public class MyGdxGame extends Game {
         font = generator.generateFont(parameter);
     }
     void createGame(int levelid){
-        screenGame = new ScreenGame(this, levelid);
+        level1 = new Level1(this);
     }
 }
