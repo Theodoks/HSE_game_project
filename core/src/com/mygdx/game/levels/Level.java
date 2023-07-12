@@ -101,8 +101,7 @@ public class Level implements Screen {
         enemyEggTexture = new Texture("egg_enemy.png");
 
         eggChild = new EggChild(eggChildTexture, 1000 * X, 500 * Y, SCR_WIDTH / 12.5f, SCR_HEIGHT / 5);
-        bob = new EnemyEgg(enemyEggTexture, 100, 100 * X, Y * 1000, X * 3, 0, false, 200);
-        enemyEggs.add(bob);
+
 
         mgg.camera.setToOrtho(false, SCR_WIDTH, SCR_HEIGHT);
         lerp = 0.12f;
@@ -157,6 +156,8 @@ public class Level implements Screen {
             }
         }
         for (EnemyEgg enemyEgg : enemyEggs){
+            enemyEgg.update(objects, player);
+            enemyEgg.draw(mgg.batch);
             for (EnemyBullet enemyBullet : enemyEgg.enemyBullets) {
                 if (enemyBullet != null && enemyBullet.doesExist){
                     enemyBullet.exist();
@@ -169,8 +170,7 @@ public class Level implements Screen {
         eggChild.draw(mgg.batch);
         player.draw(mgg.batch);
         gun.draw(mgg.batch);
-        bob.update(objects, player);
-        bob.draw(mgg.batch);
+
         mgg.batch.setProjectionMatrix(mgg.camera.combined);
         //mgg.camera.position.set(player.x + player.width/2, player.y + player.height/2, 0);
         position.x += (player.x + player.width / 2 - position.x) * lerp;

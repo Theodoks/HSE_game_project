@@ -11,11 +11,13 @@ public class EnemyBullet {
     float width = MyGdxGame.SCR_WIDTH/26.7f;
     float height = MyGdxGame.SCR_HEIGHT/35;
     public Boolean doesExist = true;
+    float enemyBulletDmg;
 
     EnemyBullet(float vx, float x, float y){
         this.x = x;
         this.y = y;
         this.vx = vx;
+        enemyBulletDmg = 25;
     }
     public void exist(){
 
@@ -37,7 +39,7 @@ public class EnemyBullet {
                 Player p = (Player) objects.get(i);
                 if(p.getBoundingRectangle().overlaps(new Rectangle(x, y, width, height))) {
                     doesExist = false;
-                    p.hp -= 25;
+                    p.hp -= enemyBulletDmg;
                 }
             }
         }

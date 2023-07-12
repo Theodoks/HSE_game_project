@@ -4,6 +4,7 @@ import static com.mygdx.game.MyGdxGame.X;
 import static com.mygdx.game.MyGdxGame.Y;
 
 import com.mygdx.game.Dirt;
+import com.mygdx.game.EnemyEgg;
 import com.mygdx.game.GrassyPlat;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.levels.Level;
@@ -53,6 +54,15 @@ public class Level1 extends Level {
             o++;
         }
         //PLATFORMS CREATION END
+
+        //ENEMIES CREATION START
+
+        bob = new EnemyEgg(enemyEggTexture, 100, 100 * X, Y * 1000, X * 3, 0, false, 200);
+        enemyEggs.add(bob);
+        objects.add(bob);
+
+        //ENEMIES CREATION END
+
         objects.add(eggChild);
     }
 
