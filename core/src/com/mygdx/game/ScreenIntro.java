@@ -4,7 +4,6 @@ import static com.mygdx.game.MyGdxGame.SCR_HEIGHT;
 import static com.mygdx.game.MyGdxGame.SCR_WIDTH;
 import static com.mygdx.game.MyGdxGame.X;
 import static com.mygdx.game.MyGdxGame.Y;
-import static com.mygdx.game.MyGdxGame.A;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -24,10 +23,10 @@ public class ScreenIntro implements Screen {
         mgg = g;
 
         imgBackGround = new Texture("Sky.jpg");
-        btnPlay = new TextButton(mgg.font, "Play", 500 * X, 500 * Y);
-        btnSettings = new TextButton(mgg.font, "Settings", 500 * X, 400 * Y);
-        btnAbout = new TextButton(mgg.font, "About", 500 * X, 300 * Y);
-        btnExit = new TextButton(mgg.font, "Exit", 500 * X, 200 * Y);
+        btnPlay = new TextButton(mgg.font, "Play", 500 * X, 500 * Y, 55 * X, 55 * Y);
+        btnSettings = new TextButton(mgg.font, "Settings", 500  * X, 400 * Y, 55 * X, 55 * Y);
+        btnAbout = new TextButton(mgg.font, "About", 500 * X, 300 * Y, 55 * X, 55 * Y);
+        btnExit = new TextButton(mgg.font, "Exit", 500 * X, 200 * Y, 55 * X, 55 * Y);
     }
 
     @Override
@@ -43,9 +42,6 @@ public class ScreenIntro implements Screen {
             if(btnPlay.hit(mgg.touch.x, mgg.touch.y)){
                 mgg.setScreen(mgg.screenLevels);
             }
-//            if(btnSettings.hit(mgg.touch.x, mgg.touch.y)){
-//                mgg.setScreen(mgg.screenSettings);
-//            }
             if(btnAbout.hit(mgg.touch.x, mgg.touch.y)){
                     mgg.setScreen(mgg.screenAbout);
             }
@@ -54,10 +50,6 @@ public class ScreenIntro implements Screen {
             }
         }
 
-        // СЃРѕР±С‹С‚РёСЏ РёРіСЂС‹
-
-
-        // РІС‹РІРѕРґ РёР·РѕР±СЂР°Р¶РµРЅРёР№
         mgg.camera.update();
         mgg.batch.setProjectionMatrix(mgg.camera.combined);
         mgg.batch.begin();
