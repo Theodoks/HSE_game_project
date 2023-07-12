@@ -1,3 +1,5 @@
+package com.mygdx.game;
+
 import static com.mygdx.game.MyGdxGame.SCR_HEIGHT;
 import static com.mygdx.game.MyGdxGame.SCR_WIDTH;
 
@@ -35,9 +37,9 @@ public class ScreenVictory implements Screen {
         imgBackGround = new Texture("Sky.jpg");
         toLevelsButtonTexture = new Texture("toLevelsButton.png");
         nextLevelButtonTexture = new Texture("nextLevelButton.png");
-        victoryText = new Text(font, "ПОБЕДА!", SCR_WIDTH * 0.15f, SCR_HEIGHT * 0.8f);
-        toLevelsButton = new IconButton(SCR_WIDTH * 0.3f, SCR_HEIGHT * 0.15f, SCR_WIDTH / 20 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 20, toLevelsButtonTexture);
-        nextLevelButton = new IconButton(SCR_WIDTH * 0.6f, SCR_HEIGHT * 0.15f, SCR_WIDTH / 20 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 20, nextLevelButtonTexture);
+        victoryText = new Text(font, "ПОБЕДА!", SCR_WIDTH * 0.23f, SCR_HEIGHT * 0.8f);
+        toLevelsButton = new IconButton(SCR_WIDTH * 0.3333f, SCR_HEIGHT * 0.15f, SCR_WIDTH / 7 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 7, toLevelsButtonTexture);
+        nextLevelButton = new IconButton(SCR_WIDTH * 0.6666f, SCR_HEIGHT * 0.15f, SCR_WIDTH / 7 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 7, nextLevelButtonTexture);
     }
 
 

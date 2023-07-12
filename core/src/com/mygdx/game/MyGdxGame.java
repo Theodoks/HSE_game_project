@@ -22,6 +22,8 @@ public class MyGdxGame extends Game {
     public ScreenIntro screenIntro;
     ScreenAbout screenAbout;
 
+    public ScreenVictory screenVictory;
+
     public final static int FPS = 60;
     Level level;
     public ScreenLevels screenLevels;
@@ -43,6 +45,7 @@ public class MyGdxGame extends Game {
         screenIntro = new ScreenIntro(this);
         screenAbout = new ScreenAbout(this);
         screenLevels = new ScreenLevels(this);
+        screenVictory = new ScreenVictory(this);
         setScreen(screenIntro);
 
     }

@@ -233,7 +233,7 @@ public class Level implements Screen {
             mgg.camera.position.set((float) (SCR_WIDTH * 0.5), (float) (SCR_HEIGHT * 0.5), 0f);
             mgg.camera.update();
             levelMusic.stop();
-            mgg.setScreen(mgg.screenIntro);
+            mgg.setScreen(mgg.screenVictory);
         }
         mgg.batch.end();
     }
