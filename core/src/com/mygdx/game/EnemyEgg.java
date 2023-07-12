@@ -31,7 +31,7 @@ public class EnemyEgg extends Enemy{
         this.vx = moveSpeed;
     }
 
-    void update(ArrayList<Object> objects){
+    public void update(ArrayList<Object> objects){
         x += vx;
         setPosition(x, y);
         collide(vx, 0, objects);

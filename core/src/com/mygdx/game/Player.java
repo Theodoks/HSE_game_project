@@ -11,22 +11,22 @@ import java.util.ArrayList;
 import static com.mygdx.game.MyGdxGame.X;
 import static com.mygdx.game.MyGdxGame.Y;
 public class Player extends Sprite {
-    float x;
-    float y;
+    public float x;
+    public  float y;
     float vx, vy;
     static int i = 0;
-    float width, height;
-    boolean onGround, bodyRotation = true;
+    public float width, height;
+    public boolean onGround, bodyRotation = true;
     float moveSpeed, powerJump, gravity;
     float bulletCD;
     float counterCD;
-    boolean onCD;
+    public boolean onCD;
     int direction;
     float v;
-    boolean isWinner = false;
+    public boolean isWinner = false;
     static Sound bitShoot;
 
-    Player(Texture img, float width, float height, float x, float y, float moveSpeed, float powerJump, float gravity) {
+    public Player(Texture img, float width, float height, float x, float y, float moveSpeed, float powerJump, float gravity) {
         super(img, 0, 0, img.getWidth(), img.getHeight());
         this.x = x;
         this.y = y;
@@ -61,7 +61,7 @@ public class Player extends Sprite {
         }
     }
 
-    void update(boolean right, boolean left, boolean up, ArrayList<Object> objects) {
+    public void update(boolean right, boolean left, boolean up, ArrayList<Object> objects) {
         x += vx;
         setPosition(x, y);
         collide(vx, 0, objects);
