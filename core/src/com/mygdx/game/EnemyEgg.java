@@ -30,6 +30,7 @@ public class EnemyEgg extends Enemy{
     Sound bitShoot;
     float v;
     int i;
+    public EnemyBullet[] enemyBullets;
 
     public EnemyEgg(Texture img, float hp, float x, float y, float moveSpeed, float vy, boolean immobile, float maxDistance){
         super(img, hp, x, y, immobile);
@@ -45,19 +46,20 @@ public class EnemyEgg extends Enemy{
         flip(true, false);
         passive = true;
         direction = 1;
-        bulletCD = 60;
+        bulletCD = 90;
         bitShoot = Gdx.audio.newSound(Gdx.files.internal("shootSound.ogg"));
         i = 0;
+        enemyBullets = new EnemyBullet[100];
     }
 
     public void shoot(EnemyBullet[] enemyBullets) {
         if (!onCD) {
             bitShoot.play();
             onCD = true;
-            if (direction == 1) v = 21 * X;
-            else v = -21 * X;
+            if (direction == 1) v = 10 * X;
+            else v = -10 * X;
             enemyBullets[i] = new EnemyBullet(v, x, y + (MyGdxGame.SCR_HEIGHT/14.35f));
-            if (v == 21 * X) enemyBullets[i].x += 100 * X;
+            if (v == 10 * X) enemyBullets[i].x += 100 * X;
 
             if (++i >= 100) {
                 i = 0;
@@ -74,12 +76,22 @@ public class EnemyEgg extends Enemy{
         }
         if(passive) {
             x += vx;
+            if (vx > 0 && direction != 1){
+                flip(true, false);
+                direction = 1;
+            }
+            if (vx < 0 && direction != 2){
+                flip(true, false);
+                direction = 2;
+            }
         }
         setPosition(x, y);
         collide(vx, 0, objects);
         y += vy;
         setPosition(x, y);
         collide(0, vy, objects);
+
+
 
         passive = true;
 
@@ -92,7 +104,9 @@ public class EnemyEgg extends Enemy{
                 if(direction != 2) {flip(true, false); direction = 2;};
             }
         }
-
+        if(!passive){
+            shoot(enemyBullets);
+        }
 
         if(!onGround){
             vy -= gravity;

@@ -5,12 +5,12 @@ import com.badlogic.gdx.math.Rectangle;
 import java.util.ArrayList;
 
 public class EnemyBullet {
-    float x;
-    float y;
+    public float x;
+    public float y;
     float vx;
     float width = MyGdxGame.SCR_WIDTH/26.7f;
     float height = MyGdxGame.SCR_HEIGHT/35;
-    Boolean doesExist = true;
+    public Boolean doesExist = true;
 
     EnemyBullet(float vx, float x, float y){
         this.x = x;
@@ -23,7 +23,7 @@ public class EnemyBullet {
 
     }
 
-    void collide(ArrayList<Object> objects)
+    public void collide(ArrayList<Object> objects)
     {
         for(int i = 0; i < objects.size(); i++){
             if(objects.get(i) instanceof SolidPlatform){
@@ -31,6 +31,13 @@ public class EnemyBullet {
                 if(new Rectangle(s.x, s.y, s.width, s.height).overlaps(new Rectangle(x, y, width, height))) {
                     doesExist = false;
 
+                }
+            }
+            if(objects.get(i) instanceof Player){
+                Player p = (Player) objects.get(i);
+                if(p.getBoundingRectangle().overlaps(new Rectangle(x, y, width, height))) {
+                    doesExist = false;
+                    p.hp -= 25;
                 }
             }
         }

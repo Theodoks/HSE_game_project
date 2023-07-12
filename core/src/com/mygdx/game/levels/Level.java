@@ -15,6 +15,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.Background;
 import com.mygdx.game.Bullet;
 import com.mygdx.game.EggChild;
+import com.mygdx.game.EnemyBullet;
 import com.mygdx.game.EnemyEgg;
 import com.mygdx.game.Gun;
 import com.mygdx.game.IconButton;
@@ -64,6 +65,8 @@ public class Level implements Screen {
 
     protected ArrayList<Object> objects = new ArrayList<>();
 
+    protected ArrayList<EnemyEgg> enemyEggs = new ArrayList<>();
+
     private long start = System.currentTimeMillis();
 
     protected Level(MyGdxGame mgg) {
@@ -88,7 +91,8 @@ public class Level implements Screen {
         position = mgg.camera.position;
         skyBG = new Background(sky, mgg);
 
-        player = new Player(playerTexture, SCR_WIDTH / 13.8f, SCR_HEIGHT / 5.5f, 0, 500 * Y, SCR_WIDTH / 190, SCR_HEIGHT / 60, SCR_HEIGHT / 1800);
+        player = new Player(playerTexture, 100, SCR_WIDTH / 13.8f, SCR_HEIGHT / 5.5f, 0, 500 * Y, SCR_WIDTH / 190, SCR_HEIGHT / 60, SCR_HEIGHT / 1800);
+        objects.add(player);
         gun = new Gun(gunTexture, player.getX(), player.getY(), SCR_WIDTH / 9.5f, SCR_HEIGHT / 15);
 
 
@@ -96,8 +100,9 @@ public class Level implements Screen {
         eggChildTexture = new Texture("egg_baby.png");
         enemyEggTexture = new Texture("egg_enemy.png");
 
-        eggChild = new EggChild(eggChildTexture, 1000 * X, 240 * Y, SCR_WIDTH / 12.5f, SCR_HEIGHT / 5);
+        eggChild = new EggChild(eggChildTexture, 1000 * X, 500 * Y, SCR_WIDTH / 12.5f, SCR_HEIGHT / 5);
         bob = new EnemyEgg(enemyEggTexture, 100, 100 * X, Y * 1000, X * 3, 0, false, 200);
+        enemyEggs.add(bob);
 
         mgg.camera.setToOrtho(false, SCR_WIDTH, SCR_HEIGHT);
         lerp = 0.12f;
@@ -150,12 +155,22 @@ public class Level implements Screen {
                 mgg.batch.draw(bullet, playerBullet.x, playerBullet.y, SCR_WIDTH / 26.7f, SCR_HEIGHT / 35);
                 playerBullet.collide(objects);
             }
-
+        }
+        for (EnemyEgg enemyEgg : enemyEggs){
+            for (EnemyBullet enemyBullet : enemyEgg.enemyBullets) {
+                if (enemyBullet != null && enemyBullet.doesExist){
+                    enemyBullet.exist();
+                    mgg.batch.draw(bullet, enemyBullet.x, enemyBullet.y, SCR_WIDTH / 26.7f, SCR_HEIGHT / 35);
+                    enemyBullet.collide(objects);
+                }
+            }
         }
 
         eggChild.draw(mgg.batch);
         player.draw(mgg.batch);
         gun.draw(mgg.batch);
+        bob.update(objects, player);
+        bob.draw(mgg.batch);
         mgg.batch.setProjectionMatrix(mgg.camera.combined);
         //mgg.camera.position.set(player.x + player.width/2, player.y + player.height/2, 0);
         position.x += (player.x + player.width / 2 - position.x) * lerp;
@@ -163,8 +178,7 @@ public class Level implements Screen {
         if (shoot) player.shoot(playerBullets);
         player.update(right, left, up, objects);
 
-        bob.update(objects, player);
-        bob.draw(mgg.batch);
+
 
         mgg.camera.update();
         if (gun.bodyRotation) {
@@ -210,7 +224,7 @@ public class Level implements Screen {
 
         mgg.batch.begin();
 
-        if(!player.isWinner) {
+        if(!player.isWinner && !player.dead) {
             render();
         } else {
             position.set(0.0f, 0.0f, 0.0f);

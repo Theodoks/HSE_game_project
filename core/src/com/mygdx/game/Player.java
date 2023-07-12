@@ -25,8 +25,9 @@ public class Player extends Sprite {
     float v;
     public boolean isWinner = false;
     static Sound bitShoot;
-
-    public Player(Texture img, float width, float height, float x, float y, float moveSpeed, float powerJump, float gravity) {
+    public float hp;
+    public boolean dead;
+    public Player(Texture img, float hp, float width, float height, float x, float y, float moveSpeed, float powerJump, float gravity) {
         super(img, 0, 0, img.getWidth(), img.getHeight());
         this.x = x;
         this.y = y;
@@ -37,6 +38,7 @@ public class Player extends Sprite {
         this.vx = 0;
         this.vy = 0;
         this.gravity = gravity;
+        this.hp = hp;
         bulletCD = 20; // frames
         counterCD = 0;
         onCD = false;
@@ -44,6 +46,7 @@ public class Player extends Sprite {
         setPosition(x, y);
         direction = 1; // 1 = right, 2 = left
         bitShoot = Gdx.audio.newSound(Gdx.files.internal("shootSound.ogg"));
+        dead = false;
     }
 
     public void shoot(Bullet[] playerBullets) {
@@ -62,6 +65,9 @@ public class Player extends Sprite {
     }
 
     public void update(boolean right, boolean left, boolean up, ArrayList<Object> objects) {
+        if(hp <= 0){
+            dead = true;
+        }
         x += vx;
         setPosition(x, y);
         collide(vx, 0, objects);
