@@ -51,7 +51,7 @@ public class Level implements Screen {
     boolean up;
     boolean shoot;
 
-    boolean startMusic = false;
+    long startMusic;
     Texture sky;
     Texture rightButtonTexture, leftButtonTexture, upButtonTexture, shootButtonTexture;
     protected Player player;
@@ -111,12 +111,13 @@ public class Level implements Screen {
         lerp = 0.12f;
 
         levelMusic = Gdx.audio.newSound(Gdx.files.internal("epicMusic2.ogg"));
+        startMusic = -1;
     }
 
     void render() {
-        if (!startMusic) {
-            levelMusic.loop();
-            startMusic = true;
+        if (startMusic == -1) {
+            startMusic = levelMusic.loop();
+
         }
         skyBG.exist();
         right = false;

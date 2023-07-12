@@ -73,8 +73,9 @@ public class EnemyEgg extends Enemy{
     public void update(ArrayList<Object> objects, Player player){
         if(hp <= 0 && !justDied){
             justDied = true;
-            vx = MathUtils.random(-2, 2) * X;
-            vy = 15 * Y;
+            vx = MathUtils.random(-5, 5) * X;
+            vy = 25 * Y;
+            gravity *= 5;
         }
         if (!justDied) {
             if (onCD) {
