@@ -78,8 +78,11 @@ public class Level implements Screen {
         shootButtonTexture = new Texture(("button_shoot.png"));
         playerTexture = new Texture("egg.png");
         gunTexture = new Texture("egg_gun.png");
-
         sky = new Texture("Sky2.png");
+        bullet = new Texture("bullet2.png");
+        eggChildTexture = new Texture("egg_baby.png");
+        enemyEggTexture = new Texture("egg_enemy.png");
+
 
         playerBullets = new Bullet[100];
 
@@ -94,14 +97,11 @@ public class Level implements Screen {
         player = new Player(playerTexture, 100000, SCR_WIDTH / 13.8f, SCR_HEIGHT / 5.5f, 0, 500 * Y, SCR_WIDTH / 190, SCR_HEIGHT / 60, SCR_HEIGHT / 1800);
         objects.add(player);
         gun = new Gun(gunTexture, player.getX(), player.getY(), SCR_WIDTH / 9.5f, SCR_HEIGHT / 15);
-
+        eggChild = new EggChild(eggChildTexture, 1000 * X, 500 * Y, SCR_WIDTH / 12.5f, SCR_HEIGHT / 5);
 
         bullet = new Texture("bullet2.png");
         eggChildTexture = new Texture("egg_baby.png");
         enemyEggTexture = new Texture("egg_enemy.png");
-
-        eggChild = new EggChild(eggChildTexture, 1000 * X, 500 * Y, SCR_WIDTH / 12.5f, SCR_HEIGHT / 5);
-
 
         mgg.camera.setToOrtho(false, SCR_WIDTH, SCR_HEIGHT);
         lerp = 0.12f;
