@@ -91,7 +91,7 @@ public class Level implements Screen {
         position = mgg.camera.position;
         skyBG = new Background(sky, mgg);
 
-        player = new Player(playerTexture, 100, SCR_WIDTH / 13.8f, SCR_HEIGHT / 5.5f, 0, 500 * Y, SCR_WIDTH / 190, SCR_HEIGHT / 60, SCR_HEIGHT / 1800);
+        player = new Player(playerTexture, 100000, SCR_WIDTH / 13.8f, SCR_HEIGHT / 5.5f, 0, 500 * Y, SCR_WIDTH / 190, SCR_HEIGHT / 60, SCR_HEIGHT / 1800);
         objects.add(player);
         gun = new Gun(gunTexture, player.getX(), player.getY(), SCR_WIDTH / 9.5f, SCR_HEIGHT / 15);
 
@@ -156,13 +156,15 @@ public class Level implements Screen {
             }
         }
         for (EnemyEgg enemyEgg : enemyEggs){
-            enemyEgg.update(objects, player);
-            enemyEgg.draw(mgg.batch);
-            for (EnemyBullet enemyBullet : enemyEgg.enemyBullets) {
-                if (enemyBullet != null && enemyBullet.doesExist){
-                    enemyBullet.exist();
-                    mgg.batch.draw(bullet, enemyBullet.x, enemyBullet.y, SCR_WIDTH / 26.7f, SCR_HEIGHT / 35);
-                    enemyBullet.collide(objects);
+            if(enemyEgg.hp > 0) {
+                enemyEgg.update(objects, player);
+                enemyEgg.draw(mgg.batch);
+                for (EnemyBullet enemyBullet : enemyEgg.enemyBullets) {
+                    if (enemyBullet != null && enemyBullet.doesExist) {
+                        enemyBullet.exist();
+                        mgg.batch.draw(bullet, enemyBullet.x, enemyBullet.y, SCR_WIDTH / 26.7f, SCR_HEIGHT / 35);
+                        enemyBullet.collide(objects);
+                    }
                 }
             }
         }

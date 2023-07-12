@@ -57,7 +57,13 @@ public class Level1 extends Level {
 
         //ENEMIES CREATION START
 
-        bob = new EnemyEgg(enemyEggTexture, 100, 100 * X, Y * 1000, X * 3, 0, false, 200);
+        bob = new EnemyEgg(enemyEggTexture, 100, 100 * X, Y * 1000, X * 3, 0, false, 200 * X);
+        enemyEggs.add(bob);
+        objects.add(bob);
+        bob = new EnemyEgg(enemyEggTexture, 100, 500 * X, Y * 1000, X * 3, 0, false, 200 * X);
+        enemyEggs.add(bob);
+        objects.add(bob);
+        bob = new EnemyEgg(enemyEggTexture, 100, 1000 * X, Y * 1000, X * 3, 0, false, 600 * X);
         enemyEggs.add(bob);
         objects.add(bob);
 

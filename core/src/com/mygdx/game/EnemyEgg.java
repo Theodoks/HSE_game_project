@@ -31,6 +31,7 @@ public class EnemyEgg extends Enemy{
     float v;
     int i;
     public EnemyBullet[] enemyBullets;
+    float startingPos;
 
     public EnemyEgg(Texture img, float hp, float x, float y, float moveSpeed, float vy, boolean immobile, float maxDistance){
         super(img, hp, x, y, immobile);
@@ -50,6 +51,7 @@ public class EnemyEgg extends Enemy{
         bitShoot = Gdx.audio.newSound(Gdx.files.internal("shootSound.ogg"));
         i = 0;
         enemyBullets = new EnemyBullet[100];
+        startingPos = x;
     }
 
     public void shoot(EnemyBullet[] enemyBullets) {
@@ -66,7 +68,8 @@ public class EnemyEgg extends Enemy{
             }
         }
     }
-    public  void update(ArrayList<Object> objects, Player player){
+    public void update(ArrayList<Object> objects, Player player){
+
         if(onCD){
             counterCD++;
             if (counterCD == bulletCD) {
@@ -95,7 +98,7 @@ public class EnemyEgg extends Enemy{
 
         passive = true;
 
-        if(Math.abs(x - player.x) < X * 800 && Math.abs(y - player.y) < Y * 210){
+        if(Math.abs(x - player.x) < X * 700 && Math.abs(y - player.y) < Y * 210){
             passive = false;
             if(player.x > x){
                 if(direction != 1) {flip(true, false); direction = 1;}
@@ -121,16 +124,14 @@ public class EnemyEgg extends Enemy{
                 if (Intersector.overlaps(new Rectangle(s.x, s.y, s.width, s.height), getBoundingRectangle())) {
                     if (vx > 0) {
                         x = s.x - width;
-                        flip(true, false);
-                        direction = 2;
+
                         this.vx = -moveSpeed;
                         setPosition(x, y);
                     }else {
 
                         if (vx < 0) {
                             x = s.x + s.width;
-                            flip(true, false);
-                            direction = 1;
+
                             this.vx = moveSpeed;
                             setPosition(x, y);
                         }
@@ -148,6 +149,16 @@ public class EnemyEgg extends Enemy{
                         onGround = true;
                         this.vy = 0;
                     }
+                }
+                if(x > startingPos + maxDistance){
+
+                    this.vx = -moveSpeed;
+                    setPosition(x, y);
+                }
+                if(x < startingPos - maxDistance){
+
+                    this.vx = moveSpeed;
+                    setPosition(x, y);
                 }
             }
         }

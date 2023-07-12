@@ -38,7 +38,7 @@ public class Bullet {
             }
             if (objects.get(i) instanceof EnemyEgg) {
                 EnemyEgg e = (EnemyEgg) objects.get(i);
-                if (e.getBoundingRectangle().overlaps(new Rectangle(x, y, width, height))) {
+                if (e.getBoundingRectangle().overlaps(new Rectangle(x, y, width, height)) && e.hp > 0) {
                     doesExist = false;
                     e.hp -= bulletDMG;
                 }

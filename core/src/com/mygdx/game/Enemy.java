@@ -4,7 +4,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Enemy extends Sprite {
-    float hp, x, y;
+    public float hp;
+    float x;
+    float y;
 
     boolean immobile;
     Texture img;
