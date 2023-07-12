@@ -3,6 +3,9 @@ package com.mygdx.game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
+
+import static com.mygdx.game.MyGdxGame.SCR_HEIGHT;
+import static com.mygdx.game.MyGdxGame.SCR_WIDTH;
 import static com.mygdx.game.MyGdxGame.X;
 import static com.mygdx.game.MyGdxGame.Y;
 import static com.mygdx.game.MyGdxGame.A;
@@ -17,27 +20,49 @@ public class EnemyEgg extends Enemy{
     boolean onGround = false;
     float gravity;
     float moveSpeed;
+    boolean passive;
+    int bulletCD; //frames
+    int counterCD;
+    int direction;
     public EnemyEgg(Texture img, float hp, float x, float y, float moveSpeed, float vy, boolean immobile, float maxDistance){
         super(img, hp, x, y, immobile);
         this.maxDistance = maxDistance;
-
         this.vy = vy;
         gravity = 0.45f;
-        width = 390 * X;
-        height = 200 * Y;
+        width = X * 190;
+        height = Y * 190;
         setSize(width, height);
         setPosition(x, y);
         this.moveSpeed = moveSpeed;
         this.vx = moveSpeed;
+        flip(true, false);
+        passive = true;
+        direction = 1;
+        bulletCD = 60;
     }
 
-    void update(ArrayList<Object> objects){
-        x += vx;
+    void update(ArrayList<Object> objects, Player player){
+        if(passive) {
+            x += vx;
+        }
         setPosition(x, y);
         collide(vx, 0, objects);
         y += vy;
         setPosition(x, y);
         collide(0, vy, objects);
+
+        passive = true;
+
+        if(Math.abs(x - player.x) < X * 800 && Math.abs(y - player.y) < Y * 210){
+            passive = false;
+            if(player.x > x){
+                if(direction != 1) {flip(true, false); direction = 1;}
+            }
+            if(player.x < x){
+                if(direction != 2) {flip(true, false); direction = 2;};
+            }
+        }
+
         if(!onGround){
             vy -= gravity;
         }
@@ -51,12 +76,16 @@ public class EnemyEgg extends Enemy{
                 if (Intersector.overlaps(new Rectangle(s.x, s.y, s.width, s.height), getBoundingRectangle())) {
                     if (vx > 0) {
                         x = s.x - width;
+                        flip(true, false);
+                        direction = 2;
                         this.vx = -moveSpeed;
                         setPosition(x, y);
                     }else {
 
                         if (vx < 0) {
                             x = s.x + s.width;
+                            flip(true, false);
+                            direction = 1;
                             this.vx = moveSpeed;
                             setPosition(x, y);
                         }
