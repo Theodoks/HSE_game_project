@@ -160,18 +160,24 @@ public class Level implements Screen {
             }
         }
         for (EnemyEgg enemyEgg : enemyEggs){
-            if(enemyEgg.hp > 0) {
-                enemyEgg.update(objects, player);
-                enemyEgg.draw(mgg.batch);
-                for (EnemyBullet enemyBullet : enemyEgg.enemyBullets) {
-                    if (enemyBullet != null && enemyBullet.doesExist) {
-                        enemyBullet.exist();
-                        mgg.batch.draw(bullet, enemyBullet.x, enemyBullet.y, SCR_WIDTH / 26.7f, SCR_HEIGHT / 35);
-                        enemyBullet.collide(objects);
-                    }
+
+            enemyEgg.update(objects, player);
+            enemyEgg.draw(mgg.batch);
+            for (EnemyBullet enemyBullet : enemyEgg.enemyBullets) {
+                if (enemyBullet != null && enemyBullet.doesExist) {
+                    enemyBullet.exist();
+                    mgg.batch.draw(bullet, enemyBullet.x, enemyBullet.y, SCR_WIDTH / 26.7f, SCR_HEIGHT / 35);
+                    enemyBullet.collide(objects);
+
                 }
             }
         }
+
+
+        eggChild.draw(mgg.batch);
+        player.draw(mgg.batch);
+        gun.draw(mgg.batch);
+
         for (BulletImpactAnim bulletImpactAnim : bullAnims){
             if (bulletImpactAnim.doesExist){
                 bulletImpactAnim.exist();
@@ -179,10 +185,6 @@ public class Level implements Screen {
             }
 
         }
-
-        eggChild.draw(mgg.batch);
-        player.draw(mgg.batch);
-        gun.draw(mgg.batch);
 
         mgg.batch.setProjectionMatrix(mgg.camera.combined);
         //mgg.camera.position.set(player.x + player.width/2, player.y + player.height/2, 0);
