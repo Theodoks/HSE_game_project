@@ -94,6 +94,8 @@ public class Level1 extends Level {
     public void win() {
         if(mgg.maxLevel < 2) {
             mgg.maxLevel = 2;
+            mgg.pref.putInteger("maxLevel", mgg.maxLevel);
+            mgg.pref.flush();
         }
     }
 }

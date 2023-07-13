@@ -142,6 +142,8 @@ public class Level2 extends Level {
     public void win() {
         if(mgg.maxLevel < 3) {
             mgg.maxLevel = 3;
+            mgg.pref.putInteger("maxLevel", mgg.maxLevel);
+            mgg.pref.flush();
         }
     }
 }
