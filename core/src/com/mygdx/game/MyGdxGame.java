@@ -20,7 +20,9 @@ public class MyGdxGame extends Game {
     public Vector3 touch;
     public BitmapFont font;
     public ScreenIntro screenIntro;
-    ScreenAbout screenAbout;
+    public ScreenAbout screenAbout;
+    public Sound levelMusic;
+    public long startMusic;
 
     public ScreenVictory screenVictory;
 
@@ -47,6 +49,8 @@ public class MyGdxGame extends Game {
         screenLevels = new ScreenLevels(this);
         screenVictory = new ScreenVictory(this);
         setScreen(screenIntro);
+        levelMusic = Gdx.audio.newSound(Gdx.files.internal("epicMusic2.ogg"));
+        startMusic = -1;
 
     }
     void createFont(){

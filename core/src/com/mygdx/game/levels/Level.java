@@ -22,6 +22,7 @@ import com.mygdx.game.IconButton;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.Player;
 import com.mygdx.game.SolidPlatform;
+import com.mygdx.game.animations.BulletImpactAnim;
 
 import java.util.ArrayList;
 
@@ -37,7 +38,7 @@ public class Level implements Screen {
 
     static Bullet[] playerBullets;
 
-    Sound levelMusic;
+
     protected EggChild eggChild;
     EnemyEgg bob;
 
@@ -50,7 +51,7 @@ public class Level implements Screen {
     boolean up;
     boolean shoot;
 
-    boolean startMusic = false;
+
     Texture sky;
     Texture rightButtonTexture, leftButtonTexture, upButtonTexture, shootButtonTexture;
     protected Player player;
@@ -66,6 +67,9 @@ public class Level implements Screen {
     protected ArrayList<Object> objects = new ArrayList<>();
 
     protected ArrayList<EnemyEgg> enemyEggs = new ArrayList<>();
+
+    // do not delete static
+    static public  ArrayList<BulletImpactAnim> bullAnims = new ArrayList<>();
 
     private long start = System.currentTimeMillis();
 
@@ -94,10 +98,10 @@ public class Level implements Screen {
         position = mgg.camera.position;
         skyBG = new Background(sky, mgg);
 
-        player = new Player(playerTexture, 100000, SCR_WIDTH / 13.8f, SCR_HEIGHT / 5.5f, 0, 500 * Y, SCR_WIDTH / 190, SCR_HEIGHT / 60, SCR_HEIGHT / 1800);
+        player = new Player(playerTexture, 100000, SCR_WIDTH / 13.8f, SCR_HEIGHT / 5.5f, 0, 400 * Y, SCR_WIDTH / 190, SCR_HEIGHT / 60, SCR_HEIGHT / 1800);
         objects.add(player);
         gun = new Gun(gunTexture, player.getX(), player.getY(), SCR_WIDTH / 9.5f, SCR_HEIGHT / 15);
-        eggChild = new EggChild(eggChildTexture, 1000 * X, 500 * Y, SCR_WIDTH / 12.5f, SCR_HEIGHT / 5);
+        eggChild = new EggChild(eggChildTexture, 1000 * X, 500 * Y, SCR_WIDTH / 25f, SCR_HEIGHT / 10);
 
         bullet = new Texture("bullet2.png");
         eggChildTexture = new Texture("egg_baby.png");
@@ -106,13 +110,13 @@ public class Level implements Screen {
         mgg.camera.setToOrtho(false, SCR_WIDTH, SCR_HEIGHT);
         lerp = 0.12f;
 
-        levelMusic = Gdx.audio.newSound(Gdx.files.internal("epicMusic2.ogg"));
+
     }
 
     void render() {
-        if (!startMusic) {
-            levelMusic.loop();
-            startMusic = true;
+        if (mgg.startMusic == -1) {
+            mgg.startMusic = mgg.levelMusic.loop();
+
         }
         skyBG.exist();
         right = false;
@@ -156,22 +160,31 @@ public class Level implements Screen {
             }
         }
         for (EnemyEgg enemyEgg : enemyEggs){
-            if(enemyEgg.hp > 0) {
-                enemyEgg.update(objects, player);
-                enemyEgg.draw(mgg.batch);
-                for (EnemyBullet enemyBullet : enemyEgg.enemyBullets) {
-                    if (enemyBullet != null && enemyBullet.doesExist) {
-                        enemyBullet.exist();
-                        mgg.batch.draw(bullet, enemyBullet.x, enemyBullet.y, SCR_WIDTH / 26.7f, SCR_HEIGHT / 35);
-                        enemyBullet.collide(objects);
-                    }
+
+            enemyEgg.update(objects, player);
+            enemyEgg.draw(mgg.batch);
+            for (EnemyBullet enemyBullet : enemyEgg.enemyBullets) {
+                if (enemyBullet != null && enemyBullet.doesExist) {
+                    enemyBullet.exist();
+                    mgg.batch.draw(bullet, enemyBullet.x, enemyBullet.y, SCR_WIDTH / 26.7f, SCR_HEIGHT / 35);
+                    enemyBullet.collide(objects);
+
                 }
             }
         }
 
+
         eggChild.draw(mgg.batch);
         player.draw(mgg.batch);
         gun.draw(mgg.batch);
+
+        for (BulletImpactAnim bulletImpactAnim : bullAnims){
+            if (bulletImpactAnim.doesExist){
+                bulletImpactAnim.exist();
+                mgg.batch.draw(bulletImpactAnim.textures[bulletImpactAnim.count], bulletImpactAnim.x, bulletImpactAnim.y, bulletImpactAnim.width, bulletImpactAnim.height);
+            }
+
+        }
 
         mgg.batch.setProjectionMatrix(mgg.camera.combined);
         //mgg.camera.position.set(player.x + player.width/2, player.y + player.height/2, 0);
@@ -232,8 +245,7 @@ public class Level implements Screen {
             position.set(0.0f, 0.0f, 0.0f);
             mgg.camera.position.set((float) (SCR_WIDTH * 0.5), (float) (SCR_HEIGHT * 0.5), 0f);
             mgg.camera.update();
-            levelMusic.stop();
-            mgg.setScreen(mgg.screenVictory);
+            mgg.setScreen(mgg.screenLevels);
         }
         mgg.batch.end();
     }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 
 import static com.mygdx.game.MyGdxGame.SCR_HEIGHT;
@@ -32,7 +33,7 @@ public class EnemyEgg extends Enemy{
     int i;
     public EnemyBullet[] enemyBullets;
     float startingPos;
-
+    boolean justDied;
     public EnemyEgg(Texture img, float hp, float x, float y, float moveSpeed, float vy, boolean immobile, float maxDistance){
         super(img, hp, x, y, immobile);
         this.maxDistance = maxDistance;
@@ -52,6 +53,7 @@ public class EnemyEgg extends Enemy{
         i = 0;
         enemyBullets = new EnemyBullet[100];
         startingPos = x;
+        justDied = false;
     }
 
     public void shoot(EnemyBullet[] enemyBullets) {
@@ -69,48 +71,65 @@ public class EnemyEgg extends Enemy{
         }
     }
     public void update(ArrayList<Object> objects, Player player){
+        if(hp <= 0 && !justDied){
+            justDied = true;
+            vx = MathUtils.random(-5, 5) * X;
+            vy = 25 * Y;
+            gravity *= 5;
+        }
+        if (!justDied) {
+            if (onCD) {
+                counterCD++;
+                if (counterCD == bulletCD) {
+                    onCD = false;
+                    counterCD = 0;
+                }
+            }
+            if (passive) {
+                x += vx;
+                if (vx > 0 && direction != 1) {
+                    flip(true, false);
+                    direction = 1;
+                }
+                if (vx < 0 && direction != 2) {
+                    flip(true, false);
+                    direction = 2;
+                }
+            }
+            setPosition(x, y);
+            collide(vx, 0, objects);
+            y += vy;
+            setPosition(x, y);
+            collide(0, vy, objects);
 
-        if(onCD){
-            counterCD++;
-            if (counterCD == bulletCD) {
-                onCD = false;
-                counterCD = 0;
+
+            passive = true;
+
+            if (Math.abs(x - player.x) < X * 700 && Math.abs(y - player.y) < Y * 210) {
+                passive = false;
+                if (player.x > x) {
+                    if (direction != 1) {
+                        flip(true, false);
+                        direction = 1;
+                    }
+                }
+                if (player.x < x) {
+                    if (direction != 2) {
+                        flip(true, false);
+                        direction = 2;
+                    }
+                    ;
+                }
+            }
+            if (!passive) {
+                shoot(enemyBullets);
             }
         }
-        if(passive) {
+        else{
             x += vx;
-            if (vx > 0 && direction != 1){
-                flip(true, false);
-                direction = 1;
-            }
-            if (vx < 0 && direction != 2){
-                flip(true, false);
-                direction = 2;
-            }
+            y += vy;
+            setPosition(x, y);
         }
-        setPosition(x, y);
-        collide(vx, 0, objects);
-        y += vy;
-        setPosition(x, y);
-        collide(0, vy, objects);
-
-
-
-        passive = true;
-
-        if(Math.abs(x - player.x) < X * 700 && Math.abs(y - player.y) < Y * 210){
-            passive = false;
-            if(player.x > x){
-                if(direction != 1) {flip(true, false); direction = 1;}
-            }
-            if(player.x < x){
-                if(direction != 2) {flip(true, false); direction = 2;};
-            }
-        }
-        if(!passive){
-            shoot(enemyBullets);
-        }
-
         if(!onGround){
             vy -= gravity;
         }
@@ -121,7 +140,7 @@ public class EnemyEgg extends Enemy{
         for (int i = 0; i < objects.size(); i++) {
             if (objects.get(i) instanceof SolidPlatform) {
                 SolidPlatform s = (SolidPlatform) objects.get(i);
-                if (Intersector.overlaps(new Rectangle(s.x, s.y, s.width, s.height), getBoundingRectangle())) {
+                if (Intersector.overlaps(new Rectangle(s.x, s.y, s.width, s.height), getBoundingRectangle()) && hp > 0) {
                     if (vx > 0) {
                         x = s.x - width;
 
@@ -149,6 +168,7 @@ public class EnemyEgg extends Enemy{
                         onGround = true;
                         this.vy = 0;
                     }
+
                 }
                 if(x > startingPos + maxDistance){
 

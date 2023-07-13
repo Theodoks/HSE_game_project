@@ -36,6 +36,10 @@ public class ScreenIntro implements Screen {
 
     @Override
     public void render(float delta) {
+        if (mgg.startMusic == -1) {
+            mgg.startMusic = mgg.levelMusic.loop();
+
+        }
         if(Gdx.input.justTouched()){
             mgg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             mgg.camera.unproject(mgg.touch);
