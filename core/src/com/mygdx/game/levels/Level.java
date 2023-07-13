@@ -9,8 +9,11 @@ import static com.mygdx.game.MyGdxGame.Y;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.Background;
 import com.mygdx.game.Bullet;
@@ -22,6 +25,7 @@ import com.mygdx.game.IconButton;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.Player;
 import com.mygdx.game.SolidPlatform;
+import com.mygdx.game.Text;
 import com.mygdx.game.animations.BulletImpactAnim;
 
 import java.util.ArrayList;
@@ -50,7 +54,7 @@ public class Level implements Screen {
     boolean left;
     boolean up;
     boolean shoot;
-
+    Text hpBar;
 
     Texture sky;
     Texture rightButtonTexture, leftButtonTexture, upButtonTexture, shootButtonTexture;
@@ -72,6 +76,7 @@ public class Level implements Screen {
     static public  ArrayList<BulletImpactAnim> bullAnims = new ArrayList<>();
 
     private long start = System.currentTimeMillis();
+    public BitmapFont hpFont;
 
     protected Level(MyGdxGame mgg) {
         this.mgg = mgg;
@@ -87,6 +92,7 @@ public class Level implements Screen {
         eggChildTexture = new Texture("egg_baby.png");
         enemyEggTexture = new Texture("egg_enemy.png");
 
+        createFont();
 
         playerBullets = new Bullet[100];
 
@@ -95,10 +101,11 @@ public class Level implements Screen {
         upButton = new IconButton(SCR_WIDTH - SCR_WIDTH / 5.5f, SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, upButtonTexture);
         shootButton = new IconButton(SCR_WIDTH - SCR_WIDTH / 3, SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, shootButtonTexture);
 
+
         position = mgg.camera.position;
         skyBG = new Background(sky, mgg);
 
-        player = new Player(playerTexture, 100, SCR_WIDTH / 15f, SCR_HEIGHT / 6f, 0, 400 * Y, SCR_WIDTH / 190, 14.5f * Y, SCR_HEIGHT / 1800);
+        player = new Player(playerTexture, 3, SCR_WIDTH / 15f, SCR_HEIGHT / 6f, 0, 400 * Y, SCR_WIDTH / 190, 14.5f * Y, SCR_HEIGHT / 1800);
         objects.add(player);
         gun = new Gun(gunTexture, player.getX(), player.getY(), SCR_WIDTH / 9.5f, SCR_HEIGHT / 15);
         eggChild = new EggChild(eggChildTexture, 1000 * X, 500 * Y, SCR_WIDTH / 25f, SCR_HEIGHT / 10);
@@ -109,6 +116,7 @@ public class Level implements Screen {
 
         mgg.camera.setToOrtho(false, SCR_WIDTH, SCR_HEIGHT);
         lerp = 0.12f;
+        hpBar = new Text(hpFont, "HP: " + player.hp, 10 * X, 750 * Y);
 
 
     }
@@ -118,6 +126,8 @@ public class Level implements Screen {
             mgg.startMusic = mgg.levelMusic.loop();
 
         }
+
+
         skyBG.exist();
         right = false;
         left = false;
@@ -172,7 +182,11 @@ public class Level implements Screen {
                 }
             }
         }
-
+        mgg.batch.draw(leftButtonTexture, mgg.camera.position.x - SCR_WIDTH / 2 + SCR_WIDTH / 60, mgg.camera.position.y - SCR_HEIGHT / 2 + SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4);
+        mgg.batch.draw(rightButtonTexture, mgg.camera.position.x - SCR_WIDTH / 2 + SCR_WIDTH / 6, mgg.camera.position.y - SCR_HEIGHT / 2 + SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4);
+        mgg.batch.draw(upButtonTexture, mgg.camera.position.x + SCR_WIDTH - SCR_WIDTH / 2 - SCR_WIDTH / 5.5f, mgg.camera.position.y - SCR_HEIGHT / 2 + SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4);
+        mgg.batch.draw(shootButtonTexture, mgg.camera.position.x + SCR_WIDTH - SCR_WIDTH / 2 - SCR_WIDTH / 3, mgg.camera.position.y - SCR_HEIGHT / 2 + SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4);
+        hpBar.font.draw(mgg.batch, hpBar.text, position.x - 800 * X, position.y + 350 * Y);
 
         eggChild.draw(mgg.batch);
         player.draw(mgg.batch);
@@ -202,10 +216,6 @@ public class Level implements Screen {
             gun.update(player.x + player.getWidth() - gun.getWidth(), player.y + player.height / 5f, player.bodyRotation);
         }
 
-        mgg.batch.draw(leftButtonTexture, mgg.camera.position.x - SCR_WIDTH / 2 + SCR_WIDTH / 60, mgg.camera.position.y - SCR_HEIGHT / 2 + SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4);
-        mgg.batch.draw(rightButtonTexture, mgg.camera.position.x - SCR_WIDTH / 2 + SCR_WIDTH / 6, mgg.camera.position.y - SCR_HEIGHT / 2 + SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4);
-        mgg.batch.draw(upButtonTexture, mgg.camera.position.x + SCR_WIDTH - SCR_WIDTH / 2 - SCR_WIDTH / 5.5f, mgg.camera.position.y - SCR_HEIGHT / 2 + SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4);
-        mgg.batch.draw(shootButtonTexture, mgg.camera.position.x + SCR_WIDTH - SCR_WIDTH / 2 - SCR_WIDTH / 3, mgg.camera.position.y - SCR_HEIGHT / 2 + SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4);
 
     }
 
@@ -286,5 +296,21 @@ public class Level implements Screen {
         upButtonTexture.dispose();
         playerTexture.dispose();
         gunTexture.dispose();
+    }
+
+    void createFont(){
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("wellwait.otf"));
+
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+
+        parameter.characters = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяabcdefghijklmnopqrstuvwxyzАБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789][_!$%#@|\\/?-+=()*&.;:,{}\"´`'<>";
+
+        parameter.size = (int)(50 * mgg.A);
+        parameter.color = Color.GREEN;
+        parameter.borderWidth = mgg.A * 3;
+        parameter.borderColor = Color.BLACK;
+        hpFont = generator.generateFont(parameter);
+
+
     }
 }

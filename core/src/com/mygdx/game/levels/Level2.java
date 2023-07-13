@@ -22,36 +22,39 @@ public class Level2 extends Level {
 
         //PLATFORMS CREATION START
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 40; i++) {
             GrassyPlat g = new GrassyPlat(gx, gy);
             solids[i] = g;
             objects.add(g);
             gx += g.width;
 
         }
-        solids[20] = new GrassyPlat(1000 * X, Y * 120);
-        objects.add(solids[20]);
-        gx = 500 * X;
-        gy = 202.5f * Y;
+        solids[40] = new GrassyPlat(1000 * X, gheight);
+        objects.add(solids[40]);
 
-        /*
-        for (int i = 21; i < 31; i++) {
-            GrassyPlat g = new GrassyPlat(gx, gy);
-            solids[i] = g;
-            objects.add(g);
-            gx += 100 * X;
-            gy += SCR_HEIGHT / 10;
-        }*/
-        solids[31] = new Dirt(0, -10000 * Y, gwidth * 20, 10000 * Y);
+        solids[99] = new Dirt(1000 * X, 0, gwidth, gheight);
+        objects.add(solids[99]);
+
+        solids[41] = new Dirt(0, -10000 * Y, gwidth * 40, 10000 * Y);
         objects.add(solids[31]);
-        solids[32] = new Dirt(-10000 * X, -10000 * Y, 10000 * X, 10400 * Y);
+        solids[42] = new Dirt(-10000 * X, -10000 * Y, 10000 * X, 10400 * Y);
         objects.add(solids[32]);
+
         int o = 1;
-        for (int i = 33; i < 43; i++) {
+        for (int i = 43; i < 53; i++) {
             solids[i] = new GrassyPlat(-gwidth * o, 400 * Y);
             objects.add(solids[i]);
             o++;
         }
+        o = 0;
+        for (int i = 53; i < 63; i++) {
+            solids[i] = new GrassyPlat(40 * gwidth + gwidth * o, 500 * Y);
+            objects.add(solids[i]);
+            o++;
+        }
+        solids[63] = new Dirt(40 * gwidth, -10000 * Y, 10000 * X, 10500 * Y);
+        objects.add(solids[63]);
+
         //PLATFORMS CREATION END
 
         //ENEMIES CREATION START

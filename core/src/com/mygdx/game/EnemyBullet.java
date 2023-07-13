@@ -23,7 +23,7 @@ public class EnemyBullet {
         this.x = x;
         this.y = y;
         this.vx = vx;
-        enemyBulletDmg = 25;
+        enemyBulletDmg = 1;
     }
     public void exist(){
 

@@ -22,6 +22,7 @@ public class MyGdxGame extends Game {
     public OrthographicCamera camera;
     public Vector3 touch;
     public BitmapFont font;
+
     public ScreenIntro screenIntro;
     public ScreenAbout screenAbout;
     public Sound levelMusic;
@@ -71,6 +72,8 @@ public class MyGdxGame extends Game {
         parameter.borderWidth = A * 3;
         parameter.borderColor = Color.BLACK;
         font = generator.generateFont(parameter);
+
+
     }
     public void loadLevel(int levelid){
         if(levelid == 0) {

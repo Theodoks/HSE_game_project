@@ -27,7 +27,7 @@ public class Level3 extends Level{
             gx += g.width;
 
         }
-        eggChild.setY(572 + gheight);
+        eggChild.setY(572 * Y + gheight);
         eggChild.setX(3000 * X + gwidth);
         /*
         for (int i = 21; i < 31; i++) {
@@ -62,10 +62,10 @@ public class Level3 extends Level{
         solids [55] = new GrassyPlat(1500 * X, 464 * Y);
         objects.add(solids[55]);
 
-        solids [56] = new GrassyPlat(1000 * X, 696 * Y);
+        solids [56] = new GrassyPlat(990 * X, 696 * Y);
         objects.add(solids[56]);
 
-        solids [57] = new GrassyPlat(1000 * X - gwidth, 696 * Y);
+        solids [57] = new GrassyPlat(990 * X - gwidth, 696 * Y);
         objects.add(solids[57]);
 
         solids[58] = new GrassyPlat(1500 * X, 928 * Y);
