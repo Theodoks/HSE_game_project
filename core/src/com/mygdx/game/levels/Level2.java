@@ -61,14 +61,25 @@ public class Level2 extends Level {
         solids[65] = new Dirt(2000 * X, 0, gwidth, gheight * 2);
         objects.add(solids[65]);
 
-        solids[66] = new GrassyPlat(3000 * X, gheight * 3);
+        solids[66] = new GrassyPlat(2000 * X + gwidth * 7, gheight * 3);
         objects.add(solids[66]);
 
-        //solids[67] = new Dirt(3000 * X, 0, gwidth, gheight * 3);
-        //objects.add(solids[67]);
+        solids[67] = new Dirt(2000 * X + gwidth * 7, 0, gwidth, gheight * 3);
+        objects.add(solids[67]);
 
-        //solids[68] = new Dirt(2000 * X + gwidth, 0, 1000 * X - gwidth, gheight * 3);
-        //objects.add(solids[68]);
+        solids[68] = new Dirt(2000 * X + gwidth, 0, gwidth * 7, gheight * 3);
+        objects.add(solids[68]);
+        o = 0;
+        for (int i = 69; i <= 74; i++) {
+            solids[i] = new GrassyPlat(2000 * X + gwidth + o * gwidth, gheight * 2);
+            o++;
+        }
+        solids[75] = new GrassyPlat(2000 * X + gwidth * 8, gheight * 2);
+        objects.add(solids[75]);
+        solids[76] = new Dirt(2000 * X + gwidth * 8, 0, gwidth, gheight * 2);
+        objects.add(solids[76]);
+
+
 
         //PLATFORMS CREATION END
 
@@ -80,12 +91,41 @@ public class Level2 extends Level {
         bob = new EnemyEgg(enemyEggTexture, 100, 2003 * X, gheight * 3, X * 3, 0, false, gwidth/3);
         enemyEggs.add(bob);
         objects.add(bob);
-        /*bob = new EnemyEgg(enemyEggTexture, 100, 1000 * X, Y * 1000, X * 3, 0, false, 600 * X);
+        bob = new EnemyEgg(enemyEggTexture, 100, 2000 * X + gwidth * 7, gheight * 4, X * 3, 0, false, gwidth / 3);
         enemyEggs.add(bob);
-        objects.add(bob);*/
+        objects.add(bob);
+        bob = new EnemyEgg(enemyEggTexture, 1, 4000 * X, gheight, X * 3, 0, false, 20000 * X);
+        enemyEggs.add(bob);
+        objects.add(bob);
+        bob = new EnemyEgg(enemyEggTexture, 1, 4000 * X, gheight, X * 4, 0, false, 20000 * X);
+        enemyEggs.add(bob);
+        objects.add(bob);
+        bob = new EnemyEgg(enemyEggTexture, 1, 4000 * X, gheight, X * 4.5f, 0, false, 20000 * X);
+        enemyEggs.add(bob);
+        objects.add(bob);
+        bob = new EnemyEgg(enemyEggTexture, 1, 4500 * X, gheight, X * 5, 0, false, 20000 * X);
+        enemyEggs.add(bob);
+        objects.add(bob);
+        bob = new EnemyEgg(enemyEggTexture, 1, 4000 * X, gheight, X * 5.5f, 0, false, 20000 * X);
+        enemyEggs.add(bob);
+        objects.add(bob);
+        bob = new EnemyEgg(enemyEggTexture, 1, 4000 * X, gheight, X * 6, 0, false, 20000 * X);
+        enemyEggs.add(bob);
+        objects.add(bob);
+        bob = new EnemyEgg(enemyEggTexture, 1, 4000 * X, gheight, X * 6.5f, 0, false, 20000 * X);
+        enemyEggs.add(bob);
+        objects.add(bob);
+        bob = new EnemyEgg(enemyEggTexture, 1, 6000 * X, gheight, X * 7f, 0, false, 20000 * X);
+        enemyEggs.add(bob);
+        objects.add(bob);
+        bob = new EnemyEgg(enemyEggTexture, 1, 3500 * X, gheight, X * 7.5f, 0, false, 20000 * X);
+        enemyEggs.add(bob);
+        objects.add(bob);
+
 
         //ENEMIES CREATION END
-
+        eggChild.setX(gwidth * 39);
+        eggChild.setY(gheight);
         objects.add(eggChild);
     }
 
