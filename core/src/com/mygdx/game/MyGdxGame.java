@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -21,7 +22,8 @@ public class MyGdxGame extends Game {
     public BitmapFont font;
     public ScreenIntro screenIntro;
     public ScreenAbout screenAbout;
-
+    public Sound levelMusic;
+    public long startMusic;
     public final static int FPS = 60;
     Level level;
     public ScreenLevels screenLevels;
@@ -44,6 +46,8 @@ public class MyGdxGame extends Game {
         screenAbout = new ScreenAbout(this);
         screenLevels = new ScreenLevels(this);
         setScreen(screenIntro);
+        levelMusic = Gdx.audio.newSound(Gdx.files.internal("epicMusic2.ogg"));
+        startMusic = -1;
 
     }
     void createFont(){

@@ -38,7 +38,7 @@ public class Level implements Screen {
 
     static Bullet[] playerBullets;
 
-    Sound levelMusic;
+
     protected EggChild eggChild;
     EnemyEgg bob;
 
@@ -51,7 +51,7 @@ public class Level implements Screen {
     boolean up;
     boolean shoot;
 
-    long startMusic;
+
     Texture sky;
     Texture rightButtonTexture, leftButtonTexture, upButtonTexture, shootButtonTexture;
     protected Player player;
@@ -110,13 +110,12 @@ public class Level implements Screen {
         mgg.camera.setToOrtho(false, SCR_WIDTH, SCR_HEIGHT);
         lerp = 0.12f;
 
-        levelMusic = Gdx.audio.newSound(Gdx.files.internal("epicMusic2.ogg"));
-        startMusic = -1;
+
     }
 
     void render() {
-        if (startMusic == -1) {
-            startMusic = levelMusic.loop();
+        if (mgg.startMusic == -1) {
+            mgg.startMusic = mgg.levelMusic.loop();
 
         }
         skyBG.exist();
@@ -246,7 +245,6 @@ public class Level implements Screen {
             position.set(0.0f, 0.0f, 0.0f);
             mgg.camera.position.set((float) (SCR_WIDTH * 0.5), (float) (SCR_HEIGHT * 0.5), 0f);
             mgg.camera.update();
-            levelMusic.stop();
             mgg.setScreen(mgg.screenLevels);
         }
         mgg.batch.end();
