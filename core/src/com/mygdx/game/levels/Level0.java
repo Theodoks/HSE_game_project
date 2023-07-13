@@ -74,6 +74,8 @@ public class Level0 extends Level {
     }
     @Override
     public void win() {
-        mgg.maxLevel = 1;
+        if(mgg.maxLevel < 1) {
+            mgg.maxLevel = 1;
+        }
     }
 }
