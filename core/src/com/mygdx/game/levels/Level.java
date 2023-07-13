@@ -267,7 +267,11 @@ public class Level implements Screen {
             position.set(0.0f, 0.0f, 0.0f);
             mgg.camera.position.set((float) (SCR_WIDTH * 0.5), (float) (SCR_HEIGHT * 0.5), 0f);
             mgg.camera.update();
-            mgg.setScreen(mgg.screenLevels);
+            try {
+                Thread.sleep(1250);
+            } catch (InterruptedException e) {
+                e.getMessage();
+            }
             mgg.setScreen(mgg.screenDefeat);
         }
         mgg.batch.end();

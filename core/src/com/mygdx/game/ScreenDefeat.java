@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
-public class ScreenDefeat implements Screen {
+public class ScreenDefeat implements Screen{
     MyGdxGame mgg;
 
     Texture imgBackGround;
