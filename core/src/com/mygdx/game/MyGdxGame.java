@@ -10,14 +10,11 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.video.VideoPlayer;
 import com.mygdx.game.levels.Level;
 import com.mygdx.game.levels.Level0;
 import com.mygdx.game.levels.Level1;
 import com.mygdx.game.levels.Level2;
 import com.mygdx.game.levels.Level3;
-
-import aurelienribon.tweenengine.TweenManager;
 
 public class MyGdxGame extends Game {
     public static float SCR_WIDTH;
@@ -32,6 +29,7 @@ public class MyGdxGame extends Game {
     public Sound levelMusic;
     public long startMusic;
 
+    public ScreenCutscene2 screenCutscene2;
     public ScreenVictory screenVictory;
     public ScreenDefeat screenDefeat;
 
@@ -61,12 +59,19 @@ public class MyGdxGame extends Game {
         screenIntro = new ScreenIntro(this);
         screenAbout = new ScreenAbout(this);
         screenLevels = new ScreenLevels(this);
+        screenCutscene2 = new ScreenCutscene2(this);
         screenVictory = new ScreenVictory(this, 0);
         screenDefeat = new ScreenDefeat(this, 0);
         setScreen(screenIntro);
         levelMusic = Gdx.audio.newSound(Gdx.files.internal("epicMusic2.ogg"));
         startMusic = -1;
 
+
+
+    }
+
+    public void switchToScreenLevels() {
+        setScreen(screenLevels);
     }
     void createFont(){
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("LilitaOne-Regular.ttf"));

@@ -18,7 +18,10 @@ public class ScreenLevels implements Screen {
 
     Texture levelButtonTexture;
 
+    Texture cutsceneButtonTexture;
+
     IconTextButton[] levelButtons;
+    IconButton cutsceneButton;
 
     BitmapFont font;
 
@@ -30,10 +33,12 @@ public class ScreenLevels implements Screen {
 
         levelButtonTexture = new Texture("oval.png");
         imgBackGround = new Texture("Sky.jpg");
+        cutsceneButtonTexture = new Texture("button_cinema.png");
         btnReturn = new TextButton(mgg.font, "Back", SCR_WIDTH * 0.05f, SCR_HEIGHT * 0.95f, 55 * mgg.X, 55 * mgg.Y);
 
         createFont();
 
+        cutsceneButton = new IconButton(SCR_WIDTH * 0.48f, SCR_HEIGHT * 0.1f, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, cutsceneButtonTexture);
 
         levelButtons = new IconTextButton[4];
         for (int i = 0; i < levelButtons.length; i++) {
@@ -95,6 +100,8 @@ public class ScreenLevels implements Screen {
                 mgg.loadLevel(3);
                 mgg.screenDefeat.levelIndex = 3;
                 mgg.screenVictory.levelIndex = 2;
+            } else if (cutsceneButton.hit(mgg.touch.x, mgg.touch.y)) {
+                mgg.setScreen(mgg.screenCutscene2);
             }
         }
 
@@ -102,6 +109,8 @@ public class ScreenLevels implements Screen {
         mgg.batch.begin();
         mgg.batch.setProjectionMatrix(mgg.camera.combined);
         mgg.batch.draw(imgBackGround, 0, 0, SCR_WIDTH, SCR_HEIGHT);
+
+        mgg.batch.draw(cutsceneButton, SCR_WIDTH * 0.48f, SCR_HEIGHT * 0.1f, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4);
 
         btnReturn.font.draw(mgg.batch, btnReturn.text, btnReturn.x, btnReturn.y);
 
