@@ -79,6 +79,7 @@ public class Level implements Screen {
 
     private long start = System.currentTimeMillis();
     public BitmapFont hpFont;
+    boolean noDelay;
 
     protected Level(MyGdxGame mgg) {
         this.mgg = mgg;
@@ -102,7 +103,7 @@ public class Level implements Screen {
         rightButton = new IconButton(SCR_WIDTH / 6, SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, rightButtonTexture);
         upButton = new IconButton(SCR_WIDTH - SCR_WIDTH / 5.5f, SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, upButtonTexture);
         shootButton = new IconButton(SCR_WIDTH - SCR_WIDTH / 3, SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, shootButtonTexture);
-        btnReturn = new TextButton(mgg.font, "return", SCR_WIDTH * 0.05f, SCR_HEIGHT * 0.95f, 55 * mgg.X, 55 * mgg.Y);
+        btnReturn = new TextButton(mgg.font, "Quit", SCR_WIDTH * 0.05f, SCR_HEIGHT * 0.95f, 55 * mgg.X, 55 * mgg.Y);
 
         position = mgg.camera.position;
         skyBG = new Background(sky, mgg);
@@ -110,7 +111,7 @@ public class Level implements Screen {
         player = new Player(playerTexture, 3, SCR_WIDTH / 15f, SCR_HEIGHT / 6f, 0, 400 * Y, SCR_WIDTH / 190, 14.5f * Y, SCR_HEIGHT / 1800);
         objects.add(player);
         gun = new Gun(gunTexture, player.getX(), player.getY(), SCR_WIDTH / 9.5f, SCR_HEIGHT / 15);
-        eggChild = new EggChild(eggChildTexture, 1000 * X, 500 * Y, SCR_WIDTH / 25f, SCR_HEIGHT / 10);
+        eggChild = new EggChild(eggChildTexture, 3500 * X, 230 * Y, SCR_WIDTH / 25f, SCR_HEIGHT / 10);
 
         bullet = new Texture("bullet2.png");
         eggChildTexture = new Texture("egg_baby.png");
@@ -119,7 +120,7 @@ public class Level implements Screen {
         mgg.camera.setToOrtho(false, SCR_WIDTH, SCR_HEIGHT);
         lerp = 0.12f;
         hpBar = new Text(hpFont, "" + player.hp, 10 * X, 750 * Y);
-
+        noDelay = false;
 
     }
 
@@ -154,6 +155,7 @@ public class Level implements Screen {
                 }
                 if(btnReturn.hit(mgg.touch.x, -mgg.touch.y + SCR_HEIGHT)){
                     player.dead = true;
+                    noDelay = true;
                 }
             }
         }
@@ -187,11 +189,11 @@ public class Level implements Screen {
                 }
             }
         }
-
+        eggChild.draw(mgg.batch);
         btnReturn.font.draw(mgg.batch, btnReturn.text, mgg.camera.position.x - SCR_WIDTH / 2 + SCR_WIDTH * 0.05f, mgg.camera.position.y - SCR_HEIGHT / 2  + SCR_HEIGHT * 0.95f);
         hpBar.font.draw(mgg.batch, hpBar.text, player.x + player.width * 0.35f, player.y + 220 * Y);
 
-        eggChild.draw(mgg.batch);
+
         player.draw(mgg.batch);
         gun.draw(mgg.batch);
 
@@ -267,10 +269,13 @@ public class Level implements Screen {
             position.set(0.0f, 0.0f, 0.0f);
             mgg.camera.position.set((float) (SCR_WIDTH * 0.5), (float) (SCR_HEIGHT * 0.5), 0f);
             mgg.camera.update();
-            try {
-                Thread.sleep(1250);
-            } catch (InterruptedException e) {
-                e.getMessage();
+            if(!noDelay) {
+
+                try {
+                    Thread.sleep(1250);
+                } catch (InterruptedException e) {
+                    e.getMessage();
+                }
             }
             mgg.setScreen(mgg.screenDefeat);
         }

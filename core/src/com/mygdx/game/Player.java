@@ -53,10 +53,10 @@ public class Player extends Sprite {
         if (!onCD) {
             bitShoot.play();
             onCD = true;
-            if (direction == 1) v = 21 * X;
-            else v = -21 * X;
+            if (direction == 1) v = 13 * X;
+            else v = -13 * X;
             playerBullets[i] = new Bullet(v, x, y + (MyGdxGame.SCR_HEIGHT/14.35f));
-            if (v == 21 * X) playerBullets[i].x += 100 * X;
+            if (v == 13 * X) playerBullets[i].x += 100 * X;
 
             if (++i >= 100) {
                 i = 0;

@@ -30,7 +30,7 @@ public class ScreenLevels implements Screen {
 
         levelButtonTexture = new Texture("oval.png");
         imgBackGround = new Texture("Sky.jpg");
-        btnReturn = new TextButton(mgg.font, "return", SCR_WIDTH * 0.05f, SCR_HEIGHT * 0.95f, 55 * mgg.X, 55 * mgg.Y);
+        btnReturn = new TextButton(mgg.font, "Back", SCR_WIDTH * 0.05f, SCR_HEIGHT * 0.95f, 55 * mgg.X, 55 * mgg.Y);
 
         createFont();
 
