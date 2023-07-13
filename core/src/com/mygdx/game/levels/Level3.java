@@ -65,13 +65,13 @@ public class Level3 extends Level{
         solids [56] = new GrassyPlat(1000 * X, 696 * Y);
         objects.add(solids[56]);
 
-        solids [57] = new GrassyPlat(1000 * X - gwidth, 696 * Y);
+        solids [57] = new GrassyPlat(1000 * X - gwidth * 0.5f, 696 * Y);
         objects.add(solids[57]);
 
         solids[58] = new GrassyPlat(1500 * X, 928 * Y);
         objects.add(solids[58]);
 
-        solids[59] = new GrassyPlat(2500 * X, 350 * Y);
+        solids[59] = new GrassyPlat(2501 * X, 350 * Y);
         objects.add(solids[59]);
 
         solids[60] = new GrassyPlat(2500 * X + gwidth, 350 * Y);
@@ -116,7 +116,9 @@ public class Level3 extends Level{
 
     @Override
     public void win() {
-        mgg.maxLevel = 4;
+        if(mgg.maxLevel < 4) {
+            mgg.maxLevel = 4;
+        }
     }
 }
 
