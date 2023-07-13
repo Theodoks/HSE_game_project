@@ -28,9 +28,12 @@ public class ScreenVictory implements Screen {
 
     Text victoryText;
 
+    int levelIndex;
 
-    public ScreenVictory(MyGdxGame g) {
+
+    public ScreenVictory(MyGdxGame g, int levelIndex) {
         mgg = g;
+        this.levelIndex = levelIndex;
 
         createFont();
 
@@ -57,7 +60,9 @@ public class ScreenVictory implements Screen {
                 mgg.setScreen(mgg.screenLevels);
             }
             else if (nextLevelButton.hit(mgg.touch.x, mgg.touch.y)) {
-                mgg.loadLevel(2);
+                mgg.loadLevel(levelIndex + 1);
+                mgg.screenDefeat.levelIndex = levelIndex + 1;
+                levelIndex += 1;
             }
         }
 

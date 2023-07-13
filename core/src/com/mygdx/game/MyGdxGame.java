@@ -51,8 +51,8 @@ public class MyGdxGame extends Game {
         screenIntro = new ScreenIntro(this);
         screenAbout = new ScreenAbout(this);
         screenLevels = new ScreenLevels(this);
-        screenVictory = new ScreenVictory(this);
-        screenDefeat = new ScreenDefeat(this);
+        screenVictory = new ScreenVictory(this, 0);
+        screenDefeat = new ScreenDefeat(this, 0);
         setScreen(screenIntro);
         levelMusic = Gdx.audio.newSound(Gdx.files.internal("epicMusic2.ogg"));
         startMusic = -1;
