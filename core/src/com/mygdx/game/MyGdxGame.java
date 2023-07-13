@@ -87,5 +87,10 @@ public class MyGdxGame extends Game {
             level = new Level2(this);
             setScreen(level);
         }
+        else if(levelid == 3)
+        {
+            level = new Level3(this);
+            setScreen(level);
+        }
     }
 }

@@ -114,5 +114,9 @@ public class Level3 extends Level{
         super.dispose();
     }
 
+    @Override
+    public void win() {
+        mgg.maxLevel = 4;
+    }
 }
 
