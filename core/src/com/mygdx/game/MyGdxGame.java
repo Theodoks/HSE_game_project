@@ -11,7 +11,9 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.levels.Level;
 import com.mygdx.game.levels.Level0;
+//import com.mygdx.game.levels.Level1;
 import com.mygdx.game.levels.Level2;
+import com.mygdx.game.levels.Level3;
 
 public class MyGdxGame extends Game {
     public static float SCR_WIDTH;
@@ -74,9 +76,19 @@ public class MyGdxGame extends Game {
             level = new Level0(this);
             setScreen(level);
         }
+        /*else if (levelid == 1){
+            level = new Level1(this);
+            setScreen(level);
+
+        }*/
         else if(levelid == 2)
         {
             level = new Level2(this);
+            setScreen(level);
+        }
+        else if(levelid == 3)
+        {
+            level = new Level3(this);
             setScreen(level);
         }
     }
