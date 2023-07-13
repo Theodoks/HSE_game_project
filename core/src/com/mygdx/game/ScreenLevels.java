@@ -83,6 +83,8 @@ public class ScreenLevels implements Screen {
             }
              else if (levelButtons[1].hit(mgg.touch.x, mgg.touch.y)) {
                 mgg.loadLevel(1);
+                mgg.screenDefeat.levelIndex = 1;
+                mgg.screenVictory.levelIndex = 1;
             }
              else if (levelButtons[2].hit(mgg.touch.x, mgg.touch.y)) {
                 mgg.loadLevel(2);
@@ -91,6 +93,8 @@ public class ScreenLevels implements Screen {
             }
             else if (levelButtons[3].hit(mgg.touch.x, mgg.touch.y)) {
                 mgg.loadLevel(3);
+                mgg.screenDefeat.levelIndex = 3;
+                mgg.screenVictory.levelIndex = 2;
             }
         }
 
