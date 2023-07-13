@@ -241,11 +241,16 @@ public class Level implements Screen {
 
         if(!player.isWinner && !player.dead) {
             render();
-        } else {
+        } else if (player.isWinner) {
             position.set(0.0f, 0.0f, 0.0f);
             mgg.camera.position.set((float) (SCR_WIDTH * 0.5), (float) (SCR_HEIGHT * 0.5), 0f);
             mgg.camera.update();
             mgg.setScreen(mgg.screenVictory);
+        } else if (player.dead) {
+            position.set(0.0f, 0.0f, 0.0f);
+            mgg.camera.position.set((float) (SCR_WIDTH * 0.5), (float) (SCR_HEIGHT * 0.5), 0f);
+            mgg.camera.update();
+            mgg.setScreen(mgg.screenDefeat);
         }
         mgg.batch.end();
     }
