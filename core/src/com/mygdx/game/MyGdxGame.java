@@ -26,6 +26,7 @@ public class MyGdxGame extends Game {
     public long startMusic;
 
     public ScreenVictory screenVictory;
+    public ScreenDefeat screenDefeat;
 
     public final static int FPS = 60;
     Level level;
@@ -49,6 +50,7 @@ public class MyGdxGame extends Game {
         screenAbout = new ScreenAbout(this);
         screenLevels = new ScreenLevels(this);
         screenVictory = new ScreenVictory(this);
+        screenDefeat = new ScreenDefeat(this);
         setScreen(screenIntro);
         levelMusic = Gdx.audio.newSound(Gdx.files.internal("epicMusic2.ogg"));
         startMusic = -1;
