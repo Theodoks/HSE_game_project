@@ -108,7 +108,7 @@ public class Level implements Screen {
         position = mgg.camera.position;
         skyBG = new Background(sky, mgg);
 
-        player = new Player(playerTexture, 3, SCR_WIDTH / 15f, SCR_HEIGHT / 6f, 0, 400 * Y, SCR_WIDTH / 190, 14.5f * Y, SCR_HEIGHT / 1800);
+        player = new Player(playerTexture, 3, SCR_WIDTH / 15f, SCR_HEIGHT / 5.7f, 0, 400 * Y, SCR_WIDTH / 190, 14.5f * Y, SCR_HEIGHT / 1800);
         objects.add(player);
         gun = new Gun(gunTexture, player.getX(), player.getY(), SCR_WIDTH / 9.5f, SCR_HEIGHT / 15);
         eggChild = new EggChild(eggChildTexture, 3500 * X, 230 * Y, SCR_WIDTH / 25f, SCR_HEIGHT / 10);
