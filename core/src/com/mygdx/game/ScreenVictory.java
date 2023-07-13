@@ -60,9 +60,14 @@ public class ScreenVictory implements Screen {
                 mgg.setScreen(mgg.screenLevels);
             }
             else if (nextLevelButton.hit(mgg.touch.x, mgg.touch.y)) {
-                mgg.loadLevel(levelIndex + 1);
-                mgg.screenDefeat.levelIndex = levelIndex + 1;
-                levelIndex += 1;
+                if(levelIndex < 5) {
+                    mgg.loadLevel(levelIndex + 1);
+                    mgg.screenDefeat.levelIndex = levelIndex + 1;
+                    levelIndex += 1;
+                }
+                else{
+                    mgg.setScreen(mgg.screenCutscene2);
+                }
             }
         }
 

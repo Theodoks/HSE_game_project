@@ -86,11 +86,11 @@ public class Level3 extends Level{
         enemyEggs.add(bob);
         objects.add(bob);
 
-        bob = new EnemyEgg(enemyEggTexture, 100, 1000 * X, Y * 696 + gheight, X * 3, 0, false, gwidth / 3);
+        bob = new EnemyEgg(enemyEggTexture, 100, 1050 * X, Y * 696 + gheight, X * 3, 0, false, gwidth / 3);
         enemyEggs.add(bob);
         objects.add(bob);
 
-        bob = new EnemyEgg(enemyEggTexture, 100, 1000 * X - gwidth, Y * 696 + gheight, X * 3, 0, false, gwidth / 3);
+        bob = new EnemyEgg(enemyEggTexture, 100, 1050 * X - gwidth, Y * 696 + gheight, X * 3, 0, false, gwidth / 3);
         enemyEggs.add(bob);
         objects.add(bob);
 
