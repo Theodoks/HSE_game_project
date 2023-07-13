@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.levels.Level;
 import com.mygdx.game.levels.Level0;
+import com.mygdx.game.levels.Level1;
 import com.mygdx.game.levels.Level2;
 
 public class MyGdxGame extends Game {
@@ -28,6 +29,7 @@ public class MyGdxGame extends Game {
     public static float X;
     public static float Y;
     public static float A;
+    public int maxLevel = 0;
     @Override
     public void create() {
         batch = new SpriteBatch();
@@ -62,6 +64,11 @@ public class MyGdxGame extends Game {
     void loadLevel(int levelid){
         if(levelid == 0) {
             level = new Level0(this);
+            setScreen(level);
+        }
+        else if(levelid == 1)
+        {
+            level = new Level1(this);
             setScreen(level);
         }
         else if(levelid == 2)
