@@ -36,9 +36,9 @@ public class Level2 extends Level {
         objects.add(solids[99]);
 
         solids[41] = new Dirt(0, -10000 * Y, gwidth * 40, 10000 * Y);
-        objects.add(solids[31]);
+        objects.add(solids[41]);
         solids[42] = new Dirt(-10000 * X, -10000 * Y, 10000 * X, 10400 * Y);
-        objects.add(solids[32]);
+        objects.add(solids[42]);
 
         int o = 1;
         for (int i = 43; i < 53; i++) {

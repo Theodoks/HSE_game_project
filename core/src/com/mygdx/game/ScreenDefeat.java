@@ -36,7 +36,7 @@ public class ScreenDefeat implements Screen {
         imgBackGround = new Texture("Sky.jpg");
         toLevelsButtonTexture = new Texture("toLevelsButton.png");
         tryAgainButtonTexture = new Texture("tryAgainButton.png");
-        victoryText = new Text(font, "ПОРАЖЕНИЕ", SCR_WIDTH * 0.1f, SCR_HEIGHT * 0.8f);
+        victoryText = new Text(font, "YOU ARE DEAD", mgg.X * 80, SCR_HEIGHT * 0.8f);
         toLevelsButton = new IconButton(SCR_WIDTH * 0.3333f, SCR_HEIGHT * 0.15f, SCR_WIDTH / 7 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 7, toLevelsButtonTexture);
         tryAgainButton = new IconButton(SCR_WIDTH * 0.6666f, SCR_HEIGHT * 0.15f, SCR_WIDTH / 7 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 7, tryAgainButtonTexture);
     }
@@ -74,7 +74,7 @@ public class ScreenDefeat implements Screen {
     }
 
     void createFont(){
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("wellwait.otf"));
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("LilitaOne-Regular.ttf"));
 
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 

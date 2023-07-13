@@ -50,7 +50,7 @@ public class ScreenLevels implements Screen {
     }
 
     void createFont(){
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("wellwait.otf"));
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("LilitaOne-Regular.ttf"));
 
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 
@@ -58,7 +58,7 @@ public class ScreenLevels implements Screen {
 
         parameter.size = (int)(110 * mgg.A);
         parameter.color = Color.ORANGE;
-        parameter.borderWidth = (int)(3 * mgg.A);
+        parameter.borderWidth = (int)(7 * mgg.A);
         parameter.borderColor = Color.BLACK;
         font = generator.generateFont(parameter);
     }
