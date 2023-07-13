@@ -30,6 +30,7 @@ public class ScreenAbout implements Screen {
 
     @Override
     public void render(float delta) {
+
         if(Gdx.input.justTouched()){
             mgg.touch.set(Gdx.input.getX(), Gdx.input.getY(), 0);
             mgg.camera.unproject(mgg.touch);

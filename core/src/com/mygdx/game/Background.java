@@ -8,7 +8,7 @@ public class Background {
     MyGdxGame mgg;
 
     float x1, x2, y1, y2;
-    Background(Texture img, MyGdxGame mgg){
+    public Background(Texture img, MyGdxGame mgg){
         this.img = img;
         this.mgg = mgg;
         x1 = mgg.camera.position.x - MyGdxGame.SCR_WIDTH;

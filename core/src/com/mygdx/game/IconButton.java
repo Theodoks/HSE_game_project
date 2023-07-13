@@ -23,7 +23,7 @@ public class IconButton extends Sprite {
         setPosition(x, y);
     }
 
-    boolean hit(float tx, float ty) {
+    public boolean hit(float tx, float ty) {
         return (x < tx && tx < (x + width)) && (y < ty && ty < (y + height));
     }
 

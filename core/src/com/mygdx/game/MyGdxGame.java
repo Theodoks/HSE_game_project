@@ -2,25 +2,31 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector3;
+import com.mygdx.game.levels.Level;
+import com.mygdx.game.levels.Level0;
+import com.mygdx.game.levels.Level2;
 
 public class MyGdxGame extends Game {
-    static float SCR_WIDTH;
-    static float SCR_HEIGHT;
-    SpriteBatch batch;
-    OrthographicCamera camera;
-    Vector3 touch;
-    BitmapFont font;
-    ScreenIntro screenIntro;
-    ScreenGame screenGame;
-    ScreenAbout screenAbout;
-
-    ScreenLevels screenLevels;
+    public static float SCR_WIDTH;
+    public static float SCR_HEIGHT;
+    public SpriteBatch batch;
+    public OrthographicCamera camera;
+    public Vector3 touch;
+    public BitmapFont font;
+    public ScreenIntro screenIntro;
+    public ScreenAbout screenAbout;
+    public Sound levelMusic;
+    public long startMusic;
+    public final static int FPS = 60;
+    Level level;
+    public ScreenLevels screenLevels;
     public static float X;
     public static float Y;
     public static float A;
@@ -40,6 +46,8 @@ public class MyGdxGame extends Game {
         screenAbout = new ScreenAbout(this);
         screenLevels = new ScreenLevels(this);
         setScreen(screenIntro);
+        levelMusic = Gdx.audio.newSound(Gdx.files.internal("epicMusic2.ogg"));
+        startMusic = -1;
 
     }
     void createFont(){
@@ -55,7 +63,15 @@ public class MyGdxGame extends Game {
         parameter.borderColor = Color.BLACK;
         font = generator.generateFont(parameter);
     }
-    void createGame(int levelid){
-        screenGame = new ScreenGame(this, levelid);
+    void loadLevel(int levelid){
+        if(levelid == 0) {
+            level = new Level0(this);
+            setScreen(level);
+        }
+        else if(levelid == 2)
+        {
+            level = new Level2(this);
+            setScreen(level);
+        }
     }
 }

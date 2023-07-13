@@ -11,22 +11,23 @@ import java.util.ArrayList;
 import static com.mygdx.game.MyGdxGame.X;
 import static com.mygdx.game.MyGdxGame.Y;
 public class Player extends Sprite {
-    float x;
-    float y;
+    public float x;
+    public  float y;
     float vx, vy;
     static int i = 0;
-    float width, height;
-    boolean onGround, bodyRotation = true;
+    public float width, height;
+    public boolean onGround, bodyRotation = true;
     float moveSpeed, powerJump, gravity;
     float bulletCD;
     float counterCD;
-    boolean onCD;
+    public boolean onCD;
     int direction;
     float v;
-    boolean isWinner = false;
+    public boolean isWinner = false;
     static Sound bitShoot;
-
-    Player(Texture img, float width, float height, float x, float y, float moveSpeed, float powerJump, float gravity) {
+    public float hp;
+    public boolean dead;
+    public Player(Texture img, float hp, float width, float height, float x, float y, float moveSpeed, float powerJump, float gravity) {
         super(img, 0, 0, img.getWidth(), img.getHeight());
         this.x = x;
         this.y = y;
@@ -37,6 +38,7 @@ public class Player extends Sprite {
         this.vx = 0;
         this.vy = 0;
         this.gravity = gravity;
+        this.hp = hp;
         bulletCD = 20; // frames
         counterCD = 0;
         onCD = false;
@@ -44,6 +46,7 @@ public class Player extends Sprite {
         setPosition(x, y);
         direction = 1; // 1 = right, 2 = left
         bitShoot = Gdx.audio.newSound(Gdx.files.internal("shootSound.ogg"));
+        dead = false;
     }
 
     public void shoot(Bullet[] playerBullets) {
@@ -61,7 +64,10 @@ public class Player extends Sprite {
         }
     }
 
-    void update(boolean right, boolean left, boolean up, ArrayList<Object> objects) {
+    public void update(boolean right, boolean left, boolean up, ArrayList<Object> objects) {
+        if(hp <= 0){
+            dead = true;
+        }
         x += vx;
         setPosition(x, y);
         collide(vx, 0, objects);
@@ -141,7 +147,6 @@ public class Player extends Sprite {
                     }
                 }
             }
-
             if (objects.get(i) instanceof EggChild) {
                 EggChild eggChild = (EggChild) objects.get(i);
                 if (Intersector.overlaps(eggChild.getBoundingRectangle(), getBoundingRectangle())) {

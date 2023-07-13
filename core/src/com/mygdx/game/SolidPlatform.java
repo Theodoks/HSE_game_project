@@ -4,10 +4,10 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class SolidPlatform {
 
-    float x, y;
-    Texture img;
-    float width, height;
-    SolidPlatform(float x, float y){
+    public float x, y;
+    public Texture img;
+    public float width, height;
+    public SolidPlatform(float x, float y){
 
         this.x = x;
         this.y = y;
