@@ -30,6 +30,7 @@ public class MyGdxGame extends Game {
     public long startMusic;
 
     public ScreenCutscene2 screenCutscene2;
+    public ScreenCutscene1 screenCutscene1;
     public ScreenVictory screenVictory;
     public ScreenDefeat screenDefeat;
 
@@ -59,6 +60,7 @@ public class MyGdxGame extends Game {
         screenIntro = new ScreenIntro(this);
         screenAbout = new ScreenAbout(this);
         screenLevels = new ScreenLevels(this);
+        screenCutscene1 = new ScreenCutscene1(this);
         screenCutscene2 = new ScreenCutscene2(this);
         screenVictory = new ScreenVictory(this, 0);
         screenDefeat = new ScreenDefeat(this, 0);
