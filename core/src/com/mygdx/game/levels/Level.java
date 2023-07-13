@@ -26,6 +26,7 @@ import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.Player;
 import com.mygdx.game.SolidPlatform;
 import com.mygdx.game.Text;
+import com.mygdx.game.TextButton;
 import com.mygdx.game.animations.BulletImpactAnim;
 
 import java.util.ArrayList;
@@ -58,6 +59,7 @@ public class Level implements Screen {
 
     Texture sky;
     Texture rightButtonTexture, leftButtonTexture, upButtonTexture, shootButtonTexture;
+    TextButton btnReturn;
     protected Player player;
 
     float lerp;
@@ -100,7 +102,7 @@ public class Level implements Screen {
         rightButton = new IconButton(SCR_WIDTH / 6, SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, rightButtonTexture);
         upButton = new IconButton(SCR_WIDTH - SCR_WIDTH / 5.5f, SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, upButtonTexture);
         shootButton = new IconButton(SCR_WIDTH - SCR_WIDTH / 3, SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, shootButtonTexture);
-
+        btnReturn = new TextButton(mgg.font, "return", SCR_WIDTH * 0.05f, SCR_HEIGHT * 0.95f, 55 * mgg.X, 55 * mgg.Y);
 
         position = mgg.camera.position;
         skyBG = new Background(sky, mgg);
@@ -150,6 +152,9 @@ public class Level implements Screen {
                 if (leftButton.hit(mgg.touch.x, -mgg.touch.y + SCR_HEIGHT)) {
                     left = true;
                 }
+                if(btnReturn.hit(mgg.touch.x, -mgg.touch.y + SCR_HEIGHT)){
+                    player.dead = true;
+                }
             }
         }
 
@@ -182,11 +187,11 @@ public class Level implements Screen {
                 }
             }
         }
+        btnReturn.font.draw(mgg.batch, btnReturn.text, mgg.camera.position.x - SCR_WIDTH / 2 + SCR_WIDTH * 0.05f, mgg.camera.position.y - SCR_HEIGHT / 2  + SCR_HEIGHT * 0.95f);
         mgg.batch.draw(leftButtonTexture, mgg.camera.position.x - SCR_WIDTH / 2 + SCR_WIDTH / 60, mgg.camera.position.y - SCR_HEIGHT / 2 + SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4);
         mgg.batch.draw(rightButtonTexture, mgg.camera.position.x - SCR_WIDTH / 2 + SCR_WIDTH / 6, mgg.camera.position.y - SCR_HEIGHT / 2 + SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4);
         mgg.batch.draw(upButtonTexture, mgg.camera.position.x + SCR_WIDTH - SCR_WIDTH / 2 - SCR_WIDTH / 5.5f, mgg.camera.position.y - SCR_HEIGHT / 2 + SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4);
         mgg.batch.draw(shootButtonTexture, mgg.camera.position.x + SCR_WIDTH - SCR_WIDTH / 2 - SCR_WIDTH / 3, mgg.camera.position.y - SCR_HEIGHT / 2 + SCR_WIDTH / 40, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4);
-        hpBar.font.draw(mgg.batch, hpBar.text, position.x - 800 * X, position.y + 350 * Y);
 
         eggChild.draw(mgg.batch);
         player.draw(mgg.batch);
