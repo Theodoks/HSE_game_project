@@ -24,16 +24,18 @@ public class EnemyEgg extends Enemy{
     float gravity;
     float moveSpeed;
     boolean passive;
-    int bulletCD; //frames
+    public int bulletCD; //frames
     int counterCD;
     int direction;
     boolean onCD;
     Sound bitShoot;
-    float v;
+    public float v;
     int i;
     public EnemyBullet[] enemyBullets;
     float startingPos;
     boolean justDied;
+    public float enemyBulletDmg;
+    float vCopy;
     public EnemyEgg(Texture img, float hp, float x, float y, float moveSpeed, float vy, boolean immobile, float maxDistance){
         super(img, hp, x, y, immobile);
         this.maxDistance = maxDistance;
@@ -54,16 +56,21 @@ public class EnemyEgg extends Enemy{
         enemyBullets = new EnemyBullet[100];
         startingPos = x;
         justDied = false;
+        enemyBulletDmg = 1;
+        v = 10 * X;
+
     }
 
     public void shoot(EnemyBullet[] enemyBullets) {
         if (!onCD) {
             bitShoot.play();
+            v = Math.abs(v);
             onCD = true;
-            if (direction == 1) v = 10 * X;
-            else v = -10 * X;
-            enemyBullets[i] = new EnemyBullet(v, x, y + (MyGdxGame.SCR_HEIGHT/14.35f));
-            if (v == 10 * X) enemyBullets[i].x += 100 * X;
+            if (direction == 2){
+                v = - v;
+            }
+            enemyBullets[i] = new EnemyBullet(v, x, y + (MyGdxGame.SCR_HEIGHT/14.35f), enemyBulletDmg);
+            if (v > 0) enemyBullets[i].x += 100 * X;
 
             if (++i >= 100) {
                 i = 0;
@@ -130,7 +137,7 @@ public class EnemyEgg extends Enemy{
             y += vy;
             setPosition(x, y);
         }
-        if(!onGround){
+        if(!onGround && vy >= -20 * Y){
             vy -= gravity;
         }
         onGround = false;

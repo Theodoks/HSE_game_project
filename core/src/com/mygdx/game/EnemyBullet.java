@@ -18,12 +18,20 @@ public class EnemyBullet {
     public Boolean doesExist = true;
     float enemyBulletDmg;
     float animX;
+    boolean bossBullet;
 
-    EnemyBullet(float vx, float x, float y){
+    EnemyBullet(float vx, float x, float y, float enemyBulletDmg){
         this.x = x;
         this.y = y;
         this.vx = vx;
-        enemyBulletDmg = 1;
+        this.enemyBulletDmg = enemyBulletDmg;
+        if(vx > 4 * X || vx < -4 * X) {
+            bossBullet = false;
+        }
+        else{
+            bossBullet = true;
+        }
+
     }
     public void exist(){
 

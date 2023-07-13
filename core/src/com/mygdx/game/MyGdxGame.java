@@ -15,6 +15,7 @@ import com.mygdx.game.levels.Level0;
 import com.mygdx.game.levels.Level1;
 import com.mygdx.game.levels.Level2;
 import com.mygdx.game.levels.Level3;
+import com.mygdx.game.levels.Level4;
 
 public class MyGdxGame extends Game {
     public static float SCR_WIDTH;
@@ -92,7 +93,7 @@ public class MyGdxGame extends Game {
     }
     public void loadLevel(int levelid){
         if(levelid == 0) {
-            level = new Level0(this);
+            level = new Level4(this);
             setScreen(level);
         }
         else if(levelid == 1)
@@ -108,6 +109,11 @@ public class MyGdxGame extends Game {
         else if(levelid == 3)
         {
             level = new Level3(this);
+            setScreen(level);
+        }
+        else if(levelid == 4)
+        {
+            level = new Level4(this);
             setScreen(level);
         }
     }

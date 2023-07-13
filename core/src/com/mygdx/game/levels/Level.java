@@ -67,6 +67,7 @@ public class Level implements Screen {
     Texture gunTexture;
 
     Texture playerTexture;
+    Texture bossEggTexture;
 
     protected SolidPlatform[] solids = new SolidPlatform[100];
 
@@ -80,7 +81,7 @@ public class Level implements Screen {
     private long start = System.currentTimeMillis();
     public BitmapFont hpFont;
     boolean noDelay;
-
+    boolean defeatedBoss;
     protected Level(MyGdxGame mgg) {
         this.mgg = mgg;
 
@@ -94,6 +95,7 @@ public class Level implements Screen {
         bullet = new Texture("bullet2.png");
         eggChildTexture = new Texture("egg_baby.png");
         enemyEggTexture = new Texture("egg_enemy.png");
+        bossEggTexture = new Texture("egg_boss.png");
 
         createFont();
 
@@ -111,7 +113,7 @@ public class Level implements Screen {
         player = new Player(playerTexture, 3, SCR_WIDTH / 15f, SCR_HEIGHT / 5.7f, 0, 400 * Y, SCR_WIDTH / 190, 14.5f * Y, SCR_HEIGHT / 1800);
         objects.add(player);
         gun = new Gun(gunTexture, player.getX(), player.getY(), SCR_WIDTH / 9.5f, SCR_HEIGHT / 15);
-        eggChild = new EggChild(eggChildTexture, 3500 * X, 230 * Y, SCR_WIDTH / 25f, SCR_HEIGHT / 10);
+        eggChild = new EggChild(eggChildTexture, 3500 * X, 10000 * Y, SCR_WIDTH / 25f, SCR_HEIGHT / 10);
 
         bullet = new Texture("bullet2.png");
         eggChildTexture = new Texture("egg_baby.png");
@@ -121,7 +123,7 @@ public class Level implements Screen {
         lerp = 0.12f;
         hpBar = new Text(hpFont, "" + player.hp, 10 * X, 750 * Y);
         noDelay = false;
-
+        defeatedBoss = false;
     }
 
     void render() {
@@ -177,7 +179,11 @@ public class Level implements Screen {
             }
         }
         for (EnemyEgg enemyEgg : enemyEggs){
-
+            if(!defeatedBoss && bob.enemyBulletDmg == 3 && bob.hp <= 0){
+                eggChild.setX(bob.getX());
+                eggChild.setY(bob.getY());
+                defeatedBoss = true;
+            }
             enemyEgg.update(objects, player);
             enemyEgg.draw(mgg.batch);
             for (EnemyBullet enemyBullet : enemyEgg.enemyBullets) {

@@ -25,7 +25,7 @@ public class Player extends Sprite {
     float v;
     public boolean isWinner = false;
     static Sound bitShoot;
-    public int hp;
+    static public int hp;
     public boolean dead;
     public Player(Texture img, int hp, float width, float height, float x, float y, float moveSpeed, float powerJump, float gravity) {
         super(img, 0, 0, img.getWidth(), img.getHeight());
