@@ -9,11 +9,14 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.video.VideoPlayer;
 import com.mygdx.game.levels.Level;
 import com.mygdx.game.levels.Level0;
 //import com.mygdx.game.levels.Level1;
 import com.mygdx.game.levels.Level2;
 import com.mygdx.game.levels.Level3;
+
+import aurelienribon.tweenengine.TweenManager;
 
 public class MyGdxGame extends Game {
     public static float SCR_WIDTH;
@@ -40,6 +43,7 @@ public class MyGdxGame extends Game {
     public void create() {
         batch = new SpriteBatch();
         touch = new Vector3(0, 0 ,0);
+
         SCR_HEIGHT = Gdx.graphics.getHeight();
         SCR_WIDTH = Gdx.graphics.getWidth();
         X = SCR_WIDTH / 1633;

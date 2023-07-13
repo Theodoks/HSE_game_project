@@ -50,7 +50,7 @@ project(":desktop") {
         api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         api "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
-        
+
     }
 }
 
@@ -71,7 +71,9 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-arm64-v8a"
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86"
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86_64"
-        
+        implementation 'org.mini2Dx:universal-tween-engine:6.3.3'
+        implementation 'nl.weeaboo.gdx-video:gdx-video:1.0.0-anonl'
+
     }
 }
 
@@ -82,6 +84,5 @@ project(":core") {
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
-        
     }
 }
