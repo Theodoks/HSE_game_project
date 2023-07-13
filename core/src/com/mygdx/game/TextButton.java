@@ -5,7 +5,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 public class TextButton {
     public float x;
     public float y;
-    float width, height;
+    float width;
+    public float height;
     public String text;
     public BitmapFont font;
 
