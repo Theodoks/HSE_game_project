@@ -72,4 +72,12 @@ public class Level0 extends Level {
     public void dispose() {
         super.dispose();
     }
+    @Override
+    public void win() {
+        if(mgg.maxLevel < 1) {
+            mgg.maxLevel = 1;
+            mgg.pref.putInteger("maxLevel", mgg.maxLevel);
+            mgg.pref.flush();
+        }
+    }
 }

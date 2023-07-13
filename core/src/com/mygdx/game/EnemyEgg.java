@@ -105,7 +105,7 @@ public class EnemyEgg extends Enemy{
 
             passive = true;
 
-            if (Math.abs(x - player.x) < X * 700 && Math.abs(y - player.y) < Y * 210) {
+            if (Math.abs(x - player.x) < X * 600 && Math.abs(y - player.y) < Y * 210) {
                 passive = false;
                 if (player.x > x) {
                     if (direction != 1) {

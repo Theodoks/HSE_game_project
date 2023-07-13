@@ -30,7 +30,7 @@ public class ScreenLevels implements Screen {
 
         levelButtonTexture = new Texture("oval.png");
         imgBackGround = new Texture("Sky.jpg");
-        btnReturn = new TextButton(mgg.font, "return", SCR_WIDTH * 0.05f, SCR_HEIGHT * 0.95f, 55 * mgg.X, 55 * mgg.Y);
+        btnReturn = new TextButton(mgg.font, "Back", SCR_WIDTH * 0.05f, SCR_HEIGHT * 0.95f, 55 * mgg.X, 55 * mgg.Y);
 
         createFont();
 
@@ -50,7 +50,7 @@ public class ScreenLevels implements Screen {
     }
 
     void createFont(){
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("wellwait.otf"));
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("LilitaOne-Regular.ttf"));
 
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 
@@ -58,7 +58,7 @@ public class ScreenLevels implements Screen {
 
         parameter.size = (int)(110 * mgg.A);
         parameter.color = Color.ORANGE;
-        parameter.borderWidth = (int)(3 * mgg.A);
+        parameter.borderWidth = (int)(7 * mgg.A);
         parameter.borderColor = Color.BLACK;
         font = generator.generateFont(parameter);
     }
@@ -76,22 +76,22 @@ public class ScreenLevels implements Screen {
             if(btnReturn.hit(mgg.touch.x, mgg.touch.y)){
                 mgg.setScreen(mgg.screenIntro);
             }
-             else if (levelButtons[0].hit(mgg.touch.x, mgg.touch.y)) {
+             else if (levelButtons[0].hit(mgg.touch.x, mgg.touch.y) && mgg.maxLevel >= 0) {
                 mgg.loadLevel(0);
                 mgg.screenDefeat.levelIndex = 0;
                 mgg.screenVictory.levelIndex = 0;
             }
-             else if (levelButtons[1].hit(mgg.touch.x, mgg.touch.y)) {
+             else if (levelButtons[1].hit(mgg.touch.x, mgg.touch.y) && mgg.maxLevel >= 1) {
                 mgg.loadLevel(1);
                 mgg.screenDefeat.levelIndex = 1;
                 mgg.screenVictory.levelIndex = 1;
             }
-             else if (levelButtons[2].hit(mgg.touch.x, mgg.touch.y)) {
+            else if (levelButtons[2].hit(mgg.touch.x, mgg.touch.y) && mgg.maxLevel >= 2) {
                 mgg.loadLevel(2);
                 mgg.screenDefeat.levelIndex = 2;
                 mgg.screenVictory.levelIndex = 2;
             }
-            else if (levelButtons[3].hit(mgg.touch.x, mgg.touch.y)) {
+            else if (levelButtons[3].hit(mgg.touch.x, mgg.touch.y) && mgg.maxLevel >= 2) {
                 mgg.loadLevel(3);
                 mgg.screenDefeat.levelIndex = 3;
                 mgg.screenVictory.levelIndex = 2;

@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -12,7 +13,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.video.VideoPlayer;
 import com.mygdx.game.levels.Level;
 import com.mygdx.game.levels.Level0;
-//import com.mygdx.game.levels.Level1;
+import com.mygdx.game.levels.Level1;
 import com.mygdx.game.levels.Level2;
 import com.mygdx.game.levels.Level3;
 
@@ -25,6 +26,7 @@ public class MyGdxGame extends Game {
     public OrthographicCamera camera;
     public Vector3 touch;
     public BitmapFont font;
+
     public ScreenIntro screenIntro;
     public ScreenAbout screenAbout;
     public Sound levelMusic;
@@ -39,8 +41,12 @@ public class MyGdxGame extends Game {
     public static float X;
     public static float Y;
     public static float A;
+    public int maxLevel;
+    public Preferences pref;
     @Override
     public void create() {
+        pref = Gdx.app.getPreferences("EGG");
+        maxLevel = pref.getInteger("maxLevel", 0);
         batch = new SpriteBatch();
         touch = new Vector3(0, 0 ,0);
 
@@ -63,7 +69,7 @@ public class MyGdxGame extends Game {
 
     }
     void createFont(){
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("wellwait.otf"));
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("LilitaOne-Regular.ttf"));
 
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 
@@ -74,17 +80,19 @@ public class MyGdxGame extends Game {
         parameter.borderWidth = A * 3;
         parameter.borderColor = Color.BLACK;
         font = generator.generateFont(parameter);
+
+
     }
     public void loadLevel(int levelid){
         if(levelid == 0) {
             level = new Level0(this);
             setScreen(level);
         }
-        /*else if (levelid == 1){
+        else if(levelid == 1)
+        {
             level = new Level1(this);
             setScreen(level);
-
-        }*/
+        }
         else if(levelid == 2)
         {
             level = new Level2(this);

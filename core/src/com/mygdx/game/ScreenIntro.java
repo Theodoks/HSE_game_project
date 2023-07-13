@@ -15,7 +15,7 @@ public class ScreenIntro implements Screen {
     Texture imgBackGround;
 
     TextButton btnPlay;
-    TextButton btnSettings;
+    //TextButton btnSettings;
     TextButton btnAbout;
     TextButton btnExit;
 
@@ -24,9 +24,9 @@ public class ScreenIntro implements Screen {
 
         imgBackGround = new Texture("Sky.jpg");
         btnPlay = new TextButton(mgg.font, "Play", 500 * X, 500 * Y, 55 * X, 55 * Y);
-        btnSettings = new TextButton(mgg.font, "Settings", 500  * X, 400 * Y, 55 * X, 55 * Y);
-        btnAbout = new TextButton(mgg.font, "About", 500 * X, 300 * Y, 55 * X, 55 * Y);
-        btnExit = new TextButton(mgg.font, "Exit", 500 * X, 200 * Y, 55 * X, 55 * Y);
+        //btnSettings = new TextButton(mgg.font, "Settings", 500  * X, 400 * Y, 55 * X, 55 * Y);
+        btnAbout = new TextButton(mgg.font, "About", 500 * X, 400 * Y, 55 * X, 55 * Y);
+        btnExit = new TextButton(mgg.font, "Exit", 500 * X, 300 * Y, 55 * X, 55 * Y);
     }
 
     @Override
@@ -59,7 +59,7 @@ public class ScreenIntro implements Screen {
         mgg.batch.begin();
         mgg.batch.draw(imgBackGround, 0, 0, SCR_WIDTH, SCR_HEIGHT);
         btnPlay.font.draw(mgg.batch, btnPlay.text, btnPlay.x, btnPlay.y);
-        btnSettings.font.draw(mgg.batch, btnSettings.text, btnSettings.x, btnSettings.y);
+        //btnSettings.font.draw(mgg.batch, btnSettings.text, btnSettings.x, btnSettings.y);
         btnAbout.font.draw(mgg.batch, btnAbout.text, btnAbout.x, btnAbout.y);
         btnExit.font.draw(mgg.batch, btnExit.text, btnExit.x, btnExit.y);
         mgg.batch.end();

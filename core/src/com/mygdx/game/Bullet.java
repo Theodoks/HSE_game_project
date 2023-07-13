@@ -24,7 +24,7 @@ public class Bullet {
         this.x = x;
         this.y = y;
         this.vx = vx;
-        bulletDMG = 25;
+        bulletDMG = 34;
     }
 
     public void exist() {

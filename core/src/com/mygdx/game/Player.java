@@ -25,9 +25,9 @@ public class Player extends Sprite {
     float v;
     public boolean isWinner = false;
     static Sound bitShoot;
-    public float hp;
+    public int hp;
     public boolean dead;
-    public Player(Texture img, float hp, float width, float height, float x, float y, float moveSpeed, float powerJump, float gravity) {
+    public Player(Texture img, int hp, float width, float height, float x, float y, float moveSpeed, float powerJump, float gravity) {
         super(img, 0, 0, img.getWidth(), img.getHeight());
         this.x = x;
         this.y = y;
@@ -53,10 +53,10 @@ public class Player extends Sprite {
         if (!onCD) {
             bitShoot.play();
             onCD = true;
-            if (direction == 1) v = 21 * X;
-            else v = -21 * X;
+            if (direction == 1) v = 13 * X;
+            else v = -13 * X;
             playerBullets[i] = new Bullet(v, x, y + (MyGdxGame.SCR_HEIGHT/14.35f));
-            if (v == 21 * X) playerBullets[i].x += 100 * X;
+            if (v == 13 * X) playerBullets[i].x += 100 * X;
 
             if (++i >= 100) {
                 i = 0;
