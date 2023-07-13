@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -37,9 +38,12 @@ public class MyGdxGame extends Game {
     public static float X;
     public static float Y;
     public static float A;
-    public int maxLevel = 0;
+    public int maxLevel;
+    public Preferences pref;
     @Override
     public void create() {
+        pref = Gdx.app.getPreferences("EGG");
+        maxLevel = pref.getInteger("maxLevel", 0);
         batch = new SpriteBatch();
         touch = new Vector3(0, 0 ,0);
         SCR_HEIGHT = Gdx.graphics.getHeight();
