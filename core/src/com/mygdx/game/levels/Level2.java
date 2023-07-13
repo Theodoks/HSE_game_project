@@ -80,4 +80,8 @@ public class Level2 extends Level {
     public void dispose() {
         super.dispose();
     }
+    @Override
+    public void win() {
+        mgg.maxLevel = 3;
+    }
 }
