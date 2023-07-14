@@ -19,18 +19,22 @@ public class Bullet {
     public boolean doesExist = true;
     float bulletDMG;
     float animX;
+    float startPos;
 
     Bullet(float vx, float x, float y) {
         this.x = x;
         this.y = y;
         this.vx = vx;
         bulletDMG = 34;
+        startPos = x;
     }
 
     public void exist() {
 
         x += vx;
-
+        if (x > startPos + 1550 * X){
+            doesExist = false;
+        }
     }
 
     public void collide(ArrayList<Object> objects) {

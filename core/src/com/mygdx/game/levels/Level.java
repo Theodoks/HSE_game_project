@@ -65,9 +65,10 @@ public class Level implements Screen {
     float lerp;
 
     Texture gunTexture;
+    Texture bossBullet;
 
     Texture playerTexture;
-    Texture bossEggTexture;
+    public static Texture bossEggTexture;
 
     protected SolidPlatform[] solids = new SolidPlatform[100];
 
@@ -96,6 +97,7 @@ public class Level implements Screen {
         eggChildTexture = new Texture("egg_baby.png");
         enemyEggTexture = new Texture("egg_enemy.png");
         bossEggTexture = new Texture("egg_boss.png");
+        bossBullet = new Texture("boss_bullet.png");
 
         createFont();
 
@@ -179,7 +181,7 @@ public class Level implements Screen {
             }
         }
         for (EnemyEgg enemyEgg : enemyEggs){
-            if(!defeatedBoss && bob.enemyBulletDmg == 3 && bob.hp <= 0){
+            if(!defeatedBoss && bob.isBoss && bob.hp <= 0){
                 eggChild.setX(bob.getX());
                 eggChild.setY(bob.getY());
                 defeatedBoss = true;
@@ -189,8 +191,18 @@ public class Level implements Screen {
             for (EnemyBullet enemyBullet : enemyEgg.enemyBullets) {
                 if (enemyBullet != null && enemyBullet.doesExist) {
                     enemyBullet.exist();
-                    mgg.batch.draw(bullet, enemyBullet.x, enemyBullet.y, SCR_WIDTH / 26.7f, SCR_HEIGHT / 35);
                     enemyBullet.collide(objects);
+                    if(enemyEggs.size() > 16) {
+                        if (enemyEgg == enemyEggs.get(17)) {
+                            mgg.batch.draw(bossBullet, enemyBullet.x, enemyBullet.y - 20 * Y, SCR_WIDTH / 13.7f, SCR_HEIGHT / 17);
+                        } else {
+                            mgg.batch.draw(bullet, enemyBullet.x, enemyBullet.y, SCR_WIDTH / 26.7f, SCR_HEIGHT / 35);
+                        }
+
+                    }
+                    else{
+                        mgg.batch.draw(bullet, enemyBullet.x, enemyBullet.y, SCR_WIDTH / 26.7f, SCR_HEIGHT / 35);
+                    }
 
                 }
             }

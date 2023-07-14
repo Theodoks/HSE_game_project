@@ -93,7 +93,7 @@ public class MyGdxGame extends Game {
     }
     public void loadLevel(int levelid){
         if(levelid == 0) {
-            level = new Level4(this);
+            level = new Level0(this);
             setScreen(level);
         }
         else if(levelid == 1)

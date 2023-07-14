@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.levels.Level;
 
 import static com.mygdx.game.MyGdxGame.SCR_HEIGHT;
 import static com.mygdx.game.MyGdxGame.SCR_WIDTH;
@@ -36,13 +37,20 @@ public class EnemyEgg extends Enemy{
     boolean justDied;
     public float enemyBulletDmg;
     float vCopy;
+    public boolean isBoss;
     public EnemyEgg(Texture img, float hp, float x, float y, float moveSpeed, float vy, boolean immobile, float maxDistance){
         super(img, hp, x, y, immobile);
         this.maxDistance = maxDistance;
         this.vy = vy;
         gravity = 0.45f;
-        width = X * 190;
-        height = Y * 190;
+        if (img == Level.bossEggTexture){
+            height = X * 300;
+            width = Y * 300;
+        }
+        else {
+            width = X * 150;
+            height = Y * 150;
+        }
         setSize(width, height);
         setPosition(x, y);
         this.moveSpeed = moveSpeed;
@@ -58,6 +66,7 @@ public class EnemyEgg extends Enemy{
         justDied = false;
         enemyBulletDmg = 1;
         v = 10 * X;
+        isBoss = false;
 
     }
 
@@ -69,8 +78,11 @@ public class EnemyEgg extends Enemy{
             if (direction == 2){
                 v = - v;
             }
-            enemyBullets[i] = new EnemyBullet(v, x, y + (MyGdxGame.SCR_HEIGHT/14.35f), enemyBulletDmg);
-            if (v > 0) enemyBullets[i].x += 100 * X;
+            enemyBullets[i] = new EnemyBullet(v, x, y + height / 3.5f, enemyBulletDmg);
+            if (v > 0) enemyBullets[i].x += width - 30 * X;
+            else{
+                enemyBullets[i].x -= SCR_WIDTH / 35.7f;
+            }
 
             if (++i >= 100) {
                 i = 0;
@@ -125,7 +137,7 @@ public class EnemyEgg extends Enemy{
                         flip(true, false);
                         direction = 2;
                     }
-                    ;
+
                 }
             }
             if (!passive) {

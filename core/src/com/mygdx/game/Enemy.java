@@ -9,7 +9,7 @@ public class Enemy extends Sprite {
     float y;
 
     boolean immobile;
-    Texture img;
+    public Texture img;
     Enemy(Texture img, float hp, float x, float y, boolean immobile){
         super(img, 0, 0, img.getWidth(), img.getHeight());
         this.hp = hp;
