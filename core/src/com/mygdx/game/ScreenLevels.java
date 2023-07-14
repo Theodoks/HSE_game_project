@@ -48,17 +48,19 @@ public class ScreenLevels implements Screen {
         levelButtons = new IconTextButton[5];
         for (int i = 0; i < levelButtons.length; i++) {
             levelButtons[i] = new IconTextButton(
-                    SCR_WIDTH * 0.1f + i * (SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT) * mgg.A + 100),
-                    SCR_HEIGHT / 2 - SCR_HEIGHT / 4 * mgg.A / 2,
+                    //SCR_WIDTH * 0.1f + i * (SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT) * mgg.A + 100),
+                    X * 100 + i * 310 * X,
+                    Y * 300,
                     levelButtonTexture,
                     font,
                     "" + (i + 1),
-                    SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT) * mgg.A,
-                    SCR_HEIGHT / 4 * mgg.A
+
+                    200 * X,
+                    200 * Y
             );
         }
-        cutscene1Button = new IconButton(levelButtons[0].x, levelButtons[0].y - 250 * Y, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, cutscene2ButtonTexture);
-        cutscene2Button = new IconButton(levelButtons[4].x, levelButtons[4].y - 250 * Y, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4, cutscene2ButtonTexture);
+        cutscene1Button = new IconButton(levelButtons[0].x, levelButtons[0].y - 250 * Y, 200 * X, 200 * Y, cutscene2ButtonTexture);
+        cutscene2Button = new IconButton(levelButtons[4].x, levelButtons[4].y - 250 * Y, 200 * X, 200 * Y, cutscene2ButtonTexture);
 
     }
 
@@ -120,8 +122,8 @@ public class ScreenLevels implements Screen {
         mgg.batch.setProjectionMatrix(mgg.camera.combined);
         mgg.batch.draw(imgBackGround, 0, 0, SCR_WIDTH, SCR_HEIGHT);
 
-        mgg.batch.draw(cutscene2Button, levelButtons[0].x, levelButtons[0].y - 250 * Y, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4);
-        mgg.batch.draw(cutscene2Button, levelButtons[4].x, levelButtons[4].y - 250 * Y, SCR_WIDTH / 4 / (SCR_WIDTH / SCR_HEIGHT), SCR_HEIGHT / 4);
+        mgg.batch.draw(cutscene2Button, levelButtons[0].x, levelButtons[0].y - 250 * Y, 200 * X, 200 * Y);
+        mgg.batch.draw(cutscene2Button, levelButtons[4].x, levelButtons[4].y - 250 * Y, 200 * X, 200 * Y);
 
         btnReturn.font.draw(mgg.batch, btnReturn.text, btnReturn.x, btnReturn.y);
 
